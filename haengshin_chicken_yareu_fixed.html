@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>행신 치킨 | Haengshin Chicken</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Arial", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      background: linear-gradient(180deg, #f58220 0%, #f47a16 34%, #ec6407 100%);
+      color: #fff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font-family: inherit; }
+    .container { width: min(1120px, 92%); margin: 0 auto; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(226, 92, 0, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.16);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+    }
+    .brand {
+      font-size: 1.45rem;
+      font-weight: 1000;
+      letter-spacing: -0.04em;
+    }
+    .brand span { color: #ffe7b0; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 0.96rem;
+      font-weight: 800;
+    }
+    .nav-links a { opacity: 0.96; }
+    .nav-links a:hover { opacity: 0.75; }
+    .order-btn {
+      background: #fff;
+      color: #ee6500;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 1000;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.10), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(255,255,255,0.08), transparent 22%),
+        radial-gradient(circle at 70% 78%, rgba(255,255,255,0.08), transparent 24%);
+      pointer-events: none;
+    }
+    .hero-wrap {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.06fr 0.94fr;
+      align-items: center;
+      gap: 42px;
+      padding: 66px 0 46px;
+    }
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 8px 14px;
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.09);
+      color: #ffe5ae;
+      font-size: 0.92rem;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+    .hero h1 {
+      font-size: clamp(3.1rem, 7.7vw, 6.1rem);
+      line-height: 1.32;
+      font-weight: 1000;
+      letter-spacing: -0.065em;
+      margin-bottom: 26px;
+      text-wrap: balance;
+    }
+    .hero h1 .title-line {
+      display: block;
+      margin-bottom: 0.12em;
+    }
+    .hero h1 .title-line:last-child { margin-bottom: 0; }
+    .hero h1 .accent { color: #ffe8b9; }
+    .hero p {
+      max-width: 630px;
+      margin-bottom: 30px;
+      color: rgba(255,255,255,0.94);
+      font-size: 1.12rem;
+    }
+    .hero-buttons { display: flex; flex-wrap: wrap; gap: 14px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+      border: 0;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 1000;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
+    .btn-primary { background: #fff; color: #ef6500; }
+    .btn-secondary { background: transparent; border: 2px solid rgba(255,255,255,0.72); color: #fff; }
+    .btn-dark { background: #251006; color: #fff; }
+    .btn-disabled { background: #d6d6d6; color: #777; cursor: not-allowed; }
+    .btn-disabled:hover { transform: none; box-shadow: none; }
+
+    .hero-visual { display: flex; justify-content: center; align-items: center; }
+    .plate {
+      position: relative;
+      width: min(460px, 90vw);
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, #fff 0 45%, #f1f1f1 46% 53%, transparent 54%),
+        radial-gradient(circle at 50% 66%, rgba(0,0,0,0.22), transparent 52%);
+      filter: drop-shadow(0 34px 30px rgba(0,0,0,0.22));
+    }
+    .chicken-piece {
+      position: absolute;
+      background: linear-gradient(145deg, #fac552, #e88b12);
+      border-radius: 48% 52% 45% 55% / 55% 45% 55% 45%;
+      box-shadow: inset -8px -8px 0 rgba(145,70,0,0.12), inset 8px 8px 0 rgba(255,225,130,0.26), 0 12px 20px rgba(0,0,0,0.15);
+    }
+    .chicken-piece::after {
+      content: "";
+      position: absolute;
+      inset: 8% 10%;
+      border-radius: inherit;
+      background:
+        radial-gradient(circle at 20% 25%, rgba(255, 220, 130, 0.85) 0 8%, transparent 9%),
+        radial-gradient(circle at 50% 35%, rgba(255, 220, 130, 0.76) 0 9%, transparent 10%),
+        radial-gradient(circle at 75% 60%, rgba(255, 220, 130, 0.65) 0 8%, transparent 9%),
+        radial-gradient(circle at 35% 75%, rgba(198, 104, 10, 0.22) 0 10%, transparent 11%);
+    }
+    .p1 { width: 110px; height: 80px; top: 145px; left: 70px; transform: rotate(-18deg); }
+    .p2 { width: 120px; height: 85px; top: 115px; left: 150px; transform: rotate(10deg); }
+    .p3 { width: 105px; height: 78px; top: 145px; left: 250px; transform: rotate(22deg); }
+    .p4 { width: 115px; height: 84px; top: 220px; left: 110px; transform: rotate(12deg); }
+    .p5 { width: 130px; height: 92px; top: 215px; left: 215px; transform: rotate(-12deg); }
+    .p6 { width: 100px; height: 72px; top: 85px; left: 170px; transform: rotate(-5deg); }
+    .p7 { width: 96px; height: 68px; top: 185px; left: 40px; transform: rotate(25deg); }
+    .p8 { width: 95px; height: 70px; top: 180px; left: 315px; transform: rotate(-20deg); }
+
+    section { padding: 90px 0; }
+    .section-title {
+      margin-bottom: 14px;
+      font-size: clamp(2rem, 5vw, 3.45rem);
+      line-height: 1.28;
+      font-weight: 1000;
+      letter-spacing: -0.055em;
+    }
+    .section-subtitle {
+      max-width: 780px;
+      margin-bottom: 42px;
+      color: rgba(255,255,255,0.91);
+      font-size: 1.05rem;
+    }
+    .features-grid, .menu-grid, .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .feature-card, .review {
+      padding: 28px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 26px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 35px rgba(0,0,0,0.08);
+    }
+    .feature-card h3, .menu-body h3 {
+      margin-bottom: 12px;
+      color: #fff1cb;
+      font-size: 1.35rem;
+      font-weight: 1000;
+    }
+    .feature-card p, .menu-body p, .review p { color: rgba(255,255,255,0.93); font-size: 0.98rem; }
+
+    .menu-card {
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 28px;
+      background: rgba(255,255,255,0.20);
+      box-shadow: 0 18px 35px rgba(0,0,0,0.1);
+      transition: 0.25s ease;
+    }
+    .menu-card:hover { transform: translateY(-6px); }
+    .menu-image {
+      height: 210px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 30% 30%, #ffc65a, #e98c12 65%), linear-gradient(135deg, #f7c56b, #d66d05);
+      font-size: 3.1rem;
+    }
+    .menu-body { padding: 24px; }
+    .price { margin-top: 16px; color: #fff; font-size: 1.15rem; font-weight: 1000; }
+
+    .promo {
+      text-align: center;
+      background: rgba(255,255,255,0.08);
+      border-top: 1px solid rgba(255,255,255,0.12);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .promo h2 {
+      margin-bottom: 18px;
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
+      line-height: 1.3;
+      font-weight: 1000;
+      letter-spacing: -0.06em;
+    }
+    .promo h2 span { color: #ffe3a2; }
+    .promo p {
+      max-width: 760px;
+      margin: 0 auto 26px;
+      color: rgba(255,255,255,0.94);
+      font-size: 1.08rem;
+    }
+
+    .review .stars { margin-bottom: 14px; font-size: 1.15rem; }
+    .review p { margin-bottom: 12px; }
+    .review strong { color: #fff0c7; }
+
+    .order-area {
+      display: grid;
+      grid-template-columns: 0.98fr 1.02fr;
+      gap: 26px;
+      align-items: start;
+    }
+    .order-panel, .summary-panel {
+      border: 1px solid rgba(255,255,255,0.20);
+      border-radius: 30px;
+      background: rgba(255,255,255,0.16);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+    .panel-head {
+      padding: 24px 26px;
+      border-bottom: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.08);
+    }
+    .panel-head h2 {
+      font-size: clamp(1.7rem, 4vw, 2.7rem);
+      line-height: 1.25;
+      font-weight: 1000;
+      letter-spacing: -0.05em;
+    }
+    .panel-head p { margin-top: 8px; color: rgba(255,255,255,0.88); font-size: 0.98rem; }
+    .panel-body { padding: 24px 26px 28px; }
+    .order-list { display: grid; gap: 14px; }
+    .order-item {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+    .item-thumb {
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.2);
+      font-size: 1.8rem;
+    }
+    .item-name { font-weight: 1000; color: #fff3cf; }
+    .item-desc { color: rgba(255,255,255,0.82); font-size: 0.9rem; }
+    .item-price { margin-top: 2px; font-weight: 900; }
+    .qty {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+    }
+    .qty button {
+      width: 28px;
+      height: 28px;
+      border: 0;
+      border-radius: 50%;
+      background: #fff;
+      color: #ed6600;
+      font-size: 1rem;
+      font-weight: 1000;
+      cursor: pointer;
+    }
+    .qty span { min-width: 16px; text-align: center; font-weight: 1000; }
+    .form-grid { display: grid; gap: 14px; }
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      color: #fff3cf;
+      font-size: 0.92rem;
+      font-weight: 900;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.26);
+      border-radius: 16px;
+      outline: none;
+      padding: 13px 14px;
+      background: rgba(255,255,255,0.94);
+      color: #241006;
+      font-size: 0.98rem;
+    }
+    .field textarea { min-height: 82px; resize: vertical; }
+    .receipt {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px dashed rgba(255,255,255,0.35);
+      display: grid;
+      gap: 10px;
+    }
+    .receipt-row { display: flex; justify-content: space-between; gap: 20px; color: rgba(255,255,255,0.92); }
+    .receipt-row.total {
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.18);
+      font-size: 1.3rem;
+      font-weight: 1000;
+      color: #fff3cf;
+    }
+    .small-notice {
+      margin-top: 12px;
+      color: rgba(255,255,255,0.76);
+      font-size: 0.82rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+    .mock-badge {
+      display: inline-flex;
+      margin-top: 14px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.16);
+      color: rgba(255,255,255,0.82);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    footer {
+      padding: 38px 0 70px;
+      text-align: center;
+      color: rgba(255,255,255,0.9);
+      font-size: 0.95rem;
+    }
+    footer .footer-brand { margin-bottom: 8px; color: #fff; font-size: 1.4rem; font-weight: 1000; }
+    footer .disclaimer { margin-top: 12px; color: rgba(255,255,255,0.68); font-size: 0.78rem; }
+    .floating-order {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 1000;
+      border: 0;
+      border-radius: 999px;
+      padding: 15px 22px;
+      background: #fff;
+      color: #f06c00;
+      font-weight: 1000;
+      cursor: pointer;
+      box-shadow: 0 18px 30px rgba(0,0,0,0.18);
+      transition: 0.2s ease;
+    }
+    .floating-order:hover { transform: translateY(-3px); }
+
+    @media (max-width: 960px) {
+      .hero-wrap, .features-grid, .menu-grid, .reviews-grid, .order-area { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .hero-wrap { gap: 24px; }
+      .nav-links { display: none; }
+      .brand { font-size: 1.12rem; }
+      .hero h1 { line-height: 1.34; }
+      .plate { width: min(360px, 88vw); }
+      .p1 { width: 88px; height: 64px; top: 125px; left: 60px; }
+      .p2 { width: 98px; height: 70px; top: 100px; left: 128px; }
+      .p3 { width: 88px; height: 64px; top: 128px; left: 218px; }
+      .p4 { width: 92px; height: 68px; top: 190px; left: 90px; }
+      .p5 { width: 106px; height: 76px; top: 186px; left: 178px; }
+      .p6 { width: 82px; height: 58px; top: 70px; left: 145px; }
+      .p7 { width: 78px; height: 56px; top: 165px; left: 33px; }
+      .p8 { width: 76px; height: 56px; top: 155px; left: 265px; }
+      .order-item { grid-template-columns: 52px 1fr; }
+      .qty { grid-column: 1 / -1; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">행신 치킨 <span>Haengshin Chicken</span></div>
+      <nav class="nav-links">
+        <a href="#about">브랜드 소개</a>
+        <a href="#menu">메뉴</a>
+        <a href="#reviews">리뷰</a>
+        <a href="#order" class="order-btn">주문하기</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-wrap">
+        <div>
+          <div class="eyebrow">REAL FRIED • STRONG CRUNCH • HAENGSHIN CHICKEN</div>
+          <h1>
+            <span class="title-line">오늘 저녁은</span>
+            <span class="title-line">오늘 <span class="accent">야식</span></span>
+            <span class="title-line">치킨 <span class="accent">야르</span> 치킨</span>
+          </h1>
+          <p>
+            매일 먹어도 질리지 않는 이유, 결국 치킨은 치킨이라서.
+            바삭함은 더 강하게, 풍미는 더 진하게.
+            <strong>행신 치킨(Haengshin Chicken)</strong>은 한입부터 다른 리얼 후라이드의 기준을 만듭니다.
+          </p>
+          <div class="hero-buttons">
+            <a href="#menu" class="btn btn-primary">대표 메뉴 보기</a>
+            <a href="#order" class="btn btn-secondary">바로 주문하러 가기</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="plate" aria-hidden="true">
+            <div class="chicken-piece p1"></div>
+            <div class="chicken-piece p2"></div>
+            <div class="chicken-piece p3"></div>
+            <div class="chicken-piece p4"></div>
+            <div class="chicken-piece p5"></div>
+            <div class="chicken-piece p6"></div>
+            <div class="chicken-piece p7"></div>
+            <div class="chicken-piece p8"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">이런 바삭함,<br />따라올 수 없다!</h2>
+        <p class="section-subtitle">
+          행신 치킨은 바삭한 튀김옷과 촉촉한 속살을 앞세운 후라이드 전문 치킨 브랜드입니다.
+          매장에 들어서는 순간부터 고소한 튀김 향이 퍼지고, 한 조각을 집는 순간 바삭함이 먼저 느껴지는 맛을 지향합니다.
+        </p>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>두 번 입힌 바삭함</h3>
+            <p>얇고 고르게 입힌 튀김옷을 한 번 더 살려 겉은 바삭하고 속은 촉촉하게 완성합니다.</p>
+          </div>
+          <div class="feature-card">
+            <h3>매일 준비하는 신선함</h3>
+            <p>주문이 들어오면 바로 튀겨 따뜻한 온도와 고소한 향이 살아있는 치킨을 제공합니다.</p>
+          </div>
+          <div class="feature-card">
+            <h3>야식에 딱 맞는 진한 맛</h3>
+            <p>혼자 먹어도, 함께 나눠 먹어도 만족스럽도록 짭짤함과 고소함의 균형을 맞췄습니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu">
+      <div class="container">
+        <h2 class="section-title">대표 메뉴</h2>
+        <p class="section-subtitle">행신 치킨에서 가장 많이 찾는 대표 메뉴입니다. 바삭한 후라이드부터 매콤한 크런치, 갈릭 순살까지 취향에 맞게 골라보세요.</p>
+        <div class="menu-grid">
+          <article class="menu-card">
+            <div class="menu-image">🍗</div>
+            <div class="menu-body">
+              <h3>오리지널 후라이드</h3>
+              <p>기본에 충실하지만 가장 강한 메뉴. 바삭한 식감과 담백한 풍미가 중심이 되는 시그니처 치킨.</p>
+              <div class="price">18,900원</div>
+            </div>
+          </article>
+          <article class="menu-card">
+            <div class="menu-image">🔥</div>
+            <div class="menu-body">
+              <h3>매콤 크런치 치킨</h3>
+              <p>은은하게 올라오는 매운맛과 진한 크런치 조합. 느끼함 없이 계속 손이 가는 스타일.</p>
+              <div class="price">20,900원</div>
+            </div>
+          </article>
+          <article class="menu-card">
+            <div class="menu-image">🧄</div>
+            <div class="menu-body">
+              <h3>갈릭 바삭 순살</h3>
+              <p>달콤짭짤한 갈릭 풍미를 입힌 순살 메뉴. 가볍게 먹기 좋고 만족도가 높은 조합.</p>
+              <div class="price">21,500원</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="promo">
+      <div class="container">
+        <h2>치킨 야르 치킨,<br /><span>행신 치킨</span></h2>
+        <p>
+          오늘 저녁 메뉴가 고민될 때, 결국 떠오르는 건 따끈한 치킨입니다.
+          행신 치킨은 바삭하게 튀겨낸 한 조각으로 평범한 밤을 제대로 된 야식 시간으로 바꿔드립니다.
+        </p>
+        <a href="#order" class="btn btn-primary">주문 화면으로 이동</a>
+      </div>
+    </section>
+
+    <section id="reviews">
+      <div class="container">
+        <h2 class="section-title">고객 반응</h2>
+        <p class="section-subtitle">행신 치킨을 먹어본 고객들의 반응을 담은 후기 영역입니다.</p>
+        <div class="reviews-grid">
+          <div class="review">
+            <div class="stars">★★★★★</div>
+            <p>“방금 튀긴 것처럼 따뜻하고 바삭해서 첫 조각부터 만족스러웠어요.”</p>
+            <strong>– 야식러 01</strong>
+          </div>
+          <div class="review">
+            <div class="stars">★★★★★</div>
+            <p>“후라이드는 담백하고, 매콤 크런치는 느끼함 없이 계속 손이 가는 맛이에요.”</p>
+            <strong>– 치킨덕후 02</strong>
+          </div>
+          <div class="review">
+            <div class="stars">★★★★☆</div>
+            <p>“야식으로 시켰는데 양도 넉넉하고 갈릭 순살이 특히 먹기 편해서 좋았어요.”</p>
+            <strong>– 새벽주문러 03</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="order">
+      <div class="container">
+        <h2 class="section-title">행신 치킨 주문하기</h2>
+        <p class="section-subtitle">메뉴를 고르고 배달 정보를 입력한 뒤 결제 예정 금액을 확인해보세요. 실제 주문·결제는 연결되어 있지 않습니다.</p>
+        <div class="order-area">
+          <div class="order-panel">
+            <div class="panel-head">
+              <h2>메뉴 선택</h2>
+              <p>드시고 싶은 메뉴의 수량을 선택해주세요.</p>
+            </div>
+            <div class="panel-body">
+              <div class="order-list">
+                <div class="order-item" data-name="오리지널 후라이드" data-price="18900" data-qty="1">
+                  <div class="item-thumb">🍗</div>
+                  <div>
+                    <div class="item-name">오리지널 후라이드</div>
+                    <div class="item-desc">대표 메뉴 · 바삭한 정통 후라이드</div>
+                    <div class="item-price">18,900원</div>
+                  </div>
+                  <div class="qty"><button type="button" onclick="changeQty(this,-1)">−</button><span>1</span><button type="button" onclick="changeQty(this,1)">+</button></div>
+                </div>
+                <div class="order-item" data-name="매콤 크런치 치킨" data-price="20900" data-qty="0">
+                  <div class="item-thumb">🔥</div>
+                  <div>
+                    <div class="item-name">매콤 크런치 치킨</div>
+                    <div class="item-desc">은은한 매운맛 · 진한 크런치</div>
+                    <div class="item-price">20,900원</div>
+                  </div>
+                  <div class="qty"><button type="button" onclick="changeQty(this,-1)">−</button><span>0</span><button type="button" onclick="changeQty(this,1)">+</button></div>
+                </div>
+                <div class="order-item" data-name="갈릭 바삭 순살" data-price="21500" data-qty="0">
+                  <div class="item-thumb">🧄</div>
+                  <div>
+                    <div class="item-name">갈릭 바삭 순살</div>
+                    <div class="item-desc">달콤짭짤 갈릭 · 먹기 좋은 순살</div>
+                    <div class="item-price">21,500원</div>
+                  </div>
+                  <div class="qty"><button type="button" onclick="changeQty(this,-1)">−</button><span>0</span><button type="button" onclick="changeQty(this,1)">+</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-panel">
+            <div class="panel-head">
+              <h2>배달 정보</h2>
+              <p>배달받을 주소와 요청 사항을 입력해주세요.</p>
+            </div>
+            <div class="panel-body">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="address">배달 주소</label>
+                  <input id="address" type="text" value="경기도 고양시 덕양구 행신동" />
+                </div>
+                <div class="field">
+                  <label for="phone">연락처</label>
+                  <input id="phone" type="text" placeholder="010-0000-0000" />
+                </div>
+                <div class="field">
+                  <label for="pay">결제 방법</label>
+                  <select id="pay">
+                    <option>만나서 카드 결제</option>
+                    <option>만나서 현금 결제</option>
+                    <option>온라인 결제 - 연결 안 됨</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="request">요청 사항</label>
+                  <textarea id="request" placeholder="예: 소스는 따로 주세요."></textarea>
+                </div>
+              </div>
+
+              <div class="receipt" aria-live="polite">
+                <div class="receipt-row"><span>상품 금액</span><strong id="productTotal">18,900원</strong></div>
+                <div class="receipt-row"><span>배달팁</span><strong id="deliveryFee">2,000원</strong></div>
+                <div class="receipt-row"><span>할인</span><strong id="discount">-1,000원</strong></div>
+                <div class="receipt-row total"><span>결제 예정 금액</span><strong id="grandTotal">19,900원</strong></div>
+              </div>
+
+              <button class="btn btn-dark" style="width:100%; margin-top:22px;" onclick="blockedOrder()">주문 요청하기</button>
+              <p class="small-notice">실제 주문·결제는 진행되지 않는 모방용 화면입니다.</p>
+              <span class="mock-badge">모방용 페이지</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-brand">행신 치킨 | Haengshin Chicken</div>
+      <p>오늘 저녁, 오늘 야식. 결국 치킨은 치킨이라서.</p>
+      <p class="disclaimer">본 페이지는 모방용 광고 페이지이며 실제 주문, 결제, 배달은 이루어지지 않습니다.</p>
+    </div>
+  </footer>
+
+  <button class="floating-order" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">주문하기</button>
+
+  <script>
+    const deliveryFee = 2000;
+    const discount = 1000;
+
+    function formatWon(value) {
+      return value.toLocaleString('ko-KR') + '원';
+    }
+
+    function updateTotal() {
+      const items = document.querySelectorAll('.order-item');
+      let productTotal = 0;
+      items.forEach(item => {
+        const price = Number(item.dataset.price);
+        const qty = Number(item.dataset.qty);
+        productTotal += price * qty;
+        item.querySelector('.qty span').textContent = qty;
+      });
+      const actualDelivery = productTotal > 0 ? deliveryFee : 0;
+      const actualDiscount = productTotal > 0 ? discount : 0;
+      const grandTotal = Math.max(0, productTotal + actualDelivery - actualDiscount);
+      document.getElementById('productTotal').textContent = formatWon(productTotal);
+      document.getElementById('deliveryFee').textContent = formatWon(actualDelivery);
+      document.getElementById('discount').textContent = '-' + formatWon(actualDiscount);
+      document.getElementById('grandTotal').textContent = formatWon(grandTotal);
+    }
+
+    function changeQty(button, amount) {
+      const item = button.closest('.order-item');
+      const current = Number(item.dataset.qty);
+      const next = Math.max(0, Math.min(9, current + amount));
+      item.dataset.qty = String(next);
+      updateTotal();
+    }
+
+    function blockedOrder() {
+      alert('모방용 주문 화면입니다. 실제 주문이나 결제는 진행되지 않습니다.');
+    }
+
+    updateTotal();
+  </script>
+</body>
+</html>
