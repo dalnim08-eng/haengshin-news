@@ -44,7 +44,7 @@
     .rich-editor h2{font-size:28px;line-height:1.25;margin:18px 0 10px}.rich-editor h3{font-size:22px;line-height:1.3;margin:16px 0 8px}.rich-editor blockquote{margin:12px 0;padding:10px 14px;border-left:4px solid #cbd5e1;background:#f8fafc;color:#475569}
     .article-body.rich-content{white-space:normal}.article-body.rich-content p{margin:0 0 14px}.article-body.rich-content h2{font-size:30px;line-height:1.28;margin:24px 0 12px}.article-body.rich-content h3{font-size:23px;line-height:1.3;margin:20px 0 10px}.article-body.rich-content blockquote{margin:16px 0;padding:12px 16px;border-left:4px solid #cbd5e1;background:#f8fafc;color:#475569}.article-body.rich-content ul,.article-body.rich-content ol{padding-left:24px}.article-body.rich-content a{color:#2563eb;text-decoration:underline}
     .hero.no-image{grid-template-columns:1fr}.hero.no-image .hero-body{padding:32px}.article-card.no-image{grid-template-columns:1fr}.article-card.no-image .thumb{display:none}
-    .ad-box{position:relative}.ad-close{position:absolute;right:8px;top:8px;width:24px;height:24px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.92);color:#334155;line-height:1;font-size:16px;display:flex;align-items:center;justify-content:center;z-index:3}.ad-close:hover{background:#111827;color:#fff}
+    .ad-box{position:relative}.ad-close{position:absolute;right:8px;top:8px;width:24px;height:24px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.92);color:#334155;line-height:1;font-size:16px;display:flex;align-items:center;justify-content:center;z-index:3}.ad-close:hover{background:#111827;color:#fff}.maintenance-card{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:18px;padding:42px 28px;text-align:center;max-width:720px;margin:56px auto}.maintenance-card h2{margin:0 0 12px;font-size:30px}.maintenance-card p{margin:6px 0;color:#4b5563}.maintenance-settings{border:1px solid var(--line);border-radius:16px;background:#f8fafc;padding:14px;margin:14px 0}.check-grid{display:flex;gap:12px;flex-wrap:wrap}.check-grid label{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;background:#fff;padding:8px 11px;font-size:14px}
     @media(max-width:1500px){.ad-rail{display:none!important}}
     @media(max-width:860px){.masthead{grid-template-columns:1fr;text-align:center}.head-actions{justify-content:center}.brand h1{font-size:40px}.layout{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.article-card{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.article-view h2{font-size:32px}}
   </style>
@@ -65,7 +65,7 @@
 
   <dialog id="editorRequestDialog"><div class="modal-head"><h2>기사 게시 계정 신청</h2><button class="close" data-close="editorRequestDialog">×</button></div><div class="modal-body"><p class="login-note">승인된 일반 회원만 게시 권한을 신청할 수 있습니다. 최종 관리자가 승인하기 전까지 기사 작성 권한은 부여되지 않습니다.</p><div class="form-grid"><div class="field"><label>이메일</label><input id="requestEmail" type="email" readonly></div><div class="field"><label>표시 이름</label><input id="requestNickname" maxlength="20" readonly></div><div class="field full"><label>신청 사유</label><textarea id="requestReason" placeholder="기사를 게시해야 하는 이유나 담당 역할을 적어 주세요."></textarea></div></div><div class="editor-actions"><button class="btn blue" id="submitEditorRequestBtn">게시 권한 신청</button></div></div></dialog>
 
-  <dialog id="accountAdminDialog"><div class="modal-head"><h2>계정 관리</h2><button class="close" data-close="accountAdminDialog">×</button></div><div class="modal-body"><p class="login-note">최종 관리자만 회원가입 승인과 게시 권한 승인을 관리할 수 있습니다.</p><div class="admin-list"><h3>회원가입 승인 대기</h3><div id="memberRequestList"></div></div><div class="admin-list"><h3>회원 목록</h3><div id="memberAccountList"></div></div><div class="admin-list"><h3>게시 권한 승인 대기</h3><div id="editorRequestList"></div></div><div class="admin-list"><h3>승인된 게시 계정</h3><div id="editorAccountList"></div></div></div></dialog>
+  <dialog id="accountAdminDialog"><div class="modal-head"><h2>계정 관리</h2><button class="close" data-close="accountAdminDialog">×</button></div><div class="modal-body"><p class="login-note">최종 관리자만 회원가입 승인과 게시 권한 승인, 점검 모드를 관리할 수 있습니다.</p><div class="admin-list"><h3>점검 모드</h3><div class="maintenance-settings"><label class="policy-check"><input type="checkbox" id="maintenanceEnabled"> 점검 모드 사용</label><p class="login-note">점검 중에는 최종 관리자는 항상 접속 가능하며, 아래에서 선택한 등급만 추가로 접속할 수 있습니다.</p><div class="check-grid"><label><input type="checkbox" class="maintenance-role" value="publisher"> 게시자</label><label><input type="checkbox" class="maintenance-role" value="editor"> 편집자</label><label><input type="checkbox" class="maintenance-role" value="member"> 승인 회원</label></div><div class="field" style="margin-top:12px"><label>점검 안내 문구</label><textarea id="maintenanceMessage" placeholder="현재 사이트 기능 점검 중입니다. 잠시 후 다시 접속해 주세요."></textarea></div><div class="editor-actions"><button class="btn blue" id="saveMaintenanceBtn">점검 설정 저장</button></div></div></div><div class="admin-list"><h3>회원가입 승인 대기</h3><div id="memberRequestList"></div></div><div class="admin-list"><h3>회원 목록</h3><div id="memberAccountList"></div></div><div class="admin-list"><h3>게시 권한 승인 대기</h3><div id="editorRequestList"></div></div><div class="admin-list"><h3>승인된 게시 계정</h3><div id="editorAccountList"></div></div></div></dialog>
 
   <dialog id="editorDialog"><div class="modal-head"><h2>기사 관리</h2><button class="close" data-close="editorDialog">×</button></div><div class="modal-body"><input type="hidden" id="articleId"><input type="hidden" id="currentImagePath"><input type="hidden" id="currentImageUrl"><input type="hidden" id="currentGalleryImages"><div class="form-grid"><div class="field full"><label>제목</label><input id="title" placeholder="기사 제목"></div><div class="field"><label>분야</label><select id="category"><option>공지</option><option>인사이트</option><option>활동</option><option>칼럼</option><option>종합</option></select></div><div class="field"><label>작성자</label><input id="author" placeholder="편집부"></div><div class="field full"><label>요약</label><textarea id="summary" placeholder="목록에 표시될 짧은 요약"></textarea></div><div class="field full"><label>본문</label><div class="rich-toolbar" id="bodyToolbar" aria-label="본문 편집 도구"><button type="button" data-cmd="bold"><b>B</b></button><button type="button" data-cmd="italic"><i>I</i></button><button type="button" data-cmd="underline"><u>U</u></button><select id="formatBlockSelect" title="문단 형식"><option value="P">본문</option><option value="H2">큰 제목</option><option value="H3">작은 제목</option><option value="BLOCKQUOTE">인용문</option></select><select id="fontSizeSelect" title="글씨 크기"><option value="">크기</option><option value="14px">14</option><option value="16px">16</option><option value="18px">18</option><option value="22px">22</option><option value="28px">28</option></select><input id="fontColorInput" type="color" title="글자색" value="#111827"><button type="button" data-cmd="justifyLeft">왼쪽</button><button type="button" data-cmd="justifyCenter">가운데</button><button type="button" data-cmd="insertUnorderedList">목록</button><button type="button" data-cmd="insertOrderedList">번호</button><button type="button" id="insertLinkBtn">링크</button><button type="button" data-cmd="removeFormat">서식 제거</button></div><div id="bodyEditor" class="rich-editor" contenteditable="true" data-placeholder="기사 본문을 입력하세요."></div><textarea id="body" class="hidden"></textarea></div><div class="field"><label>대표 사진</label><input id="imageFile" type="file" accept="image/*"><small style="color:#64748b">선택하지 않으면 기존 사진이 유지됩니다.</small></div><div class="field"><label>사진 미리보기</label><div class="preview" id="imagePreview">대표 사진 없음</div></div><div class="field full"><label>추가 사진</label><input id="galleryFiles" type="file" accept="image/*" multiple><small style="color:#64748b">여러 장을 한 번에 선택할 수 있습니다. 기존 추가 사진은 유지되고, 새로 선택한 사진은 뒤에 추가됩니다.</small></div><div class="field full"><label>추가 사진 미리보기</label><div class="gallery-preview" id="galleryPreview">추가 사진 없음</div><div class="editor-actions" style="justify-content:flex-start;margin-top:8px"><button type="button" class="btn red" id="clearGalleryBtn">추가 사진 전체 삭제</button></div></div><div class="field full"><label>사진 설명</label><input id="caption" placeholder="사진 설명 또는 출처"></div><div class="field"><label>상단 고정</label><select id="pinned"><option value="false">아니오</option><option value="true">예</option></select></div><div class="field"><label>고정 순서</label><input id="pinnedOrder" type="number" value="999" step="1"><small style="color:#64748b">숫자가 낮을수록 위에 표시됩니다.</small></div></div><div class="editor-actions"><button class="btn" id="newArticleBtn">새 글</button><button class="btn blue" id="saveArticleBtn">저장</button></div><div class="admin-list"><h3>등록된 기사</h3><div id="adminList"></div></div></div></dialog>
 
@@ -87,7 +87,7 @@
     const client = window.supabase.createClient(CONFIG.supabaseUrl, CONFIG.supabaseAnonKey, {
       auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
     });
-    let state = { articles: [], category: '종합', query: '', session: null, isEditor: false, editorRole: null, editorRecord: null, isOwner: false, profile: null, memberRequest: null, isApprovedMember: false, comments: [], activeArticleId: null, policyNotice: null, policyShown: false, memberRequests: [], editorRequests: [], editorAccounts: [], ads: [] };
+    let state = { articles: [], category: '종합', query: '', session: null, isEditor: false, editorRole: null, editorRecord: null, isOwner: false, profile: null, memberRequest: null, isApprovedMember: false, comments: [], activeArticleId: null, policyNotice: null, policyShown: false, maintenanceSettings: { enabled:false, allowedRoles:[], message:'현재 사이트 기능 점검 중입니다. 잠시 후 다시 접속해 주세요.' }, memberRequests: [], editorRequests: [], editorAccounts: [], ads: [] };
     const fmtDate = (v)=> new Intl.DateTimeFormat('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).format(new Date(v));
     const escapeHtml = (s='') => String(s).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 
@@ -250,6 +250,74 @@
       closeDialog('policyEditDialog');
       showStatus('운영 방침이 저장되었습니다.','ok');
     }
+    function defaultMaintenanceSettings(){
+      return { enabled:false, allowedRoles:[], message:'현재 사이트 기능 점검 중입니다. 잠시 후 다시 접속해 주세요.' };
+    }
+    async function loadMaintenanceSettings(){
+      const fallback = defaultMaintenanceSettings();
+      const { data, error } = await client
+        .from('site_settings')
+        .select('key, value, updated_at')
+        .eq('key', 'maintenance_settings')
+        .maybeSingle();
+      if(error){ console.warn('maintenance settings load failed:', error); state.maintenanceSettings = fallback; return; }
+      if(!data?.value){ state.maintenanceSettings = fallback; return; }
+      try{
+        const parsed = typeof data.value === 'string' ? JSON.parse(data.value) : data.value;
+        state.maintenanceSettings = {
+          enabled: !!parsed.enabled,
+          allowedRoles: Array.isArray(parsed.allowedRoles) ? parsed.allowedRoles : [],
+          message: String(parsed.message || fallback.message)
+        };
+      } catch(e){
+        console.warn('maintenance settings parse failed:', e);
+        state.maintenanceSettings = fallback;
+      }
+    }
+    function hasMaintenanceAccess(){
+      const ms = state.maintenanceSettings || defaultMaintenanceSettings();
+      if(!ms.enabled) return true;
+      if(state.isOwner) return true;
+      if(!state.session) return false;
+      const allowed = new Set(ms.allowedRoles || []);
+      if(state.editorRole && allowed.has(state.editorRole)) return true;
+      if(state.isApprovedMember && allowed.has('member')) return true;
+      return false;
+    }
+    function showMaintenancePage(){
+      updateSideRailAds();
+      $('leftAdRail')?.classList.add('hidden');
+      $('rightAdRail')?.classList.add('hidden');
+      const msg = state.maintenanceSettings?.message || defaultMaintenanceSettings().message;
+      $('content').innerHTML = `<section class="maintenance-card"><h2>haengshin news 점검 중</h2><p>${escapeHtml(msg)}</p><p class="login-note">점검 중 접속이 허용된 계정만 사이트를 이용할 수 있습니다.</p>${state.session?'<button class="btn" id="maintenanceLogoutBtn">로그아웃</button>':'<button class="btn blue" id="maintenanceLoginBtn">로그인</button>'}</section>`;
+      const loginBtn = $('maintenanceLoginBtn'); if(loginBtn) loginBtn.onclick=()=>openDialog('loginDialog');
+      const logoutBtn = $('maintenanceLogoutBtn'); if(logoutBtn) logoutBtn.onclick=async()=>{ await client.auth.signOut(); };
+    }
+    function applyMaintenanceSettingsToForm(){
+      if(!$('maintenanceEnabled')) return;
+      const ms = state.maintenanceSettings || defaultMaintenanceSettings();
+      $('maintenanceEnabled').checked = !!ms.enabled;
+      $('maintenanceMessage').value = ms.message || defaultMaintenanceSettings().message;
+      document.querySelectorAll('.maintenance-role').forEach(input=>{ input.checked = (ms.allowedRoles || []).includes(input.value); });
+    }
+    async function saveMaintenanceSettings(){
+      if(!state.isOwner){ showStatus('최종 관리자만 점검 설정을 변경할 수 있습니다.','err'); return; }
+      const enabled = !!$('maintenanceEnabled')?.checked;
+      const allowedRoles = Array.from(document.querySelectorAll('.maintenance-role:checked')).map(input=>input.value);
+      const message = ($('maintenanceMessage')?.value || '').trim() || defaultMaintenanceSettings().message;
+      const payload = { enabled, allowedRoles, message };
+      const { error } = await client.from('site_settings').upsert({
+        key: 'maintenance_settings',
+        value: JSON.stringify(payload),
+        updated_at: new Date().toISOString(),
+        updated_by: state.session?.user?.id || null
+      }, { onConflict: 'key' });
+      if(error){ showStatus('점검 설정 저장 실패: '+error.message,'err'); return; }
+      state.maintenanceSettings = payload;
+      applyMaintenanceSettingsToForm();
+      showStatus('점검 설정이 저장되었습니다.','ok');
+      render();
+    }
 
     function showStatus(msg, type=''){ const el=$('status'); el.textContent=msg; el.className='status show '+type; setTimeout(()=>el.className='status',3200); }
     function openDialog(id){ $(id).showModal(); }
@@ -270,6 +338,7 @@
         await loadProfile();
         await loadMemberStatus();
         updateAuthUI();
+        render();
         if(state.activeArticleId) renderComments(state.activeArticleId);
         if(event === 'SIGNED_IN') cleanAuthHash();
       });
@@ -527,6 +596,11 @@
     async function loadArticles(){ const { data, error } = await client.from('articles').select('*').order('pinned',{ascending:false}).order('pinned_order',{ascending:true}).order('created_at',{ascending:false}); if(error){ console.error(error); showStatus('기사 목록을 불러오지 못했습니다. RLS 정책과 테이블 이름을 확인하세요.','err'); return; } state.articles=data||[]; render(); }
     function render(){
       buildNav();
+      if(!hasMaintenanceAccess()){
+        showMaintenancePage();
+        renderAdminList();
+        return;
+      }
       updateSideRailAds();
       const items=filteredArticles();
       const content=$('content');
@@ -808,9 +882,11 @@
     async function openAccountAdmin(){
       if(!state.isOwner){ showStatus('최종 관리자만 계정 관리가 가능합니다.','err'); return; }
       await loadAccountAdminData();
+      applyMaintenanceSettingsToForm();
       openDialog('accountAdminDialog');
     }
     function renderAccountAdmin(){
+      applyMaintenanceSettingsToForm();
       const memReqBox = $('memberRequestList');
       const memAccBox = $('memberAccountList');
       const reqBox = $('editorRequestList');
@@ -919,7 +995,7 @@
       $('bodyEditor').addEventListener('input', syncBodyFromEditor);
       $('bodyEditor').addEventListener('blur', syncBodyFromEditor);
     }
-    (async function init(){ bind(); buildNav(); await loadSession(); await loadPolicyNotice(); await loadAds(); await loadArticles(); maybeShowPolicy(); })();
+    (async function init(){ bind(); buildNav(); await loadSession(); await loadPolicyNotice(); await loadMaintenanceSettings(); await loadAds(); await loadArticles(); maybeShowPolicy(); })();
   </script>
 </body>
 </html>
