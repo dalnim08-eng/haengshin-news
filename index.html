@@ -60,17 +60,17 @@
   <aside id="rightAdRail" class="ad-rail ad-rail-right hidden" aria-label="오른쪽 시범 광고"></aside>
   <footer class="footer"><div class="footer-inner"><span>© haengshin news</span><span>소식과 활동 기록을 공유하는 뉴스형 웹사이트</span></div></footer>
 
-  <dialog id="loginDialog"><div class="modal-head"><h2>계정</h2><button class="close" data-close="loginDialog">×</button></div><div class="modal-body"><div class="form-grid"><div class="field"><label>로그인 이메일</label><input id="loginEmail" type="email" placeholder="user@example.com"></div><div class="field"><label>로그인 비밀번호</label><input id="loginPassword" type="password" placeholder="비밀번호"></div></div><div class="editor-actions"><button class="btn blue" id="signinBtn">로그인</button></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h3 style="margin:0 0 10px">회원가입 신청</h3><div class="form-grid"><div class="field"><label>이메일</label><input id="signupEmail" type="email" placeholder="user@example.com"></div><div class="field"><label>비밀번호</label><input id="signupPassword" type="password" placeholder="6자 이상 비밀번호"></div><div class="field"><label>비밀번호 확인</label><input id="signupPassword2" type="password" placeholder="비밀번호 확인"></div><div class="field"><label>닉네임</label><input id="signupNickname" maxlength="20" placeholder="2~20자 닉네임"></div></div><p class="login-note">가입 신청 후 관리자가 승인해야 댓글 작성과 게시 계정 신청이 가능합니다. 이메일 인증은 사용하지 않으므로 이메일 주소는 본인이 실제로 사용하는 주소를 입력해 주세요.</p><div class="editor-actions"><button class="btn" id="signupBtn">회원가입 신청</button></div></div></dialog>
+  <dialog id="loginDialog"><div class="modal-head"><h2>계정</h2><button class="close" data-close="loginDialog">×</button></div><div class="modal-body"><div class="form-grid"><div class="field"><label>로그인 이메일</label><input id="loginEmail" type="email" placeholder="user@example.com"></div><div class="field"><label>로그인 비밀번호</label><input id="loginPassword" type="password" placeholder="비밀번호"></div></div><div class="editor-actions"><button class="btn blue" id="signinBtn">로그인</button></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h3 style="margin:0 0 10px">회원가입 신청</h3><div class="form-grid"><div class="field"><label>이메일</label><input id="signupEmail" type="email" placeholder="user@example.com"></div><div class="field"><label>비밀번호</label><input id="signupPassword" type="password" placeholder="6자 이상 비밀번호"></div><div class="field"><label>비밀번호 확인</label><input id="signupPassword2" type="password" placeholder="비밀번호 확인"></div><div class="field"><label>닉네임</label><input id="signupNickname" maxlength="20" placeholder="2~20자 닉네임"></div></div><p class="login-note">가입 신청 후 최종 관리자가 승인해야 댓글 작성과 게시 계정 신청이 가능합니다. 이메일 인증은 사용하지 않으므로 이메일 주소는 본인이 실제로 사용하는 주소를 입력해 주세요.</p><div class="editor-actions"><button class="btn" id="signupBtn">회원가입 신청</button></div></div></dialog>
 
   <dialog id="profileDialog"><div class="modal-head"><h2>닉네임 설정</h2><button class="close" data-close="profileDialog">×</button></div><div class="modal-body"><div class="field"><label>닉네임</label><input id="nicknameInput" maxlength="20" placeholder="2~20자 닉네임"></div><p class="login-note">댓글에는 이메일 대신 닉네임이 표시됩니다. 공백만 있는 닉네임은 사용할 수 없습니다.</p><div class="editor-actions"><button class="btn blue" id="saveNicknameBtn">닉네임 저장</button></div></div></dialog>
 
-  <dialog id="editorRequestDialog"><div class="modal-head"><h2>기사 게시 계정 신청</h2><button class="close" data-close="editorRequestDialog">×</button></div><div class="modal-body"><p class="login-note">승인된 일반 회원만 게시 권한을 신청할 수 있습니다. 관리자가 승인하기 전까지 기사 작성 권한은 부여되지 않습니다.</p><div class="form-grid"><div class="field"><label>이메일</label><input id="requestEmail" type="email" readonly></div><div class="field"><label>표시 이름</label><input id="requestNickname" maxlength="20" readonly></div><div class="field full"><label>신청 사유</label><textarea id="requestReason" placeholder="기사를 게시해야 하는 이유나 담당 역할을 적어 주세요."></textarea></div></div><div class="editor-actions"><button class="btn blue" id="submitEditorRequestBtn">게시 권한 신청</button></div></div></dialog>
+  <dialog id="editorRequestDialog"><div class="modal-head"><h2>기사 게시 계정 신청</h2><button class="close" data-close="editorRequestDialog">×</button></div><div class="modal-body"><p class="login-note">승인된 일반 회원만 게시 권한을 신청할 수 있습니다. 최종 관리자가 승인하기 전까지 기사 작성 권한은 부여되지 않습니다.</p><div class="form-grid"><div class="field"><label>이메일</label><input id="requestEmail" type="email" readonly></div><div class="field"><label>표시 이름</label><input id="requestNickname" maxlength="20" readonly></div><div class="field full"><label>신청 사유</label><textarea id="requestReason" placeholder="기사를 게시해야 하는 이유나 담당 역할을 적어 주세요."></textarea></div></div><div class="editor-actions"><button class="btn blue" id="submitEditorRequestBtn">게시 권한 신청</button></div></div></dialog>
 
-  <dialog id="accountAdminDialog"><div class="modal-head"><h2>계정 관리</h2><button class="close" data-close="accountAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자만 회원가입 승인과 게시 권한 승인, 점검 모드를 관리할 수 있습니다.</p><div class="admin-list"><h3>점검 모드</h3><div class="maintenance-settings"><label class="policy-check"><input type="checkbox" id="maintenanceEnabled"> 점검 모드 사용</label><p class="login-note">점검 중에는 최종 관리자는 항상 접속 가능하며, 아래에서 선택한 등급만 추가로 접속할 수 있습니다.</p><div class="check-grid"><label><input type="checkbox" class="maintenance-role" value="publisher"> 게시자</label><label><input type="checkbox" class="maintenance-role" value="editor"> 편집자</label><label><input type="checkbox" class="maintenance-role" value="member"> 승인 회원</label></div><div class="field" style="margin-top:12px"><label>점검 안내 문구</label><textarea id="maintenanceMessage" placeholder="현재 사이트 기능 점검 중입니다. 잠시 후 다시 접속해 주세요."></textarea></div><div class="editor-actions"><button class="btn blue" id="saveMaintenanceBtn">점검 설정 저장</button></div></div></div><div class="admin-list"><h3>회원가입 승인 대기</h3><div id="memberRequestList"></div></div><div class="admin-list"><h3>회원 목록</h3><div id="memberAccountList"></div></div><div class="admin-list"><h3>게시 권한 승인 대기</h3><div id="editorRequestList"></div></div><div class="admin-list"><h3>승인된 게시 계정</h3><div id="editorAccountList"></div></div></div></dialog>
+  <dialog id="accountAdminDialog"><div class="modal-head"><h2>계정 관리</h2><button class="close" data-close="accountAdminDialog">×</button></div><div class="modal-body"><p class="login-note">최종 관리자만 회원가입 승인과 게시 권한 승인, 점검 모드를 관리할 수 있습니다.</p><div class="admin-list"><h3>점검 모드</h3><div class="maintenance-settings"><label class="policy-check"><input type="checkbox" id="maintenanceEnabled"> 점검 모드 사용</label><p class="login-note">점검 중에는 최종 관리자는 항상 접속 가능하며, 아래에서 선택한 등급만 추가로 접속할 수 있습니다.</p><div class="check-grid"><label><input type="checkbox" class="maintenance-role" value="publisher"> 게시자</label><label><input type="checkbox" class="maintenance-role" value="editor"> 편집자</label><label><input type="checkbox" class="maintenance-role" value="member"> 승인 회원</label></div><div class="field" style="margin-top:12px"><label>점검 안내 문구</label><textarea id="maintenanceMessage" placeholder="현재 사이트 기능 점검 중입니다. 잠시 후 다시 접속해 주세요."></textarea></div><div class="editor-actions"><button class="btn blue" id="saveMaintenanceBtn">점검 설정 저장</button></div></div></div><div class="admin-list"><h3>회원가입 승인 대기</h3><div id="memberRequestList"></div></div><div class="admin-list"><h3>회원 목록</h3><div id="memberAccountList"></div></div><div class="admin-list"><h3>게시 권한 승인 대기</h3><div id="editorRequestList"></div></div><div class="admin-list"><h3>승인된 게시 계정</h3><div id="editorAccountList"></div></div></div></dialog>
 
   <dialog id="editorDialog"><div class="modal-head"><h2>기사 관리</h2><button class="close" data-close="editorDialog">×</button></div><div class="modal-body"><input type="hidden" id="articleId"><input type="hidden" id="currentImagePath"><input type="hidden" id="currentImageUrl"><input type="hidden" id="currentGalleryImages"><div class="form-grid"><div class="field full"><label>제목</label><input id="title" placeholder="기사 제목"></div><div class="field"><label>분야</label><select id="category"><option>공지</option><option>인사이트</option><option>활동</option><option>칼럼</option><option>종합</option></select></div><div class="field"><label>작성자</label><input id="author" placeholder="편집부"></div><div class="field full"><label>요약</label><textarea id="summary" placeholder="목록에 표시될 짧은 요약"></textarea></div><div class="field full"><label>본문</label><div class="rich-toolbar" id="bodyToolbar" aria-label="본문 편집 도구"><button type="button" data-cmd="bold"><b>B</b></button><button type="button" data-cmd="italic"><i>I</i></button><button type="button" data-cmd="underline"><u>U</u></button><select id="formatBlockSelect" title="문단 형식"><option value="P">본문</option><option value="H2">큰 제목</option><option value="H3">작은 제목</option><option value="BLOCKQUOTE">인용문</option></select><select id="fontSizeSelect" title="글씨 크기"><option value="">크기</option><option value="14px">14</option><option value="16px">16</option><option value="18px">18</option><option value="22px">22</option><option value="28px">28</option></select><input id="fontColorInput" type="color" title="글자색" value="#111827"><button type="button" data-cmd="justifyLeft">왼쪽</button><button type="button" data-cmd="justifyCenter">가운데</button><button type="button" data-cmd="insertUnorderedList">목록</button><button type="button" data-cmd="insertOrderedList">번호</button><button type="button" id="insertLinkBtn">링크</button><button type="button" data-cmd="removeFormat">서식 제거</button></div><div id="bodyEditor" class="rich-editor" contenteditable="true" data-placeholder="기사 본문을 입력하세요."></div><textarea id="body" class="hidden"></textarea></div><div class="field"><label>대표 사진</label><input id="imageFile" type="file" accept="image/*"><small style="color:#64748b">선택하지 않으면 기존 사진이 유지됩니다.</small></div><div class="field"><label>사진 미리보기</label><div class="preview" id="imagePreview">대표 사진 없음</div></div><div class="field full"><label>추가 사진</label><input id="galleryFiles" type="file" accept="image/*" multiple><small style="color:#64748b">여러 장을 한 번에 선택할 수 있습니다. 기존 추가 사진은 유지되고, 새로 선택한 사진은 뒤에 추가됩니다. 미리보기 아래 입력칸에서 사진별 설명을 적을 수 있습니다.</small></div><div class="field full"><label>추가 사진 미리보기</label><div class="gallery-preview" id="galleryPreview">추가 사진 없음</div><div class="editor-actions" style="justify-content:flex-start;margin-top:8px"><button type="button" class="btn red" id="clearGalleryBtn">추가 사진 전체 삭제</button></div></div><div class="field full"><label>대표 사진 설명</label><input id="caption" placeholder="대표 사진 설명 또는 출처"></div><div class="field"><label>상단 고정</label><select id="pinned"><option value="false">아니오</option><option value="true">예</option></select></div><div class="field"><label>고정 순서</label><input id="pinnedOrder" type="number" value="999" step="1"><small style="color:#64748b">숫자가 낮을수록 위에 표시됩니다.</small></div></div><div class="editor-actions"><button class="btn" id="newArticleBtn">새 글</button><button class="btn blue" id="saveArticleBtn">저장</button></div><div class="admin-list"><h3>등록된 기사</h3><div id="adminList"></div></div></div></dialog>
 
-  <dialog id="adAdminDialog"><div class="modal-head"><h2>광고 관리</h2><button class="close" data-close="adAdminDialog">×</button></div><div class="modal-body"><input type="hidden" id="adId"><input type="hidden" id="currentAdImagePath"><input type="hidden" id="currentAdImageUrl"><p class="login-note">관리자만 가상 광고를 등록·수정·삭제할 수 있습니다. 등록한 광고 이미지는 사이드바, 좌우 고정 여백, 기사 하단 중 선택한 위치에 표시되며, 링크를 넣으면 이미지 클릭 시 해당 주소로 이동합니다.</p><div class="form-grid"><div class="field"><label>광고 제목</label><input id="adTitle" placeholder="예: 행신 스터디 카페"></div><div class="field"><label>클릭 링크</label><input id="adLinkUrl" placeholder="https://example.com 또는 빈칸"></div><div class="field"><label>표시 위치</label><select id="adPlacement"><option value="sidebar">오른쪽 사이드바</option><option value="left_rail">왼쪽 여백</option><option value="right_rail">오른쪽 여백</option><option value="article_bottom">기사 하단 - 작게 제한</option></select></div><div class="field"><label>표시 순서</label><input id="adSortOrder" type="number" value="0" step="1"></div><div class="field"><label>활성 상태</label><select id="adActive"><option value="true">표시</option><option value="false">숨김</option></select></div><div class="field"><label>광고 이미지</label><input id="adImageFile" type="file" accept="image/*"><small style="color:#64748b">새 이미지를 선택하지 않으면 기존 이미지가 유지됩니다.</small></div><div class="field full"><label>광고 설명</label><input id="adAltText" placeholder="이미지 대체 텍스트 또는 설명"></div><div class="field full"><label>미리보기</label><div class="ad-admin-preview" id="adImagePreview">광고 이미지 없음</div></div></div><div class="editor-actions"><button class="btn" id="newAdBtn">새 광고</button><button class="btn blue" id="saveAdBtn">광고 저장</button></div><div class="admin-list"><h3>등록된 광고</h3><div id="adAdminList"></div></div></div></dialog>
+  <dialog id="adAdminDialog"><div class="modal-head"><h2>광고 관리</h2><button class="close" data-close="adAdminDialog">×</button></div><div class="modal-body"><input type="hidden" id="adId"><input type="hidden" id="currentAdImagePath"><input type="hidden" id="currentAdImageUrl"><p class="login-note">최종 관리자만 가상 광고를 등록·수정·삭제할 수 있습니다. 등록한 광고 이미지는 사이드바, 좌우 고정 여백, 기사 하단 중 선택한 위치에 표시되며, 링크를 넣으면 이미지 클릭 시 해당 주소로 이동합니다.</p><div class="form-grid"><div class="field"><label>광고 제목</label><input id="adTitle" placeholder="예: 행신 스터디 카페"></div><div class="field"><label>클릭 링크</label><input id="adLinkUrl" placeholder="https://example.com 또는 빈칸"></div><div class="field"><label>표시 위치</label><select id="adPlacement"><option value="sidebar">오른쪽 사이드바</option><option value="left_rail">왼쪽 여백</option><option value="right_rail">오른쪽 여백</option><option value="article_bottom">기사 하단 - 작게 제한</option></select></div><div class="field"><label>표시 순서</label><input id="adSortOrder" type="number" value="0" step="1"></div><div class="field"><label>활성 상태</label><select id="adActive"><option value="true">표시</option><option value="false">숨김</option></select></div><div class="field"><label>광고 이미지</label><input id="adImageFile" type="file" accept="image/*"><small style="color:#64748b">새 이미지를 선택하지 않으면 기존 이미지가 유지됩니다.</small></div><div class="field full"><label>광고 설명</label><input id="adAltText" placeholder="이미지 대체 텍스트 또는 설명"></div><div class="field full"><label>미리보기</label><div class="ad-admin-preview" id="adImagePreview">광고 이미지 없음</div></div></div><div class="editor-actions"><button class="btn" id="newAdBtn">새 광고</button><button class="btn blue" id="saveAdBtn">광고 저장</button></div><div class="admin-list"><h3>등록된 광고</h3><div id="adAdminList"></div></div></div></dialog>
 
   <dialog id="policyDialog"><div class="modal-head"><h2>운영 방침</h2><button class="close" data-close="policyDialog">×</button></div><div class="modal-body"><div class="policy-view" id="policyTextView">운영 방침을 불러오는 중입니다.</div><div class="policy-options"><label class="policy-check"><input type="checkbox" id="policyDontShowToday"> 오늘 하루 안 보기</label><button class="btn blue" id="policyCloseBtn">확인</button></div></div></dialog>
 
@@ -78,9 +78,9 @@
 
 
 
-  <dialog id="suggestionDialog"><div class="modal-head"><h2>건의함</h2><button class="close" data-close="suggestionDialog">×</button></div><div class="modal-body"><p class="login-note">사이트 이용 중 불편한 점이나 개선 의견을 관리자에게 직접 보낼 수 있습니다. 작성 내용은 관리자만 확인합니다.</p><div class="field"><label>건의 제목</label><input id="suggestionTitle" maxlength="80" placeholder="건의 제목을 입력하세요."></div><div class="field"><label>건의 내용</label><textarea id="suggestionBody" maxlength="2000" placeholder="건의 내용을 입력하세요. 최대 2000자"></textarea></div><div class="editor-actions"><button class="btn blue" id="submitSuggestionBtn">건의 보내기</button></div></div></dialog>
+  <dialog id="suggestionDialog"><div class="modal-head"><h2>건의함</h2><button class="close" data-close="suggestionDialog">×</button></div><div class="modal-body"><p class="login-note">사이트 이용 중 불편한 점이나 개선 의견을 최고관리자에게 직접 보낼 수 있습니다. 작성 내용은 최고관리자만 확인합니다.</p><div class="field"><label>건의 제목</label><input id="suggestionTitle" maxlength="80" placeholder="건의 제목을 입력하세요."></div><div class="field"><label>건의 내용</label><textarea id="suggestionBody" maxlength="2000" placeholder="건의 내용을 입력하세요. 최대 2000자"></textarea></div><div class="editor-actions"><button class="btn blue" id="submitSuggestionBtn">건의 보내기</button></div></div></dialog>
 
-  <dialog id="inboxAdminDialog"><div class="modal-head"><h2>제보·건의 관리</h2><button class="close" data-close="inboxAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자만 뉴스제보와 건의함 내용을 확인하고 처리할 수 있습니다.</p><div class="admin-list"><h3>뉴스제보 목록</h3><div id="newsTipAdminList"></div></div><div class="admin-list"><h3>건의함 목록</h3><div id="suggestionAdminList"></div></div></div></dialog>
+  <dialog id="inboxAdminDialog"><div class="modal-head"><h2>제보·건의 관리</h2><button class="close" data-close="inboxAdminDialog">×</button></div><div class="modal-body"><p class="login-note">최고관리자만 뉴스제보와 건의함 내용을 확인하고 처리할 수 있습니다.</p><div class="admin-list"><h3>뉴스제보 목록</h3><div id="newsTipAdminList"></div></div><div class="admin-list"><h3>건의함 목록</h3><div id="suggestionAdminList"></div></div></div></dialog>
 
   <dialog id="imageViewerDialog" class="image-viewer-dialog"><div class="image-viewer-shell"><button class="image-viewer-close" id="imageViewerCloseBtn" aria-label="사진 크게 보기 닫기">×</button><img id="imageViewerImg" alt="크게 보기"><div class="image-viewer-caption" id="imageViewerCaption"></div></div></dialog>
   <div class="status" id="status"></div>
@@ -252,12 +252,12 @@
       closeDialog('policyDialog');
     }
     async function openPolicyEditor(){
-      if(!state.isOwner){ showStatus('관리자만 운영 방침을 수정할 수 있습니다.','err'); return; }
+      if(!state.isOwner){ showStatus('최종 관리자만 운영 방침을 수정할 수 있습니다.','err'); return; }
       $('policyEditText').value = state.policyNotice?.value || DEFAULT_POLICY;
       openDialog('policyEditDialog');
     }
     async function savePolicyNotice(){
-      if(!state.isOwner){ showStatus('관리자만 운영 방침을 수정할 수 있습니다.','err'); return; }
+      if(!state.isOwner){ showStatus('최종 관리자만 운영 방침을 수정할 수 있습니다.','err'); return; }
       const value = $('policyEditText').value.trim();
       if(!value){ showStatus('운영 방침 내용을 입력하세요.','err'); return; }
       const { error } = await client.from('site_settings').upsert({
@@ -322,7 +322,7 @@
       document.querySelectorAll('.maintenance-role').forEach(input=>{ input.checked = (ms.allowedRoles || []).includes(input.value); });
     }
     async function saveMaintenanceSettings(){
-      if(!state.isOwner){ showStatus('관리자만 점검 설정을 변경할 수 있습니다.','err'); return; }
+      if(!state.isOwner){ showStatus('최종 관리자만 점검 설정을 변경할 수 있습니다.','err'); return; }
       const enabled = !!$('maintenanceEnabled')?.checked;
       const allowedRoles = Array.from(document.querySelectorAll('.maintenance-role:checked')).map(input=>input.value);
       const message = ($('maintenanceMessage')?.value || '').trim() || defaultMaintenanceSettings().message;
@@ -489,9 +489,9 @@
       $('memberStatusTop').classList.toggle('hidden', !loggedIn);
       if(loggedIn){
         $('nicknameInput').value = state.profile?.nickname || state.memberRequest?.nickname || '';
-        $('memberStatusTop').textContent = state.isOwner ? '관리자' : memberStatusLabel(state.memberRequest?.status);
+        $('memberStatusTop').textContent = state.isOwner ? '최종 관리자' : memberStatusLabel(state.memberRequest?.status);
       }
-      if(loggedIn && state.isOwner) showStatus('관리자 권한으로 로그인되었습니다.','ok');
+      if(loggedIn && state.isOwner) showStatus('최종 관리자 권한으로 로그인되었습니다.','ok');
       else if(loggedIn && state.isEditor) showStatus('기사 게시 계정으로 로그인되었습니다.','ok');
       else if(loggedIn && state.memberRequest?.status === 'pending') showStatus('회원가입 승인 대기 중입니다. 승인 전에는 댓글과 게시 신청을 사용할 수 없습니다.','');
       else if(loggedIn && state.memberRequest?.status === 'blocked') showStatus('차단된 계정입니다. 관리자에게 문의하세요.','err');
@@ -586,7 +586,7 @@
       $('adImagePreview').innerHTML=ad.image_url?`<img src="${escapeHtml(ad.image_url)}" alt="">`:'광고 이미지 없음';
     }
     async function saveAd(){
-      if(!state.isOwner){ showStatus('관리자만 광고를 관리할 수 있습니다.','err'); return; }
+      if(!state.isOwner){ showStatus('최종 관리자만 광고를 관리할 수 있습니다.','err'); return; }
       const title=$('adTitle').value.trim();
       if(!title){ showStatus('광고 제목을 입력하세요.','err'); return; }
       try{
@@ -620,7 +620,7 @@
       finally{ $('saveAdBtn').disabled=false; }
     }
     async function deleteAd(id){
-      if(!state.isOwner){ showStatus('관리자만 광고를 삭제할 수 있습니다.','err'); return; }
+      if(!state.isOwner){ showStatus('최종 관리자만 광고를 삭제할 수 있습니다.','err'); return; }
       if(!confirm('이 광고를 삭제하시겠습니까?')) return;
       const { error } = await client.from('advertisements').delete().eq('id',id);
       if(error){ showStatus('광고 삭제 실패: '+error.message,'err'); return; }
@@ -642,7 +642,7 @@
       box.querySelectorAll('[data-ad-del]').forEach(b=>b.onclick=()=>deleteAd(b.dataset.adDel));
     }
     function openAdAdmin(){
-      if(!state.isOwner){ showStatus('관리자만 광고 관리가 가능합니다.','err'); return; }
+      if(!state.isOwner){ showStatus('최종 관리자만 광고 관리가 가능합니다.','err'); return; }
       renderAdAdminList();
       openDialog('adAdminDialog');
     }
@@ -670,7 +670,7 @@
       if(!state.session){ content.innerHTML = `<div class="empty"><strong>로그인이 필요합니다</strong><span>뉴스제보 게시판은 로그인한 회원만 이용할 수 있습니다.</span><div style="margin-top:14px"><button class="btn blue" id="newsTipLoginBtn">로그인</button></div></div>`; $('newsTipLoginBtn').onclick=()=>openDialog('loginDialog'); return; }
       if(!canUseMemberFeatures()){ content.innerHTML = `<div class="empty"><strong>회원 승인 후 이용할 수 있습니다</strong><span>현재 상태: ${escapeHtml(memberStatusLabel(state.memberRequest?.status))}</span></div>`; return; }
       const list = state.newsTips || [];
-      content.innerHTML = `<div class="layout"><section class="maincol"><section class="special-board"><h2>뉴스제보</h2><p class="desc">주변 소식, 사건, 행사, 알릴 만한 내용을 제보할 수 있습니다. 로그인 회원 전체가 작성할 수 있으며, 제보 내용은 기사화 검토에 활용됩니다.</p><div class="tip-form"><div class="field"><label>제보 제목</label><input id="newsTipTitle" maxlength="100" placeholder="제보 제목을 입력하세요."></div><div class="field"><label>제보 내용</label><textarea id="newsTipBody" maxlength="3000" placeholder="언제, 어디서, 누가, 무엇을 했는지 중심으로 작성해 주세요. 최대 3000자"></textarea></div><div class="editor-actions"><button class="btn blue" id="submitNewsTipBtn">뉴스제보 등록</button></div></div><div id="newsTipList">${list.length ? list.map(t=>`<article class="tip-card"><div class="meta"><span class="tip-status">${escapeHtml(newsTipStatusLabel(t.status))}</span><span>${escapeHtml(t.nickname || t.email || '익명')}</span><span>${fmtDate(t.created_at)}</span></div><h3>${escapeHtml(t.title || '제목 없음')}</h3><p>${escapeHtml(t.body || '')}</p></article>`).join('') : '<div class="comment-note">아직 등록된 뉴스제보가 없습니다.</div>'}</div></section></section><aside class="sidecol"><div class="panel"><h3>뉴스제보 안내</h3><p class="login-note">제보는 기사 작성 회원 또는 관리자가 확인할 수 있습니다. 개인정보나 확인되지 않은 비방성 내용은 작성하지 말아 주세요.</p></div>${renderSidebarAds()}</aside></div>`;
+      content.innerHTML = `<div class="layout"><section class="maincol"><section class="special-board"><h2>뉴스제보</h2><p class="desc">주변 소식, 사건, 행사, 알릴 만한 내용을 제보할 수 있습니다. 로그인 회원 전체가 작성할 수 있으며, 제보 내용은 기사화 검토에 활용됩니다.</p><div class="tip-form"><div class="field"><label>제보 제목</label><input id="newsTipTitle" maxlength="100" placeholder="제보 제목을 입력하세요."></div><div class="field"><label>제보 내용</label><textarea id="newsTipBody" maxlength="3000" placeholder="언제, 어디서, 누가, 무엇을 했는지 중심으로 작성해 주세요. 최대 3000자"></textarea></div><div class="editor-actions"><button class="btn blue" id="submitNewsTipBtn">뉴스제보 등록</button></div></div><div id="newsTipList">${list.length ? list.map(t=>`<article class="tip-card"><div class="meta"><span class="tip-status">${escapeHtml(newsTipStatusLabel(t.status))}</span><span>${escapeHtml(t.nickname || t.email || '익명')}</span><span>${fmtDate(t.created_at)}</span></div><h3>${escapeHtml(t.title || '제목 없음')}</h3><p>${escapeHtml(t.body || '')}</p></article>`).join('') : '<div class="comment-note">아직 등록된 뉴스제보가 없습니다.</div>'}</div></section></section><aside class="sidecol"><div class="panel"><h3>뉴스제보 안내</h3><p class="login-note">제보는 기사 작성 회원 또는 최고관리자가 확인할 수 있습니다. 개인정보나 확인되지 않은 비방성 내용은 작성하지 말아 주세요.</p></div>${renderSidebarAds()}</aside></div>`;
       $('submitNewsTipBtn').onclick = submitNewsTip;
       bindAdCloseButtons();
     }
@@ -718,10 +718,10 @@
       });
       if(error){ showStatus('건의 전송 실패: '+error.message,'err'); return; }
       closeDialog('suggestionDialog');
-      showStatus('건의가 관리자에게 전달되었습니다.','ok');
+      showStatus('건의가 최고관리자에게 전달되었습니다.','ok');
     }
     async function openInboxAdmin(){
-      if(!state.isOwner){ showStatus('관리자만 제보·건의 관리를 사용할 수 있습니다.','err'); return; }
+      if(!state.isOwner){ showStatus('최고관리자만 제보·건의 관리를 사용할 수 있습니다.','err'); return; }
       await Promise.all([loadNewsTips(), loadSuggestions()]);
       renderInboxAdmin();
       openDialog('inboxAdminDialog');
@@ -788,7 +788,7 @@
       if(publicItems.length){ $('tickerText').textContent = publicItems[0].title; }
       else { $('tickerText').textContent = state.session ? '새로운 소식이 등록되면 이곳에 최신 기사가 표시됩니다.' : '로그인하면 더 많은 게시물을 볼 수 있습니다.'; }
       if(!items.length){
-        const emptyMessage = !state.session ? '<strong>로그인이 필요합니다</strong><span>비로그인 상태에서는 관리자의 공지사항만 볼 수 있습니다.</span><div style="margin-top:14px"><button class="btn blue" id="articleLoginBtn">로그인</button></div>' : '<strong>등록된 기사가 없습니다</strong><span>편집자가 새 기사를 저장하면 이곳에 표시됩니다.</span>';
+        const emptyMessage = !state.session ? '<strong>로그인이 필요합니다</strong><span>비로그인 상태에서는 최고관리자의 공지사항만 볼 수 있습니다.</span><div style="margin-top:14px"><button class="btn blue" id="articleLoginBtn">로그인</button></div>' : '<strong>등록된 기사가 없습니다</strong><span>편집자가 새 기사를 저장하면 이곳에 표시됩니다.</span>';
         content.innerHTML = `<div class="empty">${emptyMessage}</div>`;
         const articleLoginBtn = $('articleLoginBtn'); if(articleLoginBtn) articleLoginBtn.onclick=()=>openDialog('loginDialog');
         renderAdminList();
@@ -920,7 +920,7 @@
       if(!state.session){ openDialog('loginDialog'); return; }
       const target = state.comments.find(c => c.id === commentId);
       const canDelete = state.isOwner || (target && state.session?.user?.id === target.user_id);
-      if(!canDelete){ showStatus('댓글은 작성자 본인 또는 관리자만 삭제할 수 있습니다.','err'); return; }
+      if(!canDelete){ showStatus('댓글은 작성자 본인 또는 최종 관리자만 삭제할 수 있습니다.','err'); return; }
       if(!confirm('댓글을 삭제하시겠습니까?')) return;
       const { error } = await client.from('comments').delete().eq('id', commentId);
       if(error){ showStatus('댓글 삭제 실패: '+error.message,'err'); return; }
@@ -980,7 +980,7 @@
       } catch(e){ console.error(e); showStatus('저장 실패: '+(e.message||e),'err'); }
       finally{ $('saveArticleBtn').disabled=false; }
     }
-    async function deleteArticle(id){ if(!state.isOwner){ showStatus('관리자만 기사를 삭제할 수 있습니다.','err'); return; } if(!confirm('이 기사를 삭제하시겠습니까?')) return; const { error } = await client.from('articles').delete().eq('id',id); if(error){ showStatus('삭제 실패: '+error.message,'err'); return; } showStatus('삭제되었습니다.','ok'); await loadArticles(); }
+    async function deleteArticle(id){ if(!state.isOwner){ showStatus('최종 관리자만 기사를 삭제할 수 있습니다.','err'); return; } if(!confirm('이 기사를 삭제하시겠습니까?')) return; const { error } = await client.from('articles').delete().eq('id',id); if(error){ showStatus('삭제 실패: '+error.message,'err'); return; } showStatus('삭제되었습니다.','ok'); await loadArticles(); }
     function editArticle(id){
       const a=state.articles.find(x=>x.id===id); if(!a) return;
       if(!canEditArticle(a)){ showStatus('본인이 게시한 기사만 수정할 수 있습니다.','err'); return; }
@@ -1013,7 +1013,7 @@
       setCurrentGalleryImages([]);
     }
     function renderAdminList(){ const box=$('adminList'); if(!box) return; if(!state.articles.length){ box.innerHTML='<p style="color:#64748b">아직 등록된 기사가 없습니다.</p>'; return; } const visible = state.isOwner ? state.articles : state.articles.filter(a=>canEditArticle(a)); if(!visible.length){ box.innerHTML='<p style="color:#64748b">본인이 게시한 기사가 없습니다. 새 글을 작성하면 이곳에 표시됩니다.</p>'; return; } box.innerHTML=visible.map(a=>{ const canDelete = state.isOwner; return `<div class="admin-row"><div><strong>${escapeHtml(a.title)}</strong><span>${escapeHtml(a.category)} · ${fmtDate(a.created_at)}</span></div><div class="ops">${canEditArticle(a)?`<button class="btn" data-edit="${a.id}">수정</button>`:''}${canDelete?`<button class="btn red" data-del="${a.id}">삭제</button>`:''}</div></div>`; }).join(''); box.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editArticle(b.dataset.edit)); box.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>deleteArticle(b.dataset.del)); }
-    function roleLabel(role){ return role === 'owner' ? '관리자' : role === 'publisher' ? '게시자' : '편집자'; }
+    function roleLabel(role){ return role === 'owner' ? '최종 관리자' : role === 'publisher' ? '게시자' : '편집자'; }
     async function submitSignupRequest(){
       const email = $('signupEmail').value.trim().toLowerCase();
       const password = $('signupPassword').value;
@@ -1047,7 +1047,7 @@
         await loadProfile();
         await loadMemberStatus();
         updateAuthUI();
-        showStatus('회원가입 신청이 접수되었습니다. 관리자 승인 후 댓글과 게시 신청을 사용할 수 있습니다.','ok');
+        showStatus('회원가입 신청이 접수되었습니다. 최종 관리자 승인 후 댓글과 게시 신청을 사용할 수 있습니다.','ok');
       } catch(e){
         showStatus('회원가입 신청 실패: '+(e.message||e),'err');
       } finally{
@@ -1083,7 +1083,7 @@
         }, { onConflict: 'user_id' });
         if(reqError) throw reqError;
         closeDialog('editorRequestDialog');
-        showStatus('게시 권한 신청이 접수되었습니다. 관리자 승인 후 기사 관리 메뉴를 사용할 수 있습니다.','ok');
+        showStatus('게시 권한 신청이 접수되었습니다. 최종 관리자 승인 후 기사 관리 메뉴를 사용할 수 있습니다.','ok');
       } catch(e){
         showStatus('게시 권한 신청 실패: '+(e.message||e),'err');
       } finally{
@@ -1091,7 +1091,7 @@
       }
     }
     async function loadAccountAdminData(){
-      if(!state.isOwner){ showStatus('관리자만 계정 목록을 볼 수 있습니다.','err'); return; }
+      if(!state.isOwner){ showStatus('최종 관리자만 계정 목록을 볼 수 있습니다.','err'); return; }
       const [memberRes, reqRes, accRes] = await Promise.all([
         client.from('member_requests').select('*').order('requested_at', { ascending:false }),
         client.from('editor_requests').select('*').order('requested_at', { ascending:false }),
@@ -1106,7 +1106,7 @@
       renderAccountAdmin();
     }
     async function openAccountAdmin(){
-      if(!state.isOwner){ showStatus('관리자만 계정 관리가 가능합니다.','err'); return; }
+      if(!state.isOwner){ showStatus('최종 관리자만 계정 관리가 가능합니다.','err'); return; }
       await loadAccountAdminData();
       applyMaintenanceSettingsToForm();
       openDialog('accountAdminDialog');
