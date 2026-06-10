@@ -329,7 +329,19 @@
     function openDialog(id){ $(id).showModal(); }
     function closeDialog(id){ $(id).close(); }
     function buildNav(){ $('nav').innerHTML=''; const wrap=document.createElement('div'); wrap.className='nav-inner'; CATEGORIES.forEach(c=>{ const b=document.createElement('button'); b.className='nav-btn'+(state.category===c?' active':''); b.textContent=c; b.onclick=async()=>{state.category=c; if(c==='뉴스제보') await loadNewsTips(); render();}; wrap.appendChild(b); }); $('nav').appendChild(wrap); }
-    function filteredArticles(){ const q=state.query.trim().toLowerCase(); return state.articles.filter(a=>{ const okCat = state.category==='종합' || a.category===state.category; const text=[a.title,a.summary,a.body,a.author,a.category].join(' ').toLowerCase(); return okCat && (!q || text.includes(q)); }); }
+    function canViewArticle(a){
+      if(state.session) return true;
+      return a?.category === '공지' && (a?.created_by_role === 'owner' || !a?.created_by_role);
+    }
+    function visibleArticles(){ return state.articles.filter(canViewArticle); }
+    function filteredArticles(){
+      const q=state.query.trim().toLowerCase();
+      return visibleArticles().filter(a=>{
+        const okCat = state.category==='종합' || a.category===state.category;
+        const text=[a.title,a.summary,a.body,a.author,a.category].join(' ').toLowerCase();
+        return okCat && (!q || text.includes(q));
+      });
+    }
     async function loadSession(){
       const { data } = await client.auth.getSession();
       state.session = data.session;
@@ -738,16 +750,20 @@
       updateSideRailAds();
       const items=filteredArticles();
       const content=$('content');
-      if(state.articles.length){ $('tickerText').textContent = state.articles[0].title; }
+      const publicItems = visibleArticles();
+      if(publicItems.length){ $('tickerText').textContent = publicItems[0].title; }
+      else { $('tickerText').textContent = state.session ? '새로운 소식이 등록되면 이곳에 최신 기사가 표시됩니다.' : '로그인하면 더 많은 게시물을 볼 수 있습니다.'; }
       if(!items.length){
-        content.innerHTML = `<div class="empty"><strong>등록된 기사가 없습니다</strong><span>편집자가 새 기사를 저장하면 이곳에 표시됩니다.</span></div>`;
+        const emptyMessage = !state.session ? '<strong>로그인이 필요합니다</strong><span>비로그인 상태에서는 최고관리자의 공지사항만 볼 수 있습니다.</span><div style="margin-top:14px"><button class="btn blue" id="articleLoginBtn">로그인</button></div>' : '<strong>등록된 기사가 없습니다</strong><span>편집자가 새 기사를 저장하면 이곳에 표시됩니다.</span>';
+        content.innerHTML = `<div class="empty">${emptyMessage}</div>`;
+        const articleLoginBtn = $('articleLoginBtn'); if(articleLoginBtn) articleLoginBtn.onclick=()=>openDialog('loginDialog');
         renderAdminList();
         bindAdCloseButtons();
         return;
       }
       const [lead,...rest]=items;
       const leadImg = hasArticleImage(lead);
-      content.innerHTML = `<div class="layout"><section class="maincol"><article class="hero ${leadImg?'':'no-image'}" role="button" tabindex="0" data-open="${lead.id}">${leadImg?`<div class="hero-img"><img src="${escapeHtml(lead.image_url)}" alt=""></div>`:''}<div class="hero-body"><span class="kicker">${escapeHtml(lead.category)}</span><h2>${escapeHtml(lead.title)}</h2><p class="summary">${escapeHtml(lead.summary||'')}</p><div class="meta"><span>${escapeHtml(lead.author||'편집부')}</span><span>${fmtDate(lead.created_at)}</span><span>조회 ${lead.views||0}</span></div></div></article><div id="articleList"></div></section><aside class="sidecol"><div class="panel"><h3>최신 소식</h3><div class="list-compact">${state.articles.slice(0,5).map(a=>`<div class="compact-item"><button data-open="${a.id}">${escapeHtml(a.title)}</button><span>${escapeHtml(a.category)} · ${fmtDate(a.created_at)}</span></div>`).join('')}</div></div><div class="panel"><h3>분야</h3><div class="tag-cloud">${CATEGORIES.map(c=>`<button class="tag" data-cat="${c}">${c}</button>`).join('')}</div></div>${renderSidebarAds()}</aside></div>`;
+      content.innerHTML = `<div class="layout"><section class="maincol"><article class="hero ${leadImg?'':'no-image'}" role="button" tabindex="0" data-open="${lead.id}">${leadImg?`<div class="hero-img"><img src="${escapeHtml(lead.image_url)}" alt=""></div>`:''}<div class="hero-body"><span class="kicker">${escapeHtml(lead.category)}</span><h2>${escapeHtml(lead.title)}</h2><p class="summary">${escapeHtml(lead.summary||'')}</p><div class="meta"><span>${escapeHtml(lead.author||'편집부')}</span><span>${fmtDate(lead.created_at)}</span><span>조회 ${lead.views||0}</span></div></div></article><div id="articleList"></div></section><aside class="sidecol"><div class="panel"><h3>최신 소식</h3><div class="list-compact">${publicItems.slice(0,5).map(a=>`<div class="compact-item"><button data-open="${a.id}">${escapeHtml(a.title)}</button><span>${escapeHtml(a.category)} · ${fmtDate(a.created_at)}</span></div>`).join('') || '<div class="compact-item"><span>로그인하면 더 많은 소식을 볼 수 있습니다.</span></div>'}</div></div><div class="panel"><h3>분야</h3><div class="tag-cloud">${CATEGORIES.map(c=>`<button class="tag" data-cat="${c}">${c}</button>`).join('')}</div></div>${renderSidebarAds()}</aside></div>`;
       const list=$('articleList');
       list.innerHTML=rest.map(a=>{ const img=hasArticleImage(a); return `<article class="article-card ${img?'':'no-image'}" role="button" tabindex="0" data-open="${a.id}">${img?`<div class="thumb"><img src="${escapeHtml(a.image_url)}" alt=""></div>`:''}<div><span class="kicker">${escapeHtml(a.category)}</span><h3>${escapeHtml(a.title)}</h3><p>${escapeHtml(a.summary||'')}</p><div class="meta"><span>${escapeHtml(a.author||'편집부')}</span><span>${fmtDate(a.created_at)}</span><span>조회 ${a.views||0}</span></div></div></article>`; }).join('');
       document.querySelectorAll('[data-open]').forEach(el=>el.onclick=()=>openArticle(el.dataset.open));
@@ -758,6 +774,11 @@
     function bindAdCloseButtons(){ document.querySelectorAll('[data-ad-close]').forEach(b=>b.onclick=(e)=>{ e.preventDefault(); e.stopPropagation(); hideAdTemporarily(b.dataset.adClose); }); }
     async function openArticle(id){
       const a=state.articles.find(x=>x.id===id); if(!a) return;
+      if(!canViewArticle(a)){
+        showStatus('로그인 후 볼 수 있는 게시물입니다.','err');
+        openDialog('loginDialog');
+        return;
+      }
       state.activeArticleId = id;
       await incrementViews(a);
       $('content').innerHTML=`<div class="article-view"><div class="backline"><button class="btn" id="backBtn">← 목록으로</button></div><span class="kicker">${escapeHtml(a.category)}</span><h2>${escapeHtml(a.title)}</h2><div class="meta"><span>${escapeHtml(a.author||'편집부')}</span><span>${fmtDate(a.created_at)}</span><span>조회 ${a.views||0}</span></div>${hasArticleImage(a)?`<div class="main-image"><img src="${escapeHtml(a.image_url)}" alt=""><div class="caption">${escapeHtml(a.caption||'')}</div></div>`:''}${renderArticleGallery(a)}<p class="summary">${escapeHtml(a.summary||'')}</p><hr style="border:0;border-top:1px solid var(--line);margin:22px 0"><div class="article-body rich-content">${renderArticleBody(a.body||'')}</div>${renderArticleBottomAds()}<section class="comments" id="commentsBox"><h3>댓글</h3><div id="commentFormBox"></div><div class="comment-list" id="commentList"><div class="comment-note">댓글을 불러오는 중입니다.</div></div></section></div>`;
@@ -1137,6 +1158,7 @@
       $('publisherRequestTopBtn').onclick=openPublisherRequest;
       $('submitEditorRequestBtn').onclick=submitEditorRequest;
       $('accountAdminBtn').onclick=openAccountAdmin;
+      $('saveMaintenanceBtn').onclick=saveMaintenanceSettings;
       if($('suggestionBtn')) $('suggestionBtn').onclick=openSuggestionDialog;
       if($('inboxAdminBtn')) $('inboxAdminBtn').onclick=openInboxAdmin;
       if($('submitSuggestionBtn')) $('submitSuggestionBtn').onclick=submitSuggestion;
