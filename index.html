@@ -107,6 +107,8 @@
     .suggestion-status-badge.accepted{border-color:#86efac;background:#dcfce7;color:#15803d}
     .suggestion-status-badge.rejected{border-color:#fecaca;background:#fef2f2;color:#991b1b}
     .suggestion-status-badge.reviewing{border-color:#bfdbfe;background:#eff6ff;color:#1d4ed8}
+    .btn:disabled,.btn.disabled{background:#f3f4f6!important;color:#94a3b8!important;border-color:#e5e7eb!important;box-shadow:none!important;cursor:not-allowed;opacity:.82;transform:none!important}
+    .btn:disabled:hover,.btn.disabled:hover{border-color:#e5e7eb!important;box-shadow:none!important}
 
     @media(max-width:1500px){.ad-rail{--rail-gap:10px}.ad-rail .ad-box{padding:6px;margin-bottom:10px;border-radius:10px}.ad-rail .ad-close{right:4px;top:4px;width:20px;height:20px;font-size:13px}.ad-rail .ad-label,.ad-rail .ad-title,.ad-rail .ad-note{font-size:9px;line-height:1.25}}
     @media(max-width:1420px){.ad-rail{--rail-gap:8px}.ad-rail .ad-box{padding:4px;margin-bottom:8px}.ad-rail .ad-label,.ad-rail .ad-title,.ad-rail .ad-note{display:none}.ad-rail img{border-radius:8px}}
@@ -156,11 +158,11 @@
 
   <dialog id="suggestionAnswerNoticeDialog"><div class="modal-head"><h2>건의 답변 알림</h2><button class="close" data-close="suggestionAnswerNoticeDialog">×</button></div><div class="modal-body"><div class="suggestion-notice-card"><strong>당신의 건의에 대한 답변이 도착했습니다.</strong><p id="suggestionAnswerNoticeText" class="login-note" style="margin:0;color:#166534">건의함에서 처리 현황과 관리자 답변을 확인할 수 있습니다. 이 알림을 그만 보려면 해당 건의의 건의 확인 버튼을 눌러 주세요.</p></div><div class="editor-actions"><button class="btn" id="suggestionAnswerLaterBtn">나중에 보기</button><button class="btn blue" id="suggestionAnswerOpenBtn">건의함 보기</button></div></div></dialog>
 
-  <dialog id="personalMessageDialog"><div class="modal-head"><h2>개인 알림</h2><button class="close" data-close="personalMessageDialog">×</button></div><div class="modal-body"><p class="login-note">관리자가 개인적으로 보낸 알림을 확인할 수 있습니다. 알림는 삭제되지 않으며, 각 항목의 알림 확인 버튼을 누르면 그 알림에 대한 로그인 팝업만 더 이상 뜨지 않습니다.</p><div id="myPersonalMessageList"><p style="color:#64748b">알림 내역을 불러오는 중입니다.</p></div></div></dialog>
+  <dialog id="personalMessageDialog"><div class="modal-head"><h2>개인 알림</h2><button class="close" data-close="personalMessageDialog">×</button></div><div class="modal-body"><p class="login-note">관리자가 개인적으로 보낸 알림을 확인할 수 있습니다. 알림은 삭제되지 않으며, 각 항목의 알림 확인 버튼을 누르면 그 알림에 대한 로그인 팝업만 더 이상 뜨지 않습니다.</p><div id="myPersonalMessageList"><p style="color:#64748b">알림 내역을 불러오는 중입니다.</p></div></div></dialog>
 
-  <dialog id="personalMessageNoticeDialog"><div class="modal-head"><h2>개인 알림</h2><button class="close" data-close="personalMessageNoticeDialog">×</button></div><div class="modal-body"><div class="personal-message-notice-card"><strong>관리자의 개인 알림가 도착했습니다.</strong><p id="personalMessageNoticeText" class="login-note" style="margin:0;color:#166534">알림에서 내용을 확인할 수 있습니다. 이 알림을 그만 보려면 해당 알림의 알림 확인 버튼을 눌러 주세요.</p></div><div class="editor-actions"><button class="btn" id="personalMessageLaterBtn">나중에 보기</button><button class="btn blue" id="personalMessageOpenBtn">알림 보기</button></div></div></dialog>
+  <dialog id="personalMessageNoticeDialog"><div class="modal-head"><h2>개인 알림</h2><button class="close" data-close="personalMessageNoticeDialog">×</button></div><div class="modal-body"><div class="personal-message-notice-card"><strong>관리자의 개인 알림이 도착했습니다.</strong><p id="personalMessageNoticeText" class="login-note" style="margin:0;color:#166534">알림 창에서 내용을 확인할 수 있습니다. 이 알림을 그만 보려면 해당 알림의 알림 확인 버튼을 눌러 주세요.</p></div><div class="editor-actions"><button class="btn" id="personalMessageLaterBtn">나중에 보기</button><button class="btn blue" id="personalMessageOpenBtn">알림 보기</button></div></div></dialog>
 
-  <dialog id="personalMessageAdminDialog"><div class="modal-head"><h2>개인 알림 관리</h2><button class="close" data-close="personalMessageAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자가 특정 회원에게 개인 알림를 보낼 수 있습니다. 받은 사용자는 로그인 시 팝업 알림을 보고, 알림에서 내용을 확인할 수 있습니다.</p><div class="form-grid"><div class="field"><label>받는 사람</label><select id="personalMessageRecipient"><option value="">회원 목록을 불러오는 중입니다</option></select></div><div class="field"><label>알림 제목</label><input id="personalMessageTitle" maxlength="100" placeholder="예: 요청 처리 안내"></div><div class="field full"><label>알림 내용</label><textarea id="personalMessageBody" maxlength="2000" placeholder="전달할 개인 알림 내용을 입력하세요. 최대 2000자"></textarea></div></div><div class="editor-actions"><button class="btn blue" id="sendPersonalMessageBtn">개인 알림 보내기</button></div><div class="admin-list"><h3>최근 보낸 개인 알림</h3><div id="personalMessageAdminList"><p style="color:#64748b">알림 목록을 불러오는 중입니다.</p></div></div></div></dialog>
+  <dialog id="personalMessageAdminDialog"><div class="modal-head"><h2>개인 알림 관리</h2><button class="close" data-close="personalMessageAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자가 특정 회원에게 개인 알림을 보낼 수 있습니다. 받은 사용자는 로그인 시 팝업 알림을 보고, 알림에서 내용을 확인할 수 있습니다.</p><div class="form-grid"><div class="field"><label>받는 사람</label><select id="personalMessageRecipient"><option value="">회원 목록을 불러오는 중입니다</option></select></div><div class="field"><label>알림 제목</label><input id="personalMessageTitle" maxlength="100" placeholder="예: 요청 처리 안내"></div><div class="field full"><label>알림 내용</label><textarea id="personalMessageBody" maxlength="2000" placeholder="전달할 개인 알림 내용을 입력하세요. 최대 2000자"></textarea></div></div><div class="editor-actions"><button class="btn blue" id="sendPersonalMessageBtn">개인 알림 보내기</button></div><div class="admin-list"><h3>최근 보낸 개인 알림</h3><div id="personalMessageAdminList"><p style="color:#64748b">알림 목록을 불러오는 중입니다.</p></div></div></div></dialog>
 
   <dialog id="inboxAdminDialog"><div class="modal-head"><h2>제보·건의 관리</h2><button class="close" data-close="inboxAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자만 뉴스제보와 건의함 내용을 확인하고 처리할 수 있습니다.</p><div class="admin-list"><h3>뉴스제보 목록</h3><div id="newsTipAdminList"></div></div><div class="admin-list"><h3>건의함 목록</h3><div id="suggestionAdminList"></div></div></div></dialog>
 
@@ -1363,7 +1365,7 @@
     function confirmPersonalMessage(messageId){
       const target = (state.personalMessages || []).find(m => String(m.id) === String(messageId));
       if(!target || !isPersonalMessageTarget(target)){
-        showStatus('확인할 개인 알림를 찾지 못했습니다.','err');
+        showStatus('확인할 개인 알림을 찾지 못했습니다.','err');
         return;
       }
       const seen = loadSeenPersonalMessages();
@@ -1371,7 +1373,7 @@
       saveSeenPersonalMessages(seen);
       renderPersonalMessages();
       updatePersonalMessageIndicator();
-      showStatus('이 개인 알림를 확인 처리했습니다. 이후 로그인 때 이 알림으로 인한 팝업은 뜨지 않습니다.','ok');
+      showStatus('이 개인 알림을 확인 처리했습니다. 이후 로그인 때 이 알림으로 인한 팝업은 뜨지 않습니다.','ok');
     }
     function openPersonalMessageNoticeDialog(count, attempt=0){
       const dialog = $('personalMessageNoticeDialog');
@@ -1379,7 +1381,7 @@
       const text = $('personalMessageNoticeText');
       if(text) text.textContent = count > 1
         ? `확인하지 않은 개인 알림 ${count}개가 있습니다. 알림에서 내용을 확인할 수 있습니다. 이 알림을 그만 보려면 각 알림의 알림 확인 버튼을 눌러 주세요.`
-        : '알림에서 내용을 확인할 수 있습니다. 이 알림을 그만 보려면 해당 알림의 알림 확인 버튼을 눌러 주세요.';
+        : '알림 창에서 내용을 확인할 수 있습니다. 이 알림을 그만 보려면 해당 알림의 알림 확인 버튼을 눌러 주세요.';
       const openNow = () => {
         if(dialog.open || sessionStorage.getItem(personalMessagePopupSessionKey()) === 'shown') return;
         const other = Array.from(document.querySelectorAll('dialog[open]')).find(d => d !== dialog);
@@ -1409,7 +1411,7 @@
       if(error){
         console.warn('personal message load failed:', error);
         const box = $('myPersonalMessageList');
-        if(box) box.innerHTML = `<p style="color:#991b1b">개인 알림를 불러오지 못했습니다: ${escapeHtml(error.message || error)}</p>`;
+        if(box) box.innerHTML = `<p style="color:#991b1b">개인 알림을 불러오지 못했습니다: ${escapeHtml(error.message || error)}</p>`;
         updatePersonalMessageIndicator();
         return;
       }
@@ -1435,7 +1437,7 @@
       if(!box) return;
       const rows = Array.isArray(state.personalMessages) ? state.personalMessages : [];
       if(!rows.length){
-        box.innerHTML = '<p style="color:#64748b">도착한 개인 알림가 없습니다.</p>';
+        box.innerHTML = '<p style="color:#64748b">도착한 개인 알림이 없습니다.</p>';
         return;
       }
       box.innerHTML = rows.map(m=>{
@@ -1452,7 +1454,7 @@
       await loadPersonalMessages();
     }
     async function loadPersonalMessageAdminData(){
-      if(!state.isOwner){ showStatus('관리자만 개인 알림를 관리할 수 있습니다.','err'); return; }
+      if(!state.isOwner){ showStatus('관리자만 개인 알림을 관리할 수 있습니다.','err'); return; }
       const [membersRes, messagesRes] = await Promise.all([
         client.from('member_requests').select('user_id, email, nickname, status').order('requested_at', { ascending:false }),
         client.from('personal_messages').select('*').order('created_at', { ascending:false }).limit(100)
@@ -1474,7 +1476,7 @@
       const list = $('personalMessageAdminList');
       if(!list) return;
       const messages = state.personalMessageAdminRows || [];
-      list.innerHTML = messages.length ? messages.map(m=>`<div class="request-row"><div><strong>${escapeHtml(m.title || '개인 알림')}</strong><span>받는 사람: ${escapeHtml(m.recipient_nickname || m.recipient_email || m.recipient_id || '알 수 없음')} · ${escapeHtml(safeDisplayDate(m.created_at))}<br>${escapeHtml(String(m.body || '').slice(0,180))}${String(m.body || '').length>180?'...':''}</span></div><div class="ops"><button class="btn red" data-personal-message-del="${escapeHtml(m.id)}">삭제</button></div></div>`).join('') : '<p style="color:#64748b">보낸 개인 알림가 없습니다.</p>';
+      list.innerHTML = messages.length ? messages.map(m=>`<div class="request-row"><div><strong>${escapeHtml(m.title || '개인 알림')}</strong><span>받는 사람: ${escapeHtml(m.recipient_nickname || m.recipient_email || m.recipient_id || '알 수 없음')} · ${escapeHtml(safeDisplayDate(m.created_at))}<br>${escapeHtml(String(m.body || '').slice(0,180))}${String(m.body || '').length>180?'...':''}</span></div><div class="ops"><button class="btn red" data-personal-message-del="${escapeHtml(m.id)}">삭제</button></div></div>`).join('') : '<p style="color:#64748b">보낸 개인 알림이 없습니다.</p>';
       list.querySelectorAll('[data-personal-message-del]').forEach(b=>b.onclick=()=>deletePersonalMessage(b.dataset.personalMessageDel));
     }
     async function openPersonalMessageAdmin(){
@@ -1483,7 +1485,7 @@
       openDialog('personalMessageAdminDialog');
     }
     async function sendPersonalMessage(){
-      if(!state.isOwner){ showStatus('관리자만 개인 알림를 보낼 수 있습니다.','err'); return; }
+      if(!state.isOwner){ showStatus('관리자만 개인 알림을 보낼 수 있습니다.','err'); return; }
       const select = $('personalMessageRecipient');
       const recipientId = select?.value || '';
       const option = select?.selectedOptions?.[0];
@@ -1507,17 +1509,17 @@
       if(error){ showStatus('개인 알림 전송 실패: '+error.message+' / personal_messages 테이블과 INSERT RLS 정책을 확인하세요.','err'); return; }
       $('personalMessageTitle').value='';
       $('personalMessageBody').value='';
-      showStatus('개인 알림를 보냈습니다. 해당 사용자는 로그인 시 팝업으로 확인할 수 있습니다.','ok');
+      showStatus('개인 알림을 보냈습니다. 해당 사용자는 로그인 시 팝업으로 확인할 수 있습니다.','ok');
       await loadPersonalMessageAdminData();
     }
     async function deletePersonalMessage(id){
       if(!state.isOwner) return;
-      if(!confirm('이 개인 알림를 삭제하시겠습니까? 삭제하면 받은 사용자 쪽에서도 사라집니다.')) return;
+      if(!confirm('이 개인 알림을 삭제하시겠습니까? 삭제하면 받은 사용자 쪽에서도 사라집니다.')) return;
       const { data, error } = await client.from('personal_messages').delete().eq('id', id).select('id');
       if(error){ showStatus('개인 알림 삭제 실패: '+error.message,'err'); return; }
-      if(!data || !data.length){ showStatus('개인 알림가 삭제되지 않았습니다. personal_messages DELETE RLS 정책을 확인하세요.','err'); return; }
+      if(!data || !data.length){ showStatus('개인 알림이 삭제되지 않았습니다. personal_messages DELETE RLS 정책을 확인하세요.','err'); return; }
       await loadPersonalMessageAdminData();
-      showStatus('개인 알림가 삭제되었습니다.','ok');
+      showStatus('개인 알림이 삭제되었습니다.','ok');
     }
 
     async function loadMySuggestions(){
@@ -1598,6 +1600,21 @@
       renderInboxAdmin();
       openDialog('inboxAdminDialog');
     }
+    function isFinalSuggestionStatus(status){
+      return ['accepted','done','rejected'].includes(String(status || ''));
+    }
+    function findSuggestionById(id){
+      return (state.suggestions || []).find(x => String(x.id) === String(id));
+    }
+    function canChangeSuggestionStatus(id){
+      const target = findSuggestionById(id);
+      if(target && isFinalSuggestionStatus(target.status)){
+        showStatus('이미 처리된 건의입니다. 상태 변경이 필요하면 삭제 후 새로 접수하거나 DB에서 직접 조정하세요.','err');
+        renderInboxAdmin();
+        return false;
+      }
+      return true;
+    }
     function renderInboxAdmin(){
       const tipBox = $('newsTipAdminList');
       const sugBox = $('suggestionAdminList');
@@ -1608,10 +1625,20 @@
         tipBox.querySelectorAll('[data-tip-del]').forEach(b=>b.onclick=()=>deleteNewsTip(b.dataset.tipDel));
       }
       if(sugBox){
-        sugBox.innerHTML = state.suggestions.length ? state.suggestions.map(s=>{ const reply=suggestionReplyText(s); return `<div class="request-row"><div><strong>${escapeHtml(s.title || '제목 없음')}</strong><span>${escapeHtml(s.nickname || s.email || '익명')} · ${newsTipStatusLabel(s.status)} · ${fmtDate(s.created_at)}<br>${escapeHtml(String(s.body || '').slice(0,180))}${String(s.body || '').length>180?'...':''}${reply?`<br><b>관리자 답변/처리 내용:</b> ${escapeHtml(reply)}`:''}</span></div><div class="ops"><button class="btn blue" data-sug-done="${s.id}">처리 완료</button><button class="btn green" data-sug-accept="${s.id}">수락 메시지 보내기</button><button class="btn red" data-sug-reject="${s.id}">반려 사유 보내기</button><button class="btn red" data-sug-del="${s.id}">삭제</button></div></div>`; }).join('') : '<p style="color:#64748b">등록된 건의가 없습니다.</p>';
-        sugBox.querySelectorAll('[data-sug-done]').forEach(b=>b.onclick=()=>markSuggestionDone(b.dataset.sugDone));
-        sugBox.querySelectorAll('[data-sug-accept]').forEach(b=>b.onclick=()=>acceptSuggestionWithMessage(b.dataset.sugAccept));
-        sugBox.querySelectorAll('[data-sug-reject]').forEach(b=>b.onclick=()=>rejectSuggestionWithReason(b.dataset.sugReject));
+        sugBox.innerHTML = state.suggestions.length ? state.suggestions.map(s=>{
+          const reply = suggestionReplyText(s);
+          const status = String(s.status || 'pending');
+          const handled = isFinalSuggestionStatus(status);
+          const disabled = handled ? 'disabled aria-disabled="true" title="이미 처리된 건의입니다. 상태를 다시 덮어쓸 수 없습니다."' : '';
+          const doneLabel = status === 'done' ? '처리 완료됨' : '처리 완료';
+          const acceptLabel = status === 'accepted' ? '수락됨' : '수락 메시지 보내기';
+          const rejectLabel = status === 'rejected' ? '반려됨' : '반려 사유 보내기';
+          const handledNote = handled ? '<br><small style="color:#64748b">이미 처리된 건의입니다. 삭제 외의 상태 변경 버튼은 비활성화됩니다.</small>' : '';
+          return `<div class="request-row"><div><strong>${escapeHtml(s.title || '제목 없음')}</strong><span>${escapeHtml(s.nickname || s.email || '익명')} · <span class="suggestion-status-badge ${escapeHtml(status)}">${escapeHtml(newsTipStatusLabel(status))}</span> · ${fmtDate(s.created_at)}<br>${escapeHtml(String(s.body || '').slice(0,180))}${String(s.body || '').length>180?'...':''}${reply?`<br><b>관리자 답변/처리 내용:</b> ${escapeHtml(reply)}`:''}${handledNote}</span></div><div class="ops"><button class="btn blue" data-sug-done="${s.id}" ${disabled}>${doneLabel}</button><button class="btn green" data-sug-accept="${s.id}" ${disabled}>${acceptLabel}</button><button class="btn red" data-sug-reject="${s.id}" ${disabled}>${rejectLabel}</button><button class="btn red" data-sug-del="${s.id}">삭제</button></div></div>`;
+        }).join('') : '<p style="color:#64748b">등록된 건의가 없습니다.</p>';
+        sugBox.querySelectorAll('[data-sug-done]:not(:disabled)').forEach(b=>b.onclick=()=>markSuggestionDone(b.dataset.sugDone));
+        sugBox.querySelectorAll('[data-sug-accept]:not(:disabled)').forEach(b=>b.onclick=()=>acceptSuggestionWithMessage(b.dataset.sugAccept));
+        sugBox.querySelectorAll('[data-sug-reject]:not(:disabled)').forEach(b=>b.onclick=()=>rejectSuggestionWithReason(b.dataset.sugReject));
         sugBox.querySelectorAll('[data-sug-del]').forEach(b=>b.onclick=()=>deleteSuggestion(b.dataset.sugDel));
       }
     }
@@ -1636,7 +1663,8 @@
     }
     async function acceptSuggestionWithMessage(id){
       if(!state.isOwner) return;
-      const target = state.suggestions.find(x=>String(x.id)===String(id));
+      if(!canChangeSuggestionStatus(id)) return;
+      const target = findSuggestionById(id);
       const defaultMessage = '건의가 수락되었습니다. 어떤 방식으로 반영할지 검토해 보겠습니다.';
       const message = prompt('보낸 사용자에게 보여줄 수락 메시지를 입력하세요.', suggestionReplyText(target) || defaultMessage);
       if(message === null) return;
@@ -1669,7 +1697,8 @@
 
     async function rejectSuggestionWithReason(id){
       if(!state.isOwner) return;
-      const target = state.suggestions.find(x=>String(x.id)===String(id));
+      if(!canChangeSuggestionStatus(id)) return;
+      const target = findSuggestionById(id);
       const reason = prompt('보낸 사용자에게 보여줄 반려 사유를 입력하세요.', suggestionReplyText(target) || '');
       if(reason === null) return;
       const clean = reason.trim();
@@ -1701,6 +1730,7 @@
 
     async function markSuggestionDone(id){
       if(!state.isOwner) return;
+      if(!canChangeSuggestionStatus(id)) return;
       if(!confirm('이 건의를 처리 완료로 표시하고, 보낸 사용자에게 처리 완료 알림을 남기시겠습니까?')) return;
       const doneMessage = '관리자가 처리 완료함';
       const basePayload = {
