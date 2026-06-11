@@ -129,7 +129,7 @@
 
 
 
-  <dialog id="suggestionDialog"><div class="modal-head"><h2>건의함</h2><button class="close" data-close="suggestionDialog">×</button></div><div class="modal-body"><p class="login-note">사이트 이용 중 불편한 점이나 개선 의견을 관리자에게 직접 보낼 수 있습니다. 작성 내용은 관리자만 확인합니다.</p><div class="field"><label>건의 제목</label><input id="suggestionTitle" maxlength="80" placeholder="건의 제목을 입력하세요."></div><div class="field"><label>건의 내용</label><textarea id="suggestionBody" maxlength="2000" placeholder="건의 내용을 입력하세요. 최대 2000자"></textarea></div><div class="editor-actions"><button class="btn blue" id="submitSuggestionBtn">건의 보내기</button></div></div></dialog>
+  <dialog id="suggestionDialog"><div class="modal-head"><h2>건의함</h2><button class="close" data-close="suggestionDialog">×</button></div><div class="modal-body"><p class="login-note">사이트 이용 중 불편한 점이나 개선 의견을 관리자에게 직접 보낼 수 있습니다. 처리 완료된 건의는 보관 없이 삭제될 수 있고, 반려된 건의는 아래 내 건의 처리 현황에서 사유를 확인할 수 있습니다.</p><div class="field"><label>건의 제목</label><input id="suggestionTitle" maxlength="80" placeholder="건의 제목을 입력하세요."></div><div class="field"><label>건의 내용</label><textarea id="suggestionBody" maxlength="2000" placeholder="건의 내용을 입력하세요. 최대 2000자"></textarea></div><div class="editor-actions"><button class="btn blue" id="submitSuggestionBtn">건의 보내기</button></div><div class="admin-list"><h3>내 건의 처리 현황</h3><div id="mySuggestionList"><p style="color:#64748b">건의 내역을 불러오는 중입니다.</p></div></div></div></dialog>
 
   <dialog id="inboxAdminDialog"><div class="modal-head"><h2>제보·건의 관리</h2><button class="close" data-close="inboxAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자만 뉴스제보와 건의함 내용을 확인하고 처리할 수 있습니다.</p><div class="admin-list"><h3>뉴스제보 목록</h3><div id="newsTipAdminList"></div></div><div class="admin-list"><h3>건의함 목록</h3><div id="suggestionAdminList"></div></div></div></dialog>
 
@@ -148,7 +148,7 @@
     const client = window.supabase.createClient(CONFIG.supabaseUrl, CONFIG.supabaseAnonKey, {
       auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
     });
-    let state = { articles: [], category: '종합', query: '', session: null, isEditor: false, editorRole: null, editorRecord: null, isOwner: false, profile: null, memberRequest: null, isApprovedMember: false, comments: [], commentBadgeMap: {}, activeArticleId: null, policyNotice: null, policyShown: false, maintenanceSettings: { enabled:false, allowedRoles:[], message:'현재 사이트 기능 점검 중입니다. 잠시 후 다시 접속해 주세요.' }, memberRequests: [], memberProfileBadges: {}, editorRequests: [], editorAccounts: [], ads: [], newsTips: [], suggestions: [], accountHelpRequests: [], passwordResetAttempts: [] };
+    let state = { articles: [], category: '종합', query: '', session: null, isEditor: false, editorRole: null, editorRecord: null, isOwner: false, profile: null, memberRequest: null, isApprovedMember: false, comments: [], commentBadgeMap: {}, activeArticleId: null, policyNotice: null, policyShown: false, maintenanceSettings: { enabled:false, allowedRoles:[], message:'현재 사이트 기능 점검 중입니다. 잠시 후 다시 접속해 주세요.' }, memberRequests: [], memberProfileBadges: {}, editorRequests: [], editorAccounts: [], ads: [], newsTips: [], suggestions: [], accountHelpRequests: [], passwordResetAttempts: [], mySuggestions: [] };
     const fmtDate = (v)=> new Intl.DateTimeFormat('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).format(new Date(v));
     const escapeHtml = (s='') => String(s).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 
@@ -782,8 +782,13 @@
     async function deleteAccountHelpRequest(id){
       if(!state.isOwner) return;
       if(!confirm('이 이메일 찾기 문의를 삭제하시겠습니까?')) return;
-      const { error } = await client.from('account_help_requests').delete().eq('id', id);
+      const { data, error } = await client.from('account_help_requests').delete().eq('id', id).select('id');
       if(error){ showStatus('문의 삭제 실패: '+error.message,'err'); return; }
+      if(!data || !data.length){
+        showStatus('문의가 삭제되지 않았습니다. 관리자 DELETE RLS 정책을 확인하세요.','err');
+        await loadAccountHelpAdminData();
+        return;
+      }
       await loadAccountHelpAdminData();
       showStatus('문의가 삭제되었습니다.','ok');
     }
@@ -1146,12 +1151,51 @@
       await loadNewsTips();
       renderNewsTipBoard();
     }
-    function openSuggestionDialog(){
+    function suggestionReplyText(s){
+      return String(s?.admin_reply || s?.reply || s?.reject_reason || s?.review_note || '').trim();
+    }
+    async function loadMySuggestions(){
+      state.mySuggestions = [];
+      if(!state.session?.user?.id) return;
+      let res = await client
+        .from('suggestions')
+        .select('*')
+        .eq('user_id', state.session.user.id)
+        .order('created_at', { ascending:false })
+        .limit(20);
+      if(res.error){
+        console.warn('my suggestions load failed:', res.error);
+        const box = $('mySuggestionList');
+        if(box) box.innerHTML = `<p style="color:#991b1b">내 건의 처리 현황을 불러오지 못했습니다: ${escapeHtml(res.error.message || res.error)}</p>`;
+        return;
+      }
+      state.mySuggestions = res.data || [];
+      renderMySuggestions();
+    }
+    function renderMySuggestions(){
+      const box = $('mySuggestionList');
+      if(!box) return;
+      const rows = Array.isArray(state.mySuggestions) ? state.mySuggestions : [];
+      if(!rows.length){
+        box.innerHTML = '<p style="color:#64748b">아직 내가 보낸 건의 내역이 없습니다.</p>';
+        return;
+      }
+      box.innerHTML = rows.map(s=>{
+        const reply = suggestionReplyText(s);
+        const status = newsTipStatusLabel(s.status || 'pending');
+        return `<div class="request-row"><div><strong>${escapeHtml(s.title || '제목 없음')}</strong><span>${escapeHtml(status)} · ${escapeHtml(safeDisplayDate(s.created_at))}<br>${escapeHtml(String(s.body || '').slice(0,160))}${String(s.body || '').length>160?'...':''}${reply ? `<br><b>관리자 답변/반려 사유:</b> ${escapeHtml(reply)}` : ''}</span></div></div>`;
+      }).join('');
+    }
+    async function openSuggestionDialog(){
       if(!state.session){ openDialog('loginDialog'); return; }
       if(!canUseMemberFeatures()){ showStatus('회원 승인 후 건의함을 사용할 수 있습니다.','err'); return; }
       $('suggestionTitle').value='';
       $('suggestionBody').value='';
-      openDialog('suggestionDialog');
+      const box = $('mySuggestionList');
+      if(box) box.innerHTML = '<p style="color:#64748b">건의 내역을 불러오는 중입니다.</p>';
+      try{ openDialog('suggestionDialog'); }
+      catch(e){ console.error('suggestion dialog open failed:', e); showStatus('건의함을 열지 못했습니다: '+(e.message||e),'err'); return; }
+      await loadMySuggestions();
     }
     async function submitSuggestion(){
       if(!state.session){ openDialog('loginDialog'); return; }
@@ -1188,8 +1232,9 @@
         tipBox.querySelectorAll('[data-tip-del]').forEach(b=>b.onclick=()=>deleteNewsTip(b.dataset.tipDel));
       }
       if(sugBox){
-        sugBox.innerHTML = state.suggestions.length ? state.suggestions.map(s=>`<div class="request-row"><div><strong>${escapeHtml(s.title || '제목 없음')}</strong><span>${escapeHtml(s.nickname || s.email || '익명')} · ${newsTipStatusLabel(s.status)} · ${fmtDate(s.created_at)}<br>${escapeHtml(String(s.body || '').slice(0,180))}${String(s.body || '').length>180?'...':''}</span></div><div class="ops"><button class="btn blue" data-sug-done="${s.id}">처리 완료</button><button class="btn red" data-sug-del="${s.id}">삭제</button></div></div>`).join('') : '<p style="color:#64748b">등록된 건의가 없습니다.</p>';
-        sugBox.querySelectorAll('[data-sug-done]').forEach(b=>b.onclick=()=>updateSuggestionStatus(b.dataset.sugDone, 'done'));
+        sugBox.innerHTML = state.suggestions.length ? state.suggestions.map(s=>{ const reply=suggestionReplyText(s); return `<div class="request-row"><div><strong>${escapeHtml(s.title || '제목 없음')}</strong><span>${escapeHtml(s.nickname || s.email || '익명')} · ${newsTipStatusLabel(s.status)} · ${fmtDate(s.created_at)}<br>${escapeHtml(String(s.body || '').slice(0,180))}${String(s.body || '').length>180?'...':''}${reply?`<br><b>반려 사유:</b> ${escapeHtml(reply)}`:''}</span></div><div class="ops"><button class="btn blue" data-sug-done="${s.id}">처리 완료·삭제</button><button class="btn red" data-sug-reject="${s.id}">반려 사유 보내기</button><button class="btn red" data-sug-del="${s.id}">삭제</button></div></div>`; }).join('') : '<p style="color:#64748b">등록된 건의가 없습니다.</p>';
+        sugBox.querySelectorAll('[data-sug-done]').forEach(b=>b.onclick=()=>completeAndDeleteSuggestion(b.dataset.sugDone));
+        sugBox.querySelectorAll('[data-sug-reject]').forEach(b=>b.onclick=()=>rejectSuggestionWithReason(b.dataset.sugReject));
         sugBox.querySelectorAll('[data-sug-del]').forEach(b=>b.onclick=()=>deleteSuggestion(b.dataset.sugDel));
       }
     }
@@ -1212,11 +1257,32 @@
       if(error){ showStatus('건의 상태 변경 실패: '+error.message,'err'); return; }
       await loadSuggestions(); renderInboxAdmin(); await refreshAdminAlertIndicator(); showStatus('건의 상태가 변경되었습니다.','ok');
     }
+    async function rejectSuggestionWithReason(id){
+      if(!state.isOwner) return;
+      const target = state.suggestions.find(x=>String(x.id)===String(id));
+      const reason = prompt('보낸 사용자에게 보여줄 반려 사유를 입력하세요.', suggestionReplyText(target) || '');
+      if(reason === null) return;
+      const clean = reason.trim();
+      if(!clean){ showStatus('반려 사유를 입력해야 합니다.','err'); return; }
+      const payload = { status:'rejected', admin_reply: clean, reviewed_by: state.session.user.id, reviewed_at: new Date().toISOString() };
+      const { error } = await client.from('suggestions').update(payload).eq('id', id);
+      if(error){ showStatus('반려 사유 저장 실패: '+error.message+' / suggestions 테이블에 admin_reply 컬럼이 있는지 확인하세요.','err'); return; }
+      await loadSuggestions(); renderInboxAdmin(); await refreshAdminAlertIndicator(); showStatus('반려 사유를 저장했습니다. 사용자는 건의함에서 확인할 수 있습니다.','ok');
+    }
+    async function completeAndDeleteSuggestion(id){
+      if(!state.isOwner) return;
+      if(!confirm('이 건의를 처리 완료로 보고 삭제하시겠습니까? 삭제 후 사용자는 이 건의를 더 이상 볼 수 없습니다.')) return;
+      const { data, error } = await client.from('suggestions').delete().eq('id', id).select('id');
+      if(error){ showStatus('처리 완료 삭제 실패: '+error.message,'err'); return; }
+      if(!data || !data.length){ showStatus('건의가 삭제되지 않았습니다. suggestions DELETE RLS 정책을 확인하세요.','err'); return; }
+      await loadSuggestions(); renderInboxAdmin(); await refreshAdminAlertIndicator(); showStatus('건의가 처리 완료되어 삭제되었습니다.','ok');
+    }
     async function deleteSuggestion(id){
       if(!state.isOwner) return;
       if(!confirm('이 건의를 삭제하시겠습니까?')) return;
-      const { error } = await client.from('suggestions').delete().eq('id', id);
+      const { data, error } = await client.from('suggestions').delete().eq('id', id).select('id');
       if(error){ showStatus('건의 삭제 실패: '+error.message,'err'); return; }
+      if(!data || !data.length){ showStatus('건의가 삭제되지 않았습니다. suggestions DELETE RLS 정책을 확인하세요.','err'); return; }
       await loadSuggestions(); renderInboxAdmin(); await refreshAdminAlertIndicator(); showStatus('건의가 삭제되었습니다.','ok');
     }
 
