@@ -24,7 +24,7 @@
     .masthead{max-width:1180px;margin:0 auto;padding:28px 18px 21px;display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:end}
     .date{font-size:13px;color:var(--muted)}
     .brand{text-align:center}.brand h1{margin:0;letter-spacing:-.06em;font-family:Georgia,"Times New Roman",serif;font-size:52px;line-height:1;color:#111}.brand p{margin:8px 0 0;font-size:13px;color:#64748b;letter-spacing:.08em;text-transform:uppercase}
-    .head-actions{display:flex;justify-content:flex-end;gap:8px;align-items:center;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#fff;color:#111827;padding:9px 12px;border-radius:999px;font-size:14px;transition:.18s}.btn:hover{border-color:#94a3b8;box-shadow:0 7px 18px rgba(15,23,42,.08)}.btn.dark{background:#111827;color:#fff;border-color:#111827}.btn.blue{background:#2563eb;color:#fff;border-color:#2563eb}.btn.red{background:#fff;color:var(--danger);border-color:#fecaca}.btn.ghost{background:transparent}
+    .head-actions{display:flex;justify-content:flex-end;gap:8px;align-items:center;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#fff;color:#111827;padding:9px 12px;border-radius:999px;font-size:14px;transition:.18s}.btn:hover{border-color:#94a3b8;box-shadow:0 7px 18px rgba(15,23,42,.08)}.btn.dark{background:#111827;color:#fff;border-color:#111827}.btn.blue{background:#2563eb;color:#fff;border-color:#2563eb}.btn.green{background:#16a34a;color:#fff;border-color:#16a34a}.btn.red{background:#fff;color:var(--danger);border-color:#fecaca}.btn.ghost{background:transparent}
     nav{border-top:1px solid var(--line);background:#fff}.nav-inner{max-width:1180px;margin:0 auto;padding:0 18px;display:flex;gap:2px;align-items:center;overflow:auto}.nav-btn{border:0;background:transparent;padding:14px 14px;color:#374151;white-space:nowrap;border-bottom:3px solid transparent}.nav-btn:hover,.nav-btn.active{color:#111827;border-bottom-color:#111827;background:#f9fafb}
     .ticker{background:#fff;border-bottom:1px solid var(--line)}.ticker-inner{max-width:1180px;margin:0 auto;padding:10px 18px;display:flex;gap:12px;align-items:center}.ticker-label{font-size:12px;font-weight:800;color:#fff;background:#111827;border-radius:4px;padding:3px 7px}.ticker-text{font-size:14px;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     main{max-width:1180px;margin:0 auto;padding:24px 18px 48px}.layout{display:grid;grid-template-columns:1.7fr .9fr;gap:24px}.maincol,.sidecol{min-width:0}
@@ -94,11 +94,14 @@
     @keyframes suggestionAnswerPulse{0%{transform:scale(.82);box-shadow:0 0 0 0 rgba(34,197,94,.74),0 0 12px rgba(34,197,94,.9)}70%{transform:scale(1.16);box-shadow:0 0 0 9px rgba(34,197,94,0),0 0 18px rgba(34,197,94,.95)}100%{transform:scale(.82);box-shadow:0 0 0 0 rgba(34,197,94,0),0 0 12px rgba(34,197,94,.9)}}
     @keyframes suggestionAnswerHalo{0%{opacity:.9;transform:scale(.7)}70%{opacity:.12;transform:scale(1.65)}100%{opacity:0;transform:scale(1.85)}}
     @keyframes suggestionAnswerBlink{0%,100%{filter:brightness(1)}45%{filter:brightness(1.55)}54%{filter:brightness(.92)}64%{filter:brightness(1.75)}}
-    .suggestion-status{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;background:#f8fafc;color:#334155;padding:2px 8px;font-size:12px;font-weight:900;margin-right:5px}
-    .suggestion-status.rejected{border-color:#fecaca;background:#fef2f2;color:#b91c1c}
-    .suggestion-status.answered{border-color:#bbf7d0;background:#f0fdf4;color:#166534}
     .suggestion-notice-card{border:1px solid var(--line);border-radius:16px;background:#f0fdf4;padding:16px;color:#14532d}
     .suggestion-notice-card strong{display:block;font-size:18px;margin-bottom:5px;color:#052e16}
+
+    .suggestion-status-badge{display:inline-flex;align-items:center;border-radius:999px;border:1px solid var(--line);padding:2px 8px;font-size:12px;font-weight:900;line-height:1.35;background:#f8fafc;color:#334155}
+    .suggestion-status-badge.done{border-color:#bbf7d0;background:#f0fdf4;color:#166534}
+    .suggestion-status-badge.accepted{border-color:#86efac;background:#dcfce7;color:#15803d}
+    .suggestion-status-badge.rejected{border-color:#fecaca;background:#fef2f2;color:#991b1b}
+    .suggestion-status-badge.reviewing{border-color:#bfdbfe;background:#eff6ff;color:#1d4ed8}
 
     @media(max-width:1500px){.ad-rail{--rail-gap:10px}.ad-rail .ad-box{padding:6px;margin-bottom:10px;border-radius:10px}.ad-rail .ad-close{right:4px;top:4px;width:20px;height:20px;font-size:13px}.ad-rail .ad-label,.ad-rail .ad-title,.ad-rail .ad-note{font-size:9px;line-height:1.25}}
     @media(max-width:1420px){.ad-rail{--rail-gap:8px}.ad-rail .ad-box{padding:4px;margin-bottom:8px}.ad-rail .ad-label,.ad-rail .ad-title,.ad-rail .ad-note{display:none}.ad-rail img{border-radius:8px}}
@@ -144,7 +147,7 @@
 
 
 
-  <dialog id="suggestionDialog"><div class="modal-head"><h2>건의함</h2><button class="close" data-close="suggestionDialog">×</button></div><div class="modal-body"><p class="login-note">사이트 이용 중 불편한 점이나 개선 의견을 관리자에게 직접 보낼 수 있습니다. 처리 완료된 건의는 보관 없이 삭제될 수 있고, 반려된 건의는 아래 내 건의 처리 현황에서 사유를 확인할 수 있습니다.</p><div class="field"><label>건의 제목</label><input id="suggestionTitle" maxlength="80" placeholder="건의 제목을 입력하세요."></div><div class="field"><label>건의 내용</label><textarea id="suggestionBody" maxlength="2000" placeholder="건의 내용을 입력하세요. 최대 2000자"></textarea></div><div class="editor-actions"><button class="btn blue" id="submitSuggestionBtn">건의 보내기</button></div><div class="admin-list"><h3>내 건의 처리 현황</h3><div id="mySuggestionList"><p style="color:#64748b">건의 내역을 불러오는 중입니다.</p></div></div></div></dialog>
+  <dialog id="suggestionDialog"><div class="modal-head"><h2>건의함</h2><button class="close" data-close="suggestionDialog">×</button></div><div class="modal-body"><p class="login-note">사이트 이용 중 불편한 점이나 개선 의견을 관리자에게 직접 보낼 수 있습니다. 수락, 처리 완료 또는 반려된 건의는 아래 내 건의 처리 현황에서 확인할 수 있으며, 관리자가 삭제한 건의는 목록에서 사라질 수 있습니다.</p><div class="field"><label>건의 제목</label><input id="suggestionTitle" maxlength="80" placeholder="건의 제목을 입력하세요."></div><div class="field"><label>건의 내용</label><textarea id="suggestionBody" maxlength="2000" placeholder="건의 내용을 입력하세요. 최대 2000자"></textarea></div><div class="editor-actions"><button class="btn blue" id="submitSuggestionBtn">건의 보내기</button></div><div class="admin-list"><h3>내 건의 처리 현황</h3><div id="mySuggestionList"><p style="color:#64748b">건의 내역을 불러오는 중입니다.</p></div></div></div></dialog>
 
   <dialog id="suggestionAnswerNoticeDialog"><div class="modal-head"><h2>건의 답변 알림</h2><button class="close" data-close="suggestionAnswerNoticeDialog">×</button></div><div class="modal-body"><div class="suggestion-notice-card"><strong>당신의 건의에 대한 답변이 도착했습니다.</strong><p id="suggestionAnswerNoticeText" class="login-note" style="margin:0;color:#166534">건의함에서 처리 현황과 관리자 답변을 확인할 수 있습니다.</p></div><div class="editor-actions"><button class="btn" id="suggestionAnswerLaterBtn">나중에 보기</button><button class="btn blue" id="suggestionAnswerOpenBtn">건의함 보기</button></div></div></dialog>
 
@@ -1131,7 +1134,7 @@
 
 
     function canUseMemberBoard(){ return !!(state.session && canUseMemberFeatures()); }
-    function newsTipStatusLabel(status){ return status === 'done' ? '처리 완료' : status === 'reviewing' ? '확인 중' : status === 'rejected' ? '반려' : '접수'; }
+    function newsTipStatusLabel(status){ return status === 'accepted' ? '수락' : status === 'done' ? '처리 완료' : status === 'reviewing' ? '확인 중' : status === 'rejected' ? '반려' : '접수'; }
     async function loadNewsTips(){
       if(!state.session){ state.newsTips=[]; return; }
       const { data, error } = await client.from('news_tips').select('*').order('created_at', { ascending:false });
@@ -1209,7 +1212,7 @@
     }
     function isSuggestionAnswerTarget(s){
       const status = String(s?.status || 'pending');
-      return !!suggestionReplyText(s) || status === 'rejected';
+      return !!suggestionReplyText(s) || status === 'rejected' || status === 'done' || status === 'accepted';
     }
     function unseenSuggestionAnswers(){
       const seen = loadSeenSuggestionAnswers();
@@ -1299,10 +1302,10 @@
       }
       box.innerHTML = rows.map(s=>{
         const reply = suggestionReplyText(s);
-        const status = newsTipStatusLabel(s.status || 'pending');
-        const statusClass = String(s.status || 'pending') === 'rejected' ? 'rejected' : (reply ? 'answered' : '');
-        const statusPill = `<span class="suggestion-status ${escapeHtml(statusClass)}">${escapeHtml(status)}</span>`;
-        return `<div class="request-row"><div><strong>${escapeHtml(s.title || '제목 없음')}</strong><span>${statusPill} ${escapeHtml(safeDisplayDate(s.created_at))}<br>${escapeHtml(String(s.body || '').slice(0,160))}${String(s.body || '').length>160?'...':''}${reply ? `<br><b>관리자 답변/반려 사유:</b> ${escapeHtml(reply)}` : ''}</span></div></div>`;
+        const rawStatus = String(s.status || 'pending');
+        const status = newsTipStatusLabel(rawStatus);
+        const badgeClass = rawStatus === 'rejected' ? 'rejected' : rawStatus === 'accepted' ? 'accepted' : rawStatus === 'done' ? 'done' : rawStatus === 'reviewing' ? 'reviewing' : 'pending';
+        return `<div class="request-row"><div><strong>${escapeHtml(s.title || '제목 없음')}</strong><span><span class="suggestion-status-badge ${escapeHtml(badgeClass)}">${escapeHtml(status)}</span> · ${escapeHtml(safeDisplayDate(s.created_at))}<br>${escapeHtml(String(s.body || '').slice(0,160))}${String(s.body || '').length>160?'...':''}${reply ? `<br><b>관리자 답변/처리 내용:</b> ${escapeHtml(reply)}` : ''}</span></div></div>`;
       }).join('');
     }
     async function openSuggestionDialog(){
@@ -1353,8 +1356,9 @@
         tipBox.querySelectorAll('[data-tip-del]').forEach(b=>b.onclick=()=>deleteNewsTip(b.dataset.tipDel));
       }
       if(sugBox){
-        sugBox.innerHTML = state.suggestions.length ? state.suggestions.map(s=>{ const reply=suggestionReplyText(s); return `<div class="request-row"><div><strong>${escapeHtml(s.title || '제목 없음')}</strong><span>${escapeHtml(s.nickname || s.email || '익명')} · ${newsTipStatusLabel(s.status)} · ${fmtDate(s.created_at)}<br>${escapeHtml(String(s.body || '').slice(0,180))}${String(s.body || '').length>180?'...':''}${reply?`<br><b>반려 사유:</b> ${escapeHtml(reply)}`:''}</span></div><div class="ops"><button class="btn blue" data-sug-done="${s.id}">처리 완료·삭제</button><button class="btn red" data-sug-reject="${s.id}">반려 사유 보내기</button><button class="btn red" data-sug-del="${s.id}">삭제</button></div></div>`; }).join('') : '<p style="color:#64748b">등록된 건의가 없습니다.</p>';
-        sugBox.querySelectorAll('[data-sug-done]').forEach(b=>b.onclick=()=>completeAndDeleteSuggestion(b.dataset.sugDone));
+        sugBox.innerHTML = state.suggestions.length ? state.suggestions.map(s=>{ const reply=suggestionReplyText(s); return `<div class="request-row"><div><strong>${escapeHtml(s.title || '제목 없음')}</strong><span>${escapeHtml(s.nickname || s.email || '익명')} · ${newsTipStatusLabel(s.status)} · ${fmtDate(s.created_at)}<br>${escapeHtml(String(s.body || '').slice(0,180))}${String(s.body || '').length>180?'...':''}${reply?`<br><b>관리자 답변/처리 내용:</b> ${escapeHtml(reply)}`:''}</span></div><div class="ops"><button class="btn blue" data-sug-done="${s.id}">처리 완료</button><button class="btn green" data-sug-accept="${s.id}">수락 메시지 보내기</button><button class="btn red" data-sug-reject="${s.id}">반려 사유 보내기</button><button class="btn red" data-sug-del="${s.id}">삭제</button></div></div>`; }).join('') : '<p style="color:#64748b">등록된 건의가 없습니다.</p>';
+        sugBox.querySelectorAll('[data-sug-done]').forEach(b=>b.onclick=()=>markSuggestionDone(b.dataset.sugDone));
+        sugBox.querySelectorAll('[data-sug-accept]').forEach(b=>b.onclick=()=>acceptSuggestionWithMessage(b.dataset.sugAccept));
         sugBox.querySelectorAll('[data-sug-reject]').forEach(b=>b.onclick=()=>rejectSuggestionWithReason(b.dataset.sugReject));
         sugBox.querySelectorAll('[data-sug-del]').forEach(b=>b.onclick=()=>deleteSuggestion(b.dataset.sugDel));
       }
@@ -1378,6 +1382,39 @@
       if(error){ showStatus('건의 상태 변경 실패: '+error.message,'err'); return; }
       await loadSuggestions(); renderInboxAdmin(); await refreshAdminAlertIndicator(); showStatus('건의 상태가 변경되었습니다.','ok');
     }
+    async function acceptSuggestionWithMessage(id){
+      if(!state.isOwner) return;
+      const target = state.suggestions.find(x=>String(x.id)===String(id));
+      const defaultMessage = '건의가 수락되었습니다. 어떤 방식으로 반영할지 검토해 보겠습니다.';
+      const message = prompt('보낸 사용자에게 보여줄 수락 메시지를 입력하세요.', suggestionReplyText(target) || defaultMessage);
+      if(message === null) return;
+      const clean = message.trim();
+      if(!clean){ showStatus('수락 메시지를 입력해야 합니다.','err'); return; }
+
+      const basePayload = {
+        status:'accepted',
+        reviewed_by: state.session.user.id,
+        reviewed_at: new Date().toISOString()
+      };
+      const replyColumns = ['admin_reply', 'reply', 'review_note'];
+      let lastError = null;
+
+      for(const col of replyColumns){
+        const payload = { ...basePayload, [col]: clean };
+        const { error } = await client.from('suggestions').update(payload).eq('id', id);
+        if(!error){
+          await loadSuggestions(); renderInboxAdmin(); await refreshAdminAlertIndicator();
+          showStatus('수락 메시지를 저장했습니다. 사용자는 건의함에서 확인할 수 있습니다.','ok');
+          return;
+        }
+        lastError = error;
+        const msg = String(error.message || '');
+        if(!/column|schema|admin_reply|reply|review_note|Could not find/i.test(msg)) break;
+      }
+
+      showStatus('수락 메시지 저장 실패: '+(lastError?.message || lastError)+' / suggestions 테이블에 admin_reply 컬럼을 추가하거나 RLS UPDATE 정책을 확인하세요.','err');
+    }
+
     async function rejectSuggestionWithReason(id){
       if(!state.isOwner) return;
       const target = state.suggestions.find(x=>String(x.id)===String(id));
@@ -1410,13 +1447,38 @@
       showStatus('반려 사유 저장 실패: '+(lastError?.message || lastError)+' / suggestions 테이블에 admin_reply 컬럼을 추가하거나 RLS UPDATE 정책을 확인하세요.','err');
     }
 
-    async function completeAndDeleteSuggestion(id){
+    async function markSuggestionDone(id){
       if(!state.isOwner) return;
-      if(!confirm('이 건의를 처리 완료로 보고 삭제하시겠습니까? 삭제 후 사용자는 이 건의를 더 이상 볼 수 없습니다.')) return;
-      const { data, error } = await client.from('suggestions').delete().eq('id', id).select('id');
-      if(error){ showStatus('처리 완료 삭제 실패: '+error.message,'err'); return; }
-      if(!data || !data.length){ showStatus('건의가 삭제되지 않았습니다. suggestions DELETE RLS 정책을 확인하세요.','err'); return; }
-      await loadSuggestions(); renderInboxAdmin(); await refreshAdminAlertIndicator(); showStatus('건의가 처리 완료되어 삭제되었습니다.','ok');
+      if(!confirm('이 건의를 처리 완료로 표시하고, 보낸 사용자에게 처리 완료 알림을 남기시겠습니까?')) return;
+      const doneMessage = '관리자가 처리 완료함';
+      const basePayload = {
+        status:'done',
+        reviewed_by: state.session.user.id,
+        reviewed_at: new Date().toISOString()
+      };
+      const replyColumns = ['admin_reply', 'reply', 'review_note'];
+      let lastError = null;
+
+      for(const col of replyColumns){
+        const payload = { ...basePayload, [col]: doneMessage };
+        const { error } = await client.from('suggestions').update(payload).eq('id', id);
+        if(!error){
+          await loadSuggestions(); renderInboxAdmin(); await refreshAdminAlertIndicator();
+          showStatus('건의를 처리 완료로 표시했습니다. 사용자는 건의함에서 확인할 수 있습니다.','ok');
+          return;
+        }
+        lastError = error;
+        const msg = String(error.message || '');
+        if(!/column|schema|admin_reply|reply|review_note|Could not find/i.test(msg)) break;
+      }
+
+      const fallback = await client.from('suggestions').update(basePayload).eq('id', id);
+      if(fallback.error){
+        showStatus('처리 완료 표시 실패: '+(fallback.error.message || lastError?.message || lastError)+' / suggestions UPDATE RLS 정책을 확인하세요.','err');
+        return;
+      }
+      await loadSuggestions(); renderInboxAdmin(); await refreshAdminAlertIndicator();
+      showStatus('건의를 처리 완료로 표시했습니다. 단, 답변 컬럼이 없어 사용자는 상태만 확인할 수 있습니다.','ok');
     }
     async function deleteSuggestion(id){
       if(!state.isOwner) return;
