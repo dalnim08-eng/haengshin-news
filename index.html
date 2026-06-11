@@ -88,14 +88,19 @@
     @keyframes adminAlertTwinkle{0%,100%{filter:brightness(1)}45%{filter:brightness(1.45)}52%{filter:brightness(.92)}62%{filter:brightness(1.7)}}
 
 
-    #suggestionBtn{position:relative;overflow:visible}
-    #suggestionBtn.suggestion-answer-active::after{content:"";position:absolute;right:-4px;top:-5px;width:11px;height:11px;border-radius:999px;background:#22c55e;border:2px solid #fff;box-shadow:0 0 0 0 rgba(34,197,94,.74),0 0 14px rgba(34,197,94,.95);animation:suggestionAnswerPulse 1.25s ease-out infinite,suggestionAnswerBlink 1.8s ease-in-out infinite;z-index:4}
-    #suggestionBtn.suggestion-answer-active::before{content:"";position:absolute;right:-9px;top:-10px;width:22px;height:22px;border-radius:999px;background:radial-gradient(circle,rgba(34,197,94,.38) 0%,rgba(34,197,94,.18) 44%,rgba(34,197,94,0) 72%);animation:suggestionAnswerHalo 1.25s ease-out infinite;z-index:3;pointer-events:none}
+    #suggestionBtn,#personalMessageBtn{position:relative;overflow:visible}
+    #suggestionBtn.suggestion-answer-active::after,#personalMessageBtn.personal-message-active::after{content:"";position:absolute;right:-4px;top:-5px;width:11px;height:11px;border-radius:999px;background:#22c55e;border:2px solid #fff;box-shadow:0 0 0 0 rgba(34,197,94,.74),0 0 14px rgba(34,197,94,.95);animation:suggestionAnswerPulse 1.25s ease-out infinite,suggestionAnswerBlink 1.8s ease-in-out infinite;z-index:4}
+    #suggestionBtn.suggestion-answer-active::before,#personalMessageBtn.personal-message-active::before{content:"";position:absolute;right:-9px;top:-10px;width:22px;height:22px;border-radius:999px;background:radial-gradient(circle,rgba(34,197,94,.38) 0%,rgba(34,197,94,.18) 44%,rgba(34,197,94,0) 72%);animation:suggestionAnswerHalo 1.25s ease-out infinite;z-index:3;pointer-events:none}
     @keyframes suggestionAnswerPulse{0%{transform:scale(.82);box-shadow:0 0 0 0 rgba(34,197,94,.74),0 0 12px rgba(34,197,94,.9)}70%{transform:scale(1.16);box-shadow:0 0 0 9px rgba(34,197,94,0),0 0 18px rgba(34,197,94,.95)}100%{transform:scale(.82);box-shadow:0 0 0 0 rgba(34,197,94,0),0 0 12px rgba(34,197,94,.9)}}
     @keyframes suggestionAnswerHalo{0%{opacity:.9;transform:scale(.7)}70%{opacity:.12;transform:scale(1.65)}100%{opacity:0;transform:scale(1.85)}}
     @keyframes suggestionAnswerBlink{0%,100%{filter:brightness(1)}45%{filter:brightness(1.55)}54%{filter:brightness(.92)}64%{filter:brightness(1.75)}}
-    .suggestion-notice-card{border:1px solid var(--line);border-radius:16px;background:#f0fdf4;padding:16px;color:#14532d}
-    .suggestion-notice-card strong{display:block;font-size:18px;margin-bottom:5px;color:#052e16}
+    .suggestion-notice-card,.personal-message-notice-card{border:1px solid var(--line);border-radius:16px;background:#f0fdf4;padding:16px;color:#14532d}
+    .suggestion-notice-card strong,.personal-message-notice-card strong{display:block;font-size:18px;margin-bottom:5px;color:#052e16}
+    .personal-message-card{border:1px solid var(--line);border-radius:16px;background:#fff;padding:14px;margin-bottom:10px}
+    .personal-message-card.unseen{border-color:#86efac;background:#f0fdf4;box-shadow:0 8px 18px rgba(34,197,94,.08)}
+    .personal-message-card h4{margin:0 0 6px;font-size:16px}
+    .personal-message-card p{white-space:pre-wrap;margin:8px 0;color:#374151}
+    .personal-message-meta{font-size:12px;color:#64748b}
 
     .suggestion-status-badge{display:inline-flex;align-items:center;border-radius:999px;border:1px solid var(--line);padding:2px 8px;font-size:12px;font-weight:900;line-height:1.35;background:#f8fafc;color:#334155}
     .suggestion-status-badge.done{border-color:#bbf7d0;background:#f0fdf4;color:#166534}
@@ -111,7 +116,7 @@
 </head>
 <body>
   <div class="topbar"><div class="topbar-inner"><div id="today"></div><div class="mini-links"><span id="memberStatusTop" class="role-badge hidden">승인 상태</span><button id="loginTopBtn">로그인</button><button id="publisherRequestTopBtn" class="hidden">게시 신청</button><button id="profileTopBtn" class="hidden">닉네임 설정</button><button id="logoutTopBtn" class="hidden">로그아웃</button></div></div></div>
-  <header><div class="masthead"><div class="date">소식 · 활동 기록 · 공지</div><div class="brand"><h1>haengshin news</h1><p>newsroom</p></div><div class="head-actions"><button class="btn hidden" id="suggestionBtn">건의함</button><button class="btn dark hidden admin-center-button" id="adminCenterBtn">관리 센터</button><button class="btn hidden" id="inboxAdminBtn">제보·건의 관리</button><button class="btn hidden" id="accountHelpAdminBtn">계정 도움 관리</button><button class="btn hidden" id="accountAdminBtn">계정 관리</button><button class="btn hidden" id="adAdminBtn">광고 관리</button><button class="btn hidden" id="policyAdminBtn">운영 방침</button><button class="btn dark hidden" id="manageBtn">기사 관리</button></div></div></header>
+  <header><div class="masthead"><div class="date">소식 · 활동 기록 · 공지</div><div class="brand"><h1>haengshin news</h1><p>newsroom</p></div><div class="head-actions"><button class="btn hidden" id="suggestionBtn">건의함</button><button class="btn hidden" id="personalMessageBtn">알림</button><button class="btn dark hidden admin-center-button" id="adminCenterBtn">관리 센터</button><button class="btn hidden" id="inboxAdminBtn">제보·건의 관리</button><button class="btn hidden" id="accountHelpAdminBtn">계정 도움 관리</button><button class="btn hidden" id="accountAdminBtn">계정 관리</button><button class="btn hidden" id="adAdminBtn">광고 관리</button><button class="btn hidden" id="policyAdminBtn">운영 방침</button><button class="btn dark hidden" id="manageBtn">기사 관리</button></div></div></header>
   <nav><div class="nav-inner" id="nav"></div></nav>
   <section class="ticker"><div class="ticker-inner"><span class="ticker-label">NOTICE</span><span class="ticker-text" id="tickerText">새로운 소식이 등록되면 이곳에 최신 기사가 표시됩니다.</span></div></section>
   <main><div class="search-row"><input id="searchInput" placeholder="기사 검색" autocomplete="off" /><button class="btn" id="searchClear">초기화</button></div><div id="content"></div></main>
@@ -119,7 +124,7 @@
   <aside id="rightAdRail" class="ad-rail ad-rail-right hidden" aria-label="오른쪽 시범 광고"></aside>
   <footer class="footer"><div class="footer-inner"><span>© haengshin news</span><span>소식과 활동 기록을 공유하는 뉴스형 웹사이트</span></div></footer>
 
-  <dialog id="adminCenterDialog"><div class="modal-head"><h2>관리 센터</h2><button class="close" data-close="adminCenterDialog">×</button></div><div class="modal-body"><div class="admin-center-layout"><nav class="admin-center-menu" aria-label="관리 센터 메뉴"><button type="button" data-admin-action="dashboard">요청 현황</button><button type="button" data-admin-action="articles">기사 관리</button><button type="button" class="owner-only" data-admin-action="accounts">계정 관리</button><button type="button" class="owner-only" data-admin-action="accountHelp">계정 도움 관리</button><button type="button" class="owner-only" data-admin-action="inbox">제보·건의 관리</button><button type="button" class="owner-only" data-admin-action="ads">광고 관리</button><button type="button" class="owner-only" data-admin-action="policy">운영 방침</button></nav><section class="admin-center-main" id="adminCenterMain"><h3>요청 현황을 불러오는 중입니다</h3><p>새 요청과 처리할 항목을 확인하고 있습니다.</p></section></div></div></dialog>
+  <dialog id="adminCenterDialog"><div class="modal-head"><h2>관리 센터</h2><button class="close" data-close="adminCenterDialog">×</button></div><div class="modal-body"><div class="admin-center-layout"><nav class="admin-center-menu" aria-label="관리 센터 메뉴"><button type="button" data-admin-action="dashboard">요청 현황</button><button type="button" data-admin-action="articles">기사 관리</button><button type="button" class="owner-only" data-admin-action="accounts">계정 관리</button><button type="button" class="owner-only" data-admin-action="accountHelp">계정 도움 관리</button><button type="button" class="owner-only" data-admin-action="inbox">제보·건의 관리</button><button type="button" class="owner-only" data-admin-action="personalMessages">개인 알림 관리</button><button type="button" class="owner-only" data-admin-action="ads">광고 관리</button><button type="button" class="owner-only" data-admin-action="policy">운영 방침</button></nav><section class="admin-center-main" id="adminCenterMain"><h3>요청 현황을 불러오는 중입니다</h3><p>새 요청과 처리할 항목을 확인하고 있습니다.</p></section></div></div></dialog>
 
   <dialog id="loginDialog"><div class="modal-head"><h2>계정</h2><button class="close" data-close="loginDialog">×</button></div><div class="modal-body"><div class="form-grid"><div class="field"><label>로그인 이메일</label><input id="loginEmail" type="email" placeholder="user@example.com"></div><div class="field"><label>로그인 비밀번호</label><input id="loginPassword" type="password" placeholder="비밀번호"></div></div><div class="editor-actions"><button class="btn" id="accountHelpBtn">이메일 찾기 문의</button><button class="btn" id="forgotPasswordBtn">비밀번호 찾기</button><button class="btn blue" id="signinBtn">로그인</button></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h3 style="margin:0 0 10px">회원가입 신청</h3><div class="form-grid"><div class="field"><label>이메일</label><input id="signupEmail" type="email" placeholder="user@example.com"></div><div class="field"><label>비밀번호</label><input id="signupPassword" type="password" placeholder="6자 이상 비밀번호"></div><div class="field"><label>비밀번호 확인</label><input id="signupPassword2" type="password" placeholder="비밀번호 확인"></div><div class="field"><label>닉네임</label><input id="signupNickname" maxlength="20" placeholder="2~20자 닉네임"></div></div><p class="login-note">가입 신청 후 관리자가 승인해야 댓글 작성과 게시 계정 신청이 가능합니다. 이메일 인증은 사용하지 않으므로 이메일 주소는 본인이 실제로 사용하는 주소를 입력해 주세요.</p><div class="editor-actions"><button class="btn" id="signupBtn">회원가입 신청</button></div></div></dialog>
 
@@ -149,7 +154,13 @@
 
   <dialog id="suggestionDialog"><div class="modal-head"><h2>건의함</h2><button class="close" data-close="suggestionDialog">×</button></div><div class="modal-body"><p class="login-note">사이트 이용 중 불편한 점이나 개선 의견을 관리자에게 직접 보낼 수 있습니다. 수락, 처리 완료 또는 반려된 건의는 아래 내 건의 처리 현황에서 확인할 수 있으며, 관리자가 삭제한 건의는 목록에서 사라질 수 있습니다.</p><div class="field"><label>건의 제목</label><input id="suggestionTitle" maxlength="80" placeholder="건의 제목을 입력하세요."></div><div class="field"><label>건의 내용</label><textarea id="suggestionBody" maxlength="2000" placeholder="건의 내용을 입력하세요. 최대 2000자"></textarea></div><div class="editor-actions"><button class="btn blue" id="submitSuggestionBtn">건의 보내기</button></div><div class="admin-list"><h3>내 건의 처리 현황</h3><div id="mySuggestionList"><p style="color:#64748b">건의 내역을 불러오는 중입니다.</p></div></div></div></dialog>
 
-  <dialog id="suggestionAnswerNoticeDialog"><div class="modal-head"><h2>건의 답변 알림</h2><button class="close" data-close="suggestionAnswerNoticeDialog">×</button></div><div class="modal-body"><div class="suggestion-notice-card"><strong>당신의 건의에 대한 답변이 도착했습니다.</strong><p id="suggestionAnswerNoticeText" class="login-note" style="margin:0;color:#166534">건의함에서 처리 현황과 관리자 답변을 확인할 수 있습니다.</p></div><div class="editor-actions"><button class="btn" id="suggestionAnswerLaterBtn">나중에 보기</button><button class="btn blue" id="suggestionAnswerOpenBtn">건의함 보기</button></div></div></dialog>
+  <dialog id="suggestionAnswerNoticeDialog"><div class="modal-head"><h2>건의 답변 알림</h2><button class="close" data-close="suggestionAnswerNoticeDialog">×</button></div><div class="modal-body"><div class="suggestion-notice-card"><strong>당신의 건의에 대한 답변이 도착했습니다.</strong><p id="suggestionAnswerNoticeText" class="login-note" style="margin:0;color:#166534">건의함에서 처리 현황과 관리자 답변을 확인할 수 있습니다. 이 알림을 그만 보려면 해당 건의의 건의 확인 버튼을 눌러 주세요.</p></div><div class="editor-actions"><button class="btn" id="suggestionAnswerLaterBtn">나중에 보기</button><button class="btn blue" id="suggestionAnswerOpenBtn">건의함 보기</button></div></div></dialog>
+
+  <dialog id="personalMessageDialog"><div class="modal-head"><h2>개인 알림</h2><button class="close" data-close="personalMessageDialog">×</button></div><div class="modal-body"><p class="login-note">관리자가 개인적으로 보낸 알림을 확인할 수 있습니다. 알림는 삭제되지 않으며, 각 항목의 알림 확인 버튼을 누르면 그 알림에 대한 로그인 팝업만 더 이상 뜨지 않습니다.</p><div id="myPersonalMessageList"><p style="color:#64748b">알림 내역을 불러오는 중입니다.</p></div></div></dialog>
+
+  <dialog id="personalMessageNoticeDialog"><div class="modal-head"><h2>개인 알림</h2><button class="close" data-close="personalMessageNoticeDialog">×</button></div><div class="modal-body"><div class="personal-message-notice-card"><strong>관리자의 개인 알림가 도착했습니다.</strong><p id="personalMessageNoticeText" class="login-note" style="margin:0;color:#166534">알림에서 내용을 확인할 수 있습니다. 이 알림을 그만 보려면 해당 알림의 알림 확인 버튼을 눌러 주세요.</p></div><div class="editor-actions"><button class="btn" id="personalMessageLaterBtn">나중에 보기</button><button class="btn blue" id="personalMessageOpenBtn">알림 보기</button></div></div></dialog>
+
+  <dialog id="personalMessageAdminDialog"><div class="modal-head"><h2>개인 알림 관리</h2><button class="close" data-close="personalMessageAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자가 특정 회원에게 개인 알림를 보낼 수 있습니다. 받은 사용자는 로그인 시 팝업 알림을 보고, 알림에서 내용을 확인할 수 있습니다.</p><div class="form-grid"><div class="field"><label>받는 사람</label><select id="personalMessageRecipient"><option value="">회원 목록을 불러오는 중입니다</option></select></div><div class="field"><label>알림 제목</label><input id="personalMessageTitle" maxlength="100" placeholder="예: 요청 처리 안내"></div><div class="field full"><label>알림 내용</label><textarea id="personalMessageBody" maxlength="2000" placeholder="전달할 개인 알림 내용을 입력하세요. 최대 2000자"></textarea></div></div><div class="editor-actions"><button class="btn blue" id="sendPersonalMessageBtn">개인 알림 보내기</button></div><div class="admin-list"><h3>최근 보낸 개인 알림</h3><div id="personalMessageAdminList"><p style="color:#64748b">알림 목록을 불러오는 중입니다.</p></div></div></div></dialog>
 
   <dialog id="inboxAdminDialog"><div class="modal-head"><h2>제보·건의 관리</h2><button class="close" data-close="inboxAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자만 뉴스제보와 건의함 내용을 확인하고 처리할 수 있습니다.</p><div class="admin-list"><h3>뉴스제보 목록</h3><div id="newsTipAdminList"></div></div><div class="admin-list"><h3>건의함 목록</h3><div id="suggestionAdminList"></div></div></div></dialog>
 
@@ -168,7 +179,7 @@
     const client = window.supabase.createClient(CONFIG.supabaseUrl, CONFIG.supabaseAnonKey, {
       auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
     });
-    let state = { articles: [], category: '종합', query: '', session: null, isEditor: false, editorRole: null, editorRecord: null, isOwner: false, profile: null, memberRequest: null, isApprovedMember: false, comments: [], commentBadgeMap: {}, activeArticleId: null, policyNotice: null, policyShown: false, maintenanceSettings: { enabled:false, allowedRoles:[], message:'현재 사이트 기능 점검 중입니다. 잠시 후 다시 접속해 주세요.' }, memberRequests: [], memberProfileBadges: {}, editorRequests: [], editorAccounts: [], ads: [], newsTips: [], suggestions: [], accountHelpRequests: [], passwordResetAttempts: [], mySuggestions: [], suggestionAnswerNoticeCount: 0 };
+    let state = { articles: [], category: '종합', query: '', session: null, isEditor: false, editorRole: null, editorRecord: null, isOwner: false, profile: null, memberRequest: null, isApprovedMember: false, comments: [], commentBadgeMap: {}, activeArticleId: null, policyNotice: null, policyShown: false, maintenanceSettings: { enabled:false, allowedRoles:[], message:'현재 사이트 기능 점검 중입니다. 잠시 후 다시 접속해 주세요.' }, memberRequests: [], memberProfileBadges: {}, editorRequests: [], editorAccounts: [], ads: [], newsTips: [], suggestions: [], accountHelpRequests: [], passwordResetAttempts: [], mySuggestions: [], suggestionAnswerNoticeCount: 0, personalMessages: [], personalMessageNoticeCount: 0, personalMessageRecipients: [], personalMessageAdminRows: [] };
     const fmtDate = (v)=> new Intl.DateTimeFormat('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).format(new Date(v));
     const escapeHtml = (s='') => String(s).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 
@@ -846,6 +857,7 @@
       await loadMemberStatus();
       updateAuthUI();
       await checkSuggestionAnswerNotifications({ popup:true });
+      await checkPersonalMessageNotifications({ popup:true });
       if(isRecoveryRedirect && state.session) openPasswordUpdateDialog();
       cleanAuthHash();
       client.auth.onAuthStateChange(async (event, session)=>{
@@ -855,6 +867,7 @@
         await loadMemberStatus();
         updateAuthUI();
         await checkSuggestionAnswerNotifications({ popup:event === 'SIGNED_IN' });
+        await checkPersonalMessageNotifications({ popup:event === 'SIGNED_IN' });
         await refreshAdminAlertIndicator();
         await renderCurrentView();
         if(event === 'PASSWORD_RECOVERY'){
@@ -962,6 +975,10 @@
       if($('suggestionBtn')) {
         $('suggestionBtn').classList.toggle('hidden', !(loggedIn && approvedMember));
         if(!(loggedIn && approvedMember)) $('suggestionBtn').classList.remove('suggestion-answer-active');
+      }
+      if($('personalMessageBtn')) {
+        $('personalMessageBtn').classList.toggle('hidden', !loggedIn);
+        if(!loggedIn) $('personalMessageBtn').classList.remove('personal-message-active');
       }
       if($('adminCenterBtn')) $('adminCenterBtn').classList.toggle('hidden', !(loggedIn && (state.isOwner || state.isEditor)));
       forceHideLegacyAdminButtons();
@@ -1238,13 +1255,29 @@
       saveSeenSuggestionAnswers(seen);
       updateSuggestionAnswerIndicator();
     }
+    function isSuggestionAnswerSeen(s){
+      return loadSeenSuggestionAnswers().has(suggestionAnswerSignature(s));
+    }
+    function confirmSuggestionAnswer(suggestionId){
+      const target = (state.mySuggestions || []).find(s => String(s.id) === String(suggestionId));
+      if(!target || !isSuggestionAnswerTarget(target)){
+        showStatus('확인할 건의 답변을 찾지 못했습니다.','err');
+        return;
+      }
+      const seen = loadSeenSuggestionAnswers();
+      seen.add(suggestionAnswerSignature(target));
+      saveSeenSuggestionAnswers(seen);
+      renderMySuggestions();
+      updateSuggestionAnswerIndicator();
+      showStatus('이 건의 답변을 확인 처리했습니다. 이후 로그인 때 이 건의로 인한 팝업은 뜨지 않습니다.','ok');
+    }
     function openSuggestionAnswerNoticeDialog(count, attempt=0){
       const dialog = $('suggestionAnswerNoticeDialog');
       if(!dialog || !state.session || count <= 0) return;
       const text = $('suggestionAnswerNoticeText');
       if(text) text.textContent = count > 1
-        ? `확인하지 않은 건의 답변 ${count}개가 있습니다. 건의함에서 처리 현황과 관리자 답변을 확인할 수 있습니다.`
-        : '건의함에서 처리 현황과 관리자 답변을 확인할 수 있습니다.';
+        ? `확인하지 않은 건의 답변 ${count}개가 있습니다. 건의함에서 처리 현황과 관리자 답변을 확인할 수 있습니다. 이 알림을 그만 보려면 각 건의의 건의 확인 버튼을 눌러 주세요.`
+        : '건의함에서 처리 현황과 관리자 답변을 확인할 수 있습니다. 이 알림을 그만 보려면 해당 건의의 건의 확인 버튼을 눌러 주세요.';
       const openNow = () => {
         if(dialog.open || sessionStorage.getItem(suggestionAnswerPopupSessionKey()) === 'shown') return;
         const other = Array.from(document.querySelectorAll('dialog[open]')).find(d => d !== dialog);
@@ -1274,6 +1307,219 @@
         openSuggestionAnswerNoticeDialog(unseen.length);
       }
     }
+    function personalMessageStorageKey(){
+      return 'hn_seen_personal_messages_' + (state.session?.user?.id || 'guest');
+    }
+    function personalMessagePopupSessionKey(){
+      return 'hn_personal_message_popup_' + (state.session?.user?.id || 'guest');
+    }
+    function personalMessageSignature(m){
+      const id = String(m?.id || 'no-id');
+      const updatedAt = String(m?.updated_at || m?.created_at || '');
+      const title = String(m?.title || '').slice(0, 100);
+      const body = String(m?.body || '').slice(0, 160);
+      return [id, updatedAt, title, body].join('|');
+    }
+    function loadSeenPersonalMessages(){
+      try{
+        const raw = localStorage.getItem(personalMessageStorageKey()) || '[]';
+        const arr = JSON.parse(raw);
+        return new Set(Array.isArray(arr) ? arr.map(String) : []);
+      } catch(_){
+        return new Set();
+      }
+    }
+    function saveSeenPersonalMessages(keys){
+      try{
+        localStorage.setItem(personalMessageStorageKey(), JSON.stringify([...keys].slice(-300)));
+      } catch(e){
+        console.warn('personal message seen save failed:', e);
+      }
+    }
+    function isPersonalMessageTarget(m){
+      return !!m && m.active !== false && (!!String(m.title || '').trim() || !!String(m.body || '').trim());
+    }
+    function isPersonalMessageSeen(m){
+      return loadSeenPersonalMessages().has(personalMessageSignature(m));
+    }
+    function unseenPersonalMessages(){
+      const seen = loadSeenPersonalMessages();
+      return (state.personalMessages || []).filter(m => isPersonalMessageTarget(m) && !seen.has(personalMessageSignature(m)));
+    }
+    function updatePersonalMessageIndicator(){
+      const btn = $('personalMessageBtn');
+      const count = unseenPersonalMessages().length;
+      state.personalMessageNoticeCount = count;
+      if(!btn) return;
+      btn.classList.toggle('personal-message-active', count > 0);
+      if(count > 0){
+        btn.setAttribute('title', `확인하지 않은 개인 알림 ${count}개가 있습니다.`);
+        btn.setAttribute('aria-label', `알림, 확인하지 않은 개인 알림 ${count}개`);
+      } else {
+        btn.removeAttribute('title');
+        btn.setAttribute('aria-label', '알림');
+      }
+    }
+    function confirmPersonalMessage(messageId){
+      const target = (state.personalMessages || []).find(m => String(m.id) === String(messageId));
+      if(!target || !isPersonalMessageTarget(target)){
+        showStatus('확인할 개인 알림를 찾지 못했습니다.','err');
+        return;
+      }
+      const seen = loadSeenPersonalMessages();
+      seen.add(personalMessageSignature(target));
+      saveSeenPersonalMessages(seen);
+      renderPersonalMessages();
+      updatePersonalMessageIndicator();
+      showStatus('이 개인 알림를 확인 처리했습니다. 이후 로그인 때 이 알림으로 인한 팝업은 뜨지 않습니다.','ok');
+    }
+    function openPersonalMessageNoticeDialog(count, attempt=0){
+      const dialog = $('personalMessageNoticeDialog');
+      if(!dialog || !state.session || count <= 0) return;
+      const text = $('personalMessageNoticeText');
+      if(text) text.textContent = count > 1
+        ? `확인하지 않은 개인 알림 ${count}개가 있습니다. 알림에서 내용을 확인할 수 있습니다. 이 알림을 그만 보려면 각 알림의 알림 확인 버튼을 눌러 주세요.`
+        : '알림에서 내용을 확인할 수 있습니다. 이 알림을 그만 보려면 해당 알림의 알림 확인 버튼을 눌러 주세요.';
+      const openNow = () => {
+        if(dialog.open || sessionStorage.getItem(personalMessagePopupSessionKey()) === 'shown') return;
+        const other = Array.from(document.querySelectorAll('dialog[open]')).find(d => d !== dialog);
+        if(other){
+          if(attempt < 12) setTimeout(() => openPersonalMessageNoticeDialog(count, attempt + 1), 450);
+          return;
+        }
+        try{
+          dialog.showModal();
+          sessionStorage.setItem(personalMessagePopupSessionKey(), 'shown');
+        } catch(e){
+          console.warn('personal message notice open failed:', e);
+        }
+      };
+      setTimeout(openNow, 250);
+    }
+    async function loadPersonalMessages(){
+      state.personalMessages = [];
+      if(!state.session?.user?.id){ updatePersonalMessageIndicator(); return; }
+      const { data, error } = await client
+        .from('personal_messages')
+        .select('*')
+        .eq('recipient_id', state.session.user.id)
+        .eq('active', true)
+        .order('created_at', { ascending:false })
+        .limit(50);
+      if(error){
+        console.warn('personal message load failed:', error);
+        const box = $('myPersonalMessageList');
+        if(box) box.innerHTML = `<p style="color:#991b1b">개인 알림를 불러오지 못했습니다: ${escapeHtml(error.message || error)}</p>`;
+        updatePersonalMessageIndicator();
+        return;
+      }
+      state.personalMessages = data || [];
+      renderPersonalMessages();
+      updatePersonalMessageIndicator();
+    }
+    async function checkPersonalMessageNotifications({ popup=false }={}){
+      if(!state.session){
+        state.personalMessages = [];
+        updatePersonalMessageIndicator();
+        return;
+      }
+      await loadPersonalMessages();
+      const unseen = unseenPersonalMessages();
+      updatePersonalMessageIndicator();
+      if(popup && unseen.length && sessionStorage.getItem(personalMessagePopupSessionKey()) !== 'shown'){
+        openPersonalMessageNoticeDialog(unseen.length);
+      }
+    }
+    function renderPersonalMessages(){
+      const box = $('myPersonalMessageList');
+      if(!box) return;
+      const rows = Array.isArray(state.personalMessages) ? state.personalMessages : [];
+      if(!rows.length){
+        box.innerHTML = '<p style="color:#64748b">도착한 개인 알림가 없습니다.</p>';
+        return;
+      }
+      box.innerHTML = rows.map(m=>{
+        const seen = isPersonalMessageSeen(m);
+        return `<article class="personal-message-card ${seen?'':'unseen'}"><div class="personal-message-meta">${escapeHtml(safeDisplayDate(m.created_at))}${m.sender_nickname ? ' · 보낸 사람: '+escapeHtml(m.sender_nickname) : ''}</div><h4>${escapeHtml(m.title || '개인 알림')}</h4><p>${escapeHtml(m.body || '')}</p><div class="editor-actions" style="justify-content:flex-start;margin-top:8px">${seen ? '<span class="role-badge">확인됨</span>' : `<button class="btn green" type="button" data-personal-message-confirm="${escapeHtml(m.id)}">알림 확인</button><small style="color:#166534;align-self:center">이 버튼을 누르면 이 알림의 로그인 팝업만 더 이상 뜨지 않습니다.</small>`}</div></article>`;
+      }).join('');
+      box.querySelectorAll('[data-personal-message-confirm]').forEach(b=>b.onclick=()=>confirmPersonalMessage(b.dataset.personalMessageConfirm));
+    }
+    async function openPersonalMessageDialog(){
+      if(!state.session){ openDialog('loginDialog'); return; }
+      const box = $('myPersonalMessageList');
+      if(box) box.innerHTML = '<p style="color:#64748b">알림 내역을 불러오는 중입니다.</p>';
+      openDialog('personalMessageDialog');
+      await loadPersonalMessages();
+    }
+    async function loadPersonalMessageAdminData(){
+      if(!state.isOwner){ showStatus('관리자만 개인 알림를 관리할 수 있습니다.','err'); return; }
+      const [membersRes, messagesRes] = await Promise.all([
+        client.from('member_requests').select('user_id, email, nickname, status').order('requested_at', { ascending:false }),
+        client.from('personal_messages').select('*').order('created_at', { ascending:false }).limit(100)
+      ]);
+      if(membersRes.error){ showStatus('회원 목록 로드 실패: '+membersRes.error.message,'err'); state.personalMessageRecipients = []; }
+      else state.personalMessageRecipients = (membersRes.data || []).filter(m=>m.user_id && m.status !== 'blocked' && m.status !== 'rejected');
+      if(messagesRes.error){ showStatus('개인 알림 목록 로드 실패: '+messagesRes.error.message+' / personal_messages 테이블 생성 여부를 확인하세요.','err'); state.personalMessageAdminRows = []; }
+      else state.personalMessageAdminRows = messagesRes.data || [];
+      renderPersonalMessageAdmin();
+    }
+    function renderPersonalMessageAdmin(){
+      const select = $('personalMessageRecipient');
+      if(select){
+        const rows = state.personalMessageRecipients || [];
+        select.innerHTML = rows.length
+          ? '<option value="">받는 사람 선택</option>' + rows.map(m=>`<option value="${escapeHtml(m.user_id)}" data-email="${escapeHtml(m.email || '')}" data-nickname="${escapeHtml(m.nickname || '')}">${escapeHtml(m.nickname || m.email || m.user_id)}${m.email ? ' · '+escapeHtml(m.email) : ''}</option>`).join('')
+          : '<option value="">선택 가능한 회원이 없습니다</option>';
+      }
+      const list = $('personalMessageAdminList');
+      if(!list) return;
+      const messages = state.personalMessageAdminRows || [];
+      list.innerHTML = messages.length ? messages.map(m=>`<div class="request-row"><div><strong>${escapeHtml(m.title || '개인 알림')}</strong><span>받는 사람: ${escapeHtml(m.recipient_nickname || m.recipient_email || m.recipient_id || '알 수 없음')} · ${escapeHtml(safeDisplayDate(m.created_at))}<br>${escapeHtml(String(m.body || '').slice(0,180))}${String(m.body || '').length>180?'...':''}</span></div><div class="ops"><button class="btn red" data-personal-message-del="${escapeHtml(m.id)}">삭제</button></div></div>`).join('') : '<p style="color:#64748b">보낸 개인 알림가 없습니다.</p>';
+      list.querySelectorAll('[data-personal-message-del]').forEach(b=>b.onclick=()=>deletePersonalMessage(b.dataset.personalMessageDel));
+    }
+    async function openPersonalMessageAdmin(){
+      if(!state.isOwner){ showStatus('관리자만 개인 알림 관리를 사용할 수 있습니다.','err'); return; }
+      await loadPersonalMessageAdminData();
+      openDialog('personalMessageAdminDialog');
+    }
+    async function sendPersonalMessage(){
+      if(!state.isOwner){ showStatus('관리자만 개인 알림를 보낼 수 있습니다.','err'); return; }
+      const select = $('personalMessageRecipient');
+      const recipientId = select?.value || '';
+      const option = select?.selectedOptions?.[0];
+      const title = $('personalMessageTitle')?.value.trim();
+      const body = $('personalMessageBody')?.value.trim();
+      if(!recipientId){ showStatus('받는 사람을 선택하세요.','err'); return; }
+      if(!title || !body){ showStatus('알림 제목과 내용을 모두 입력하세요.','err'); return; }
+      const payload = {
+        recipient_id: recipientId,
+        recipient_email: option?.dataset?.email || null,
+        recipient_nickname: option?.dataset?.nickname || null,
+        title,
+        body,
+        active: true,
+        created_by: state.session.user.id,
+        sender_nickname: state.profile?.nickname || state.editorRecord?.nickname || '관리자',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+      const { error } = await client.from('personal_messages').insert(payload);
+      if(error){ showStatus('개인 알림 전송 실패: '+error.message+' / personal_messages 테이블과 INSERT RLS 정책을 확인하세요.','err'); return; }
+      $('personalMessageTitle').value='';
+      $('personalMessageBody').value='';
+      showStatus('개인 알림를 보냈습니다. 해당 사용자는 로그인 시 팝업으로 확인할 수 있습니다.','ok');
+      await loadPersonalMessageAdminData();
+    }
+    async function deletePersonalMessage(id){
+      if(!state.isOwner) return;
+      if(!confirm('이 개인 알림를 삭제하시겠습니까? 삭제하면 받은 사용자 쪽에서도 사라집니다.')) return;
+      const { data, error } = await client.from('personal_messages').delete().eq('id', id).select('id');
+      if(error){ showStatus('개인 알림 삭제 실패: '+error.message,'err'); return; }
+      if(!data || !data.length){ showStatus('개인 알림가 삭제되지 않았습니다. personal_messages DELETE RLS 정책을 확인하세요.','err'); return; }
+      await loadPersonalMessageAdminData();
+      showStatus('개인 알림가 삭제되었습니다.','ok');
+    }
+
     async function loadMySuggestions(){
       state.mySuggestions = [];
       if(!state.session?.user?.id) return;
@@ -1305,8 +1551,14 @@
         const rawStatus = String(s.status || 'pending');
         const status = newsTipStatusLabel(rawStatus);
         const badgeClass = rawStatus === 'rejected' ? 'rejected' : rawStatus === 'accepted' ? 'accepted' : rawStatus === 'done' ? 'done' : rawStatus === 'reviewing' ? 'reviewing' : 'pending';
-        return `<div class="request-row"><div><strong>${escapeHtml(s.title || '제목 없음')}</strong><span><span class="suggestion-status-badge ${escapeHtml(badgeClass)}">${escapeHtml(status)}</span> · ${escapeHtml(safeDisplayDate(s.created_at))}<br>${escapeHtml(String(s.body || '').slice(0,160))}${String(s.body || '').length>160?'...':''}${reply ? `<br><b>관리자 답변/처리 내용:</b> ${escapeHtml(reply)}` : ''}</span></div></div>`;
+        const answerTarget = isSuggestionAnswerTarget(s);
+        const seen = answerTarget && isSuggestionAnswerSeen(s);
+        const ops = answerTarget
+          ? `<div class="ops">${seen ? '<span class="role-badge">확인됨</span>' : `<button class="btn green" type="button" data-sug-confirm="${escapeHtml(s.id)}">건의 확인</button>`}</div>`
+          : '';
+        return `<div class="request-row"><div><strong>${escapeHtml(s.title || '제목 없음')}</strong><span><span class="suggestion-status-badge ${escapeHtml(badgeClass)}">${escapeHtml(status)}</span> · ${escapeHtml(safeDisplayDate(s.created_at))}<br>${escapeHtml(String(s.body || '').slice(0,160))}${String(s.body || '').length>160?'...':''}${reply ? `<br><b>관리자 답변/처리 내용:</b> ${escapeHtml(reply)}` : ''}${answerTarget && !seen ? '<br><small style="color:#166534">이 알림을 그만 보려면 오른쪽의 건의 확인 버튼을 눌러 주세요.</small>' : ''}</span></div>${ops}</div>`;
       }).join('');
+      box.querySelectorAll('[data-sug-confirm]').forEach(b=>b.onclick=()=>confirmSuggestionAnswer(b.dataset.sugConfirm));
     }
     async function openSuggestionDialog(){
       if(!state.session){ openDialog('loginDialog'); return; }
@@ -1318,7 +1570,7 @@
       try{ openDialog('suggestionDialog'); }
       catch(e){ console.error('suggestion dialog open failed:', e); showStatus('건의함을 열지 못했습니다: '+(e.message||e),'err'); return; }
       await loadMySuggestions();
-      markSuggestionAnswersAsSeen(state.mySuggestions || []);
+      updateSuggestionAnswerIndicator();
     }
     async function submitSuggestion(){
       if(!state.session){ openDialog('loginDialog'); return; }
@@ -2103,6 +2355,7 @@
         } else if(action === 'accounts') openAccountAdmin();
         else if(action === 'accountHelp') openAccountHelpAdmin();
         else if(action === 'inbox') openInboxAdmin();
+        else if(action === 'personalMessages') openPersonalMessageAdmin();
         else if(action === 'ads') openAdAdmin();
         else if(action === 'policy') openPolicyEditor();
       }, 0);
@@ -2134,8 +2387,12 @@
       if($('accountHelpAdminBtn')) $('accountHelpAdminBtn').onclick=openAccountHelpAdmin;
       $('saveMaintenanceBtn').onclick=saveMaintenanceSettings;
       if($('suggestionBtn')) $('suggestionBtn').onclick=openSuggestionDialog;
+      if($('personalMessageBtn')) $('personalMessageBtn').onclick=openPersonalMessageDialog;
       if($('suggestionAnswerLaterBtn')) $('suggestionAnswerLaterBtn').onclick=()=>closeDialog('suggestionAnswerNoticeDialog');
       if($('suggestionAnswerOpenBtn')) $('suggestionAnswerOpenBtn').onclick=async()=>{ closeDialog('suggestionAnswerNoticeDialog'); await openSuggestionDialog(); };
+      if($('personalMessageLaterBtn')) $('personalMessageLaterBtn').onclick=()=>closeDialog('personalMessageNoticeDialog');
+      if($('personalMessageOpenBtn')) $('personalMessageOpenBtn').onclick=async()=>{ closeDialog('personalMessageNoticeDialog'); await openPersonalMessageDialog(); };
+      if($('sendPersonalMessageBtn')) $('sendPersonalMessageBtn').onclick=sendPersonalMessage;
       if($('inboxAdminBtn')) $('inboxAdminBtn').onclick=openInboxAdmin;
       if($('submitSuggestionBtn')) $('submitSuggestionBtn').onclick=submitSuggestion;
       $('adAdminBtn').onclick=openAdAdmin;
@@ -2144,7 +2401,7 @@
       $('policyCloseBtn').onclick=closePolicyDialog;
       $('savePolicyBtn').onclick=savePolicyNotice;
       $('manageBtn').onclick=()=>{ if(!state.isEditor){ showStatus('승인된 기사 게시 계정만 기사 관리가 가능합니다.','err'); return; } if(!$('articleId')?.value) renderArticleCategoryControls({ category:$('category')?.value || '공지' }); renderAdminList();openDialog('editorDialog');};
-      $('logoutTopBtn').onclick=async()=>{await client.auth.signOut(); state.isEditor=false; state.isOwner=false; state.editorRole=null; state.editorRecord=null; state.profile=null; state.memberRequest=null; state.isApprovedMember=false; state.newsTips=[]; state.suggestions=[]; state.mySuggestions=[]; updateSuggestionAnswerIndicator(); if(state.activeArticleId) renderComments(state.activeArticleId); showStatus('로그아웃되었습니다.','ok');};
+      $('logoutTopBtn').onclick=async()=>{await client.auth.signOut(); state.isEditor=false; state.isOwner=false; state.editorRole=null; state.editorRecord=null; state.profile=null; state.memberRequest=null; state.isApprovedMember=false; state.newsTips=[]; state.suggestions=[]; state.mySuggestions=[]; state.personalMessages=[]; updateSuggestionAnswerIndicator(); updatePersonalMessageIndicator(); if(state.activeArticleId) renderComments(state.activeArticleId); showStatus('로그아웃되었습니다.','ok');};
       document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeDialog(b.dataset.close));
       if($('imageViewerCloseBtn')) $('imageViewerCloseBtn').onclick=()=>closeDialog('imageViewerDialog');
       if($('imageViewerDialog')) $('imageViewerDialog').addEventListener('click',(e)=>{ if(e.target === $('imageViewerDialog')) closeDialog('imageViewerDialog'); });
