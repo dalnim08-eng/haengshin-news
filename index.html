@@ -1848,12 +1848,8 @@
         safeSelectEditorsForBadges(userIds)
       ]);
       profiles.forEach(p=>{ state.commentBadgeMap[p.user_id] = normalizeBadges(p.badges); });
-      editors.forEach(e=>{
-        const roleBadges = roleBadgesFromEditor(e);
-        if(roleBadges.length){
-          state.commentBadgeMap[e.user_id] = mergeBadges(roleBadges, state.commentBadgeMap[e.user_id]);
-        }
-      });
+      // 댓글 배지도 profiles.badges에 저장된 수동 배지만 사용합니다.
+      // 게시 권한(editors.role)에서 기자 배지를 자동 생성하면 관리자가 배지를 해제해도 다시 살아납니다.
     }
     function canReplyToComments(){ return !!(state.session && canUseMemberFeatures() && state.profile?.nickname); }
     function renderComments(articleId){
@@ -2136,12 +2132,8 @@
       state.memberProfileBadges = {};
       const profileRows = await safeSelectProfilesWithBadges(state.memberRequests.map(m=>m.user_id));
       profileRows.forEach(row=>{ state.memberProfileBadges[row.user_id] = normalizeBadges(row.badges); });
-      state.editorAccounts.filter(e=>e.user_id).forEach(e=>{
-        const roleBadges = roleBadgesFromEditor(e);
-        if(roleBadges.length){
-          state.memberProfileBadges[e.user_id] = mergeBadges(roleBadges, state.memberProfileBadges[e.user_id]);
-        }
-      });
+      // 배지 체크박스는 profiles.badges에 저장된 수동 배지만 기준으로 표시합니다.
+      // editors 테이블의 게시 권한을 자동으로 합치면, 체크 해제 후 저장해도 다시 켜지는 문제가 생깁니다.
       renderAccountAdmin();
       await refreshAdminAlertIndicator();
     }
@@ -2184,19 +2176,21 @@
       const badges = Array.from(box.querySelectorAll('[data-badge-check]:checked')).map(input=>input.dataset.badgeCheck);
       const cleanBadges = normalizeBadges(badges);
       const member = state.memberRequests.find(m=>m.user_id === userId);
-      const { error } = await client.from('profiles').upsert({
+      const nickname = member?.nickname || state.profile?.nickname || member?.email || '사용자';
+      const { data, error } = await client.from('profiles').upsert({
         user_id: userId,
-        nickname: member?.nickname || undefined,
+        nickname,
         badges: cleanBadges,
         updated_at: new Date().toISOString()
-      }, { onConflict: 'user_id' });
+      }, { onConflict: 'user_id' }).select('user_id, badges').maybeSingle();
       if(error){
-        showStatus('배지 저장 실패: '+error.message+' / profiles 테이블에 badges 컬럼이 있는지 확인하세요.','err');
+        showStatus('배지 저장 실패: '+error.message+' / profiles 테이블의 badges 컬럼과 profiles UPDATE RLS 정책을 확인하세요.','err');
         return;
       }
-      state.memberProfileBadges[userId] = cleanBadges;
-      if(state.session?.user?.id === userId && state.profile) state.profile.badges = cleanBadges;
-      showStatus('댓글 배지가 저장되었습니다.','ok');
+      const savedBadges = normalizeBadges(data?.badges ?? cleanBadges);
+      state.memberProfileBadges[userId] = savedBadges;
+      if(state.session?.user?.id === userId && state.profile) state.profile.badges = savedBadges;
+      showStatus(savedBadges.length ? '댓글 배지가 저장되었습니다.' : '댓글 배지가 해제되었습니다.','ok');
       await loadAccountAdminData();
       await refreshAdminAlertIndicator();
       if(state.activeArticleId) await loadComments(state.activeArticleId);
@@ -2226,7 +2220,18 @@
       if(upsertError){ showStatus('승인 실패: '+upsertError.message,'err'); return; }
       const { error: reqError } = await client.from('editor_requests').update({ status:'approved', reviewed_by: state.session.user.id, reviewed_at: new Date().toISOString() }).eq('id', requestId);
       if(reqError){ showStatus('신청 상태 변경 실패: '+reqError.message,'err'); return; }
-      showStatus('게시 계정이 승인되었습니다.','ok');
+      try{
+        const currentBadges = normalizeBadges(state.memberProfileBadges?.[r.user_id]);
+        await client.from('profiles').upsert({
+          user_id: r.user_id,
+          nickname: r.nickname || r.email || '사용자',
+          badges: mergeBadges(currentBadges, ['reporter']),
+          updated_at: new Date().toISOString()
+        }, { onConflict: 'user_id' });
+      } catch(e){
+        console.warn('reporter badge auto grant failed:', e);
+      }
+      showStatus('게시 계정이 승인되었습니다. 기자 배지도 함께 부여되었습니다.','ok');
       await loadAccountAdminData();
     }
     async function rejectEditorRequest(requestId){
