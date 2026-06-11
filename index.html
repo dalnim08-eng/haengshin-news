@@ -47,9 +47,9 @@
     .ad-box{position:relative}.ad-close{position:absolute;right:8px;top:8px;width:24px;height:24px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.92);color:#334155;line-height:1;font-size:16px;display:flex;align-items:center;justify-content:center;z-index:3}.ad-close:hover{background:#111827;color:#fff}.maintenance-card{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:18px;padding:42px 28px;text-align:center;max-width:720px;margin:56px auto}.maintenance-card h2{margin:0 0 12px;font-size:30px}.maintenance-card p{margin:6px 0;color:#4b5563}.maintenance-settings{border:1px solid var(--line);border-radius:16px;background:#f8fafc;padding:14px;margin:14px 0}.check-grid{display:flex;gap:12px;flex-wrap:wrap}.check-grid label{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;background:#fff;padding:8px 11px;font-size:14px}.category-pin-grid{display:grid;gap:8px;border:1px solid var(--line);border-radius:16px;background:#f8fafc;padding:10px}.category-pin-row{display:grid;grid-template-columns:minmax(130px,1fr) 150px;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;background:#fff;padding:9px 10px}.category-pin-row label{display:flex;align-items:center;gap:8px;font-size:14px;color:#334155}.category-pin-row input[type="number"]{width:100%;border:1px solid var(--line);border-radius:10px;padding:8px 9px}.category-pin-row input[type="number"]:disabled{background:#f1f5f9;color:#94a3b8}
     .image-viewer-dialog{max-width:min(1120px,calc(100% - 24px));width:auto;background:transparent;box-shadow:none;border-radius:0}.image-viewer-dialog::backdrop{background:rgba(2,6,23,.82)}.image-viewer-shell{position:relative;background:#020617;border-radius:18px;padding:14px;box-shadow:0 30px 90px rgba(0,0,0,.45)}.image-viewer-shell img{display:block;max-width:min(1080px,calc(100vw - 56px));max-height:82vh;width:auto;height:auto;object-fit:contain;border-radius:12px;background:#111827}.image-viewer-caption{color:#e5e7eb;font-size:13px;margin:10px 6px 2px;max-width:min(1080px,calc(100vw - 56px));white-space:pre-wrap}.image-viewer-close{position:absolute;right:10px;top:10px;width:38px;height:38px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(15,23,42,.78);color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center;z-index:2}.image-viewer-close:hover{background:#fff;color:#111827}
 
-    .comment-author-line{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-    .comment-badges{display:inline-flex;align-items:center;gap:5px;flex-wrap:wrap}
-    .comment-badge{display:inline-flex;align-items:center;border-radius:999px;border:1px solid var(--line);padding:2px 7px;font-size:11px;font-weight:900;line-height:1.35;letter-spacing:-.02em;background:#f8fafc;color:#334155}
+    .comment-author-line{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .comment-badges{display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap}
+    .comment-badge{display:inline-flex;align-items:center;border-radius:6px;border:1px solid var(--line);padding:2px 6px;font-size:10.5px;font-weight:950;line-height:1.35;letter-spacing:-.02em;background:#f8fafc;color:#334155}
     .comment-badge.reporter{border-color:#bfdbfe;background:#eff6ff;color:#1d4ed8}
     .comment-badge.admin{border-color:#cbd5e1;background:#111827;color:#fff}
     .comment-badge.owner{border-color:#f59e0b;background:linear-gradient(90deg,#92400e,#facc15,#fff7ed,#facc15,#92400e);background-size:220% auto;color:#111827;text-shadow:0 0 8px rgba(250,204,21,.45);box-shadow:0 0 12px rgba(250,204,21,.25);animation:goldBadgeShine 2.4s linear infinite}
@@ -57,8 +57,8 @@
     .badge-editor{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}.badge-editor label{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;background:#fff;padding:6px 9px;font-size:12px;color:#334155}.badge-editor .btn{padding:6px 9px;font-size:12px}
 
     /* title system pilot */
-    .user-title-wrap{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 3px}
-    .user-title-chip{position:relative;display:inline-flex;align-items:center;gap:4px;width:max-content;max-width:100%;border-radius:999px;border:1px solid var(--line);padding:2px 8px;font-size:11px;font-weight:950;line-height:1.35;letter-spacing:-.02em;background:#f8fafc;color:#334155;user-select:none;outline:none;animation-iteration-count:2;animation-fill-mode:both}
+    .user-title-wrap{display:inline-flex;align-items:center;gap:4px;margin:0;vertical-align:middle}
+    .user-title-chip{position:relative;display:inline-flex;align-items:center;gap:3px;width:max-content;max-width:100%;border-radius:999px;border:1px solid var(--line);padding:2px 7px;font-size:10.5px;font-weight:950;line-height:1.35;letter-spacing:-.02em;background:#f8fafc;color:#334155;user-select:none;outline:none;animation-iteration-count:2;animation-fill-mode:both}
     .user-title-chip[data-rarity="common"]{background:#f8fafc;color:#334155;border-color:#e5e7eb}
     .user-title-chip[data-rarity="advanced"]{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe;box-shadow:0 0 0 2px rgba(37,99,235,.04)}
     .user-title-chip[data-rarity="rare"]{background:linear-gradient(90deg,#eef2ff,#f5f3ff,#eef2ff);color:#4338ca;border-color:#c4b5fd;box-shadow:0 0 12px rgba(124,58,237,.13)}
@@ -74,11 +74,17 @@
     .user-title-chip.title-cosmic{overflow:hidden;background:#071225;color:#fff;border-color:#38bdf8;text-shadow:0 0 10px rgba(255,255,255,.68);box-shadow:0 0 16px rgba(56,189,248,.22),inset 0 0 18px rgba(30,64,175,.32);animation-name:titleCosmic;animation-duration:1.9s}
     .user-title-chip.title-cosmic::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 14% 36%,rgba(255,255,255,.95) 0 1px,transparent 2px),radial-gradient(circle at 72% 26%,rgba(186,230,253,.95) 0 1px,transparent 2px),radial-gradient(circle at 88% 68%,rgba(255,255,255,.85) 0 1px,transparent 2px),radial-gradient(circle at 42% 78%,rgba(147,197,253,.9) 0 1px,transparent 2px);opacity:.72;animation:titleCosmicStars 1.9s ease-in-out 2;pointer-events:none}
     .user-title-chip:hover,.user-title-chip.title-tapped{animation-iteration-count:1;filter:brightness(1.04)}
-    .title-tooltip{position:fixed;z-index:90;max-width:min(260px,calc(100vw - 24px));background:#111827;color:#fff;border-radius:12px;padding:9px 11px;font-size:12px;line-height:1.45;box-shadow:0 18px 42px rgba(15,23,42,.28);pointer-events:none}
+    .title-tooltip{position:fixed;z-index:90;max-width:min(260px,calc(100vw - 24px));background:#111827;color:#fff;border-radius:12px;padding:9px 11px;font-size:12px;line-height:1.45;box-shadow:0 18px 42px rgba(15,23,42,.28);pointer-events:none;transform:translateY(0)}
+    .title-tooltip::after{content:"";position:absolute;left:50%;bottom:-6px;width:12px;height:12px;background:#111827;transform:translateX(-50%) rotate(45deg);border-radius:2px}
     .title-admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
     .title-preview-box{border:1px solid var(--line);border-radius:16px;background:#f8fafc;padding:14px;display:flex;align-items:center;justify-content:center;min-height:78px}
     .owned-title-list{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
     .owned-title-empty{color:#64748b;font-size:13px}
+
+    .profile-settings-body{display:grid;gap:14px}
+    .profile-section{border:1px solid var(--line);border-radius:16px;background:#fff;padding:16px}
+    .profile-section h3{margin:0 0 8px;font-size:17px}
+    .profile-section .login-note{margin:0 0 12px}
     @keyframes titleBubble{0%,100%{transform:translateY(0)}45%{transform:translateY(-2px)}70%{transform:translateY(1px)}}
     @keyframes titleSparkle{0%,100%{filter:brightness(1);box-shadow:0 0 0 rgba(250,204,21,0)}50%{filter:brightness(1.18);box-shadow:0 0 15px rgba(250,204,21,.32)}}
     @keyframes titleRadar{0%,100%{box-shadow:0 0 0 0 rgba(37,99,235,.18)}55%{box-shadow:0 0 0 7px rgba(37,99,235,0)}}
@@ -175,7 +181,7 @@
 
   <dialog id="accountHelpAdminDialog"><div class="modal-head"><h2>계정 도움 관리</h2><button class="close" data-close="accountHelpAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자 전용 창구입니다. 이메일 찾기 문의와 비밀번호 재설정 시도 기록을 확인할 수 있습니다.</p><div class="admin-list"><h3>이메일 찾기 문의</h3><div id="accountHelpRequestList"></div></div><div class="admin-list"><h3>비밀번호 재설정 시도 내역</h3><div id="passwordResetAttemptList"></div></div></div></dialog>
 
-  <dialog id="profileDialog"><div class="modal-head"><h2>프로필 설정</h2><button class="close" data-close="profileDialog">×</button></div><div class="modal-body"><div class="field"><label>닉네임</label><input id="nicknameInput" maxlength="20" placeholder="2~20자 닉네임"></div><div class="field"><label>대표 칭호</label><select id="featuredTitleSelect"><option value="">칭호 없음</option></select></div><div class="field"><label>내가 보유한 칭호</label><div id="ownedTitleList" class="owned-title-list"><span class="owned-title-empty">보유한 칭호를 불러오는 중입니다.</span></div></div><p class="login-note">칭호는 이름 상단에 대표 칭호 1개만 표시됩니다. 칭호 획득 조건은 공개되지 않으며, 사이트 활동 중 조건을 만족하면 지급됩니다.</p><div class="editor-actions"><button class="btn blue" id="saveNicknameBtn">프로필 저장</button></div></div></dialog>
+  <dialog id="profileDialog"><div class="modal-head"><h2>프로필 설정</h2><button class="close" data-close="profileDialog">×</button></div><div class="modal-body profile-settings-body"><section class="profile-section"><h3>기본 정보</h3><p class="login-note">사이트에서 표시될 이름을 설정합니다. 추후 소개글, 프로필 이미지, 배경 설정도 이 영역에 추가할 수 있습니다.</p><div class="field"><label>닉네임</label><input id="nicknameInput" maxlength="20" placeholder="2~20자 닉네임"></div></section><section class="profile-section"><h3>칭호 설정</h3><p class="login-note">여러 칭호를 보유해도 댓글과 게시물에는 대표 칭호 1개만 표시됩니다. 보유 칭호 목록에서 원하는 칭호를 대표 칭호로 선택할 수 있습니다.</p><div class="field"><label>대표 칭호</label><select id="featuredTitleSelect"><option value="">칭호 없음</option></select></div><div class="field"><label>내가 보유한 칭호</label><div id="ownedTitleList" class="owned-title-list"><span class="owned-title-empty">보유한 칭호를 불러오는 중입니다.</span></div></div><p class="login-note">칭호 획득 조건은 사용자에게 숫자까지 공개되지 않으며, 사이트 활동 중 조건을 만족하면 자동 또는 관리자 지급으로 보유 목록에 추가됩니다.</p></section><div class="editor-actions"><button class="btn blue" id="saveNicknameBtn">프로필 저장</button></div></div></dialog>
 
   <dialog id="editorRequestDialog"><div class="modal-head"><h2>기사 게시 계정 신청</h2><button class="close" data-close="editorRequestDialog">×</button></div><div class="modal-body"><p class="login-note">승인된 일반 회원만 게시 권한을 신청할 수 있습니다. 관리자가 승인하기 전까지 기사 작성 권한은 부여되지 않습니다.</p><div class="form-grid"><div class="field"><label>이메일</label><input id="requestEmail" type="email" readonly></div><div class="field"><label>표시 이름</label><input id="requestNickname" maxlength="20" readonly></div><div class="field full"><label>신청 사유</label><textarea id="requestReason" placeholder="기사를 게시해야 하는 이유나 담당 역할을 적어 주세요."></textarea></div></div><div class="editor-actions"><button class="btn blue" id="submitEditorRequestBtn">게시 권한 신청</button></div></div></dialog>
 
@@ -322,7 +328,7 @@
       const t = normalizeTitleRow(title);
       if(!t) return '';
       const desc = t.public_description || '사이트 활동을 통해 획득한 칭호입니다.';
-      return `<div class="user-title-wrap"><span class="user-title-chip ${escapeHtml(titleAnimationClass(t))}" data-title-tooltip="${escapeHtml(desc)}" data-rarity="${escapeHtml(t.rarity)}" tabindex="0" role="button" aria-label="${escapeHtml(t.name)} 칭호, ${escapeHtml(desc)}">${escapeHtml(t.name)}</span></div>`;
+      return `<span class="user-title-wrap"><span class="user-title-chip ${escapeHtml(titleAnimationClass(t))}" data-title-tooltip="${escapeHtml(desc)}" data-rarity="${escapeHtml(t.rarity)}" tabindex="0" role="button" aria-label="${escapeHtml(t.name)} 칭호, ${escapeHtml(desc)}">✦ ${escapeHtml(t.name)}</span></span>`;
     }
     function bindTitleTooltips(root=document){
       let tip = document.querySelector('.title-tooltip');
@@ -338,12 +344,17 @@
         const r = el.getBoundingClientRect();
         const tw = Math.min(260, window.innerWidth - 24);
         tip.style.maxWidth = tw + 'px';
-        let left = Math.min(Math.max(12, r.left), window.innerWidth - tw - 12);
-        let top = r.top - 10;
+        // 칭호 바로 위 중앙에 보조 설명을 띄워 댓글 본문을 덜 가리게 합니다.
+        tip.style.left = '0px';
+        tip.style.top = '0px';
+        const tr0 = tip.getBoundingClientRect();
+        let left = r.left + (r.width / 2) - (tr0.width / 2);
+        left = Math.min(Math.max(12, left), window.innerWidth - tr0.width - 12);
+        let top = r.top - tr0.height - 9;
         tip.style.left = left + 'px';
         tip.style.top = top + 'px';
         const tr = tip.getBoundingClientRect();
-        if(tr.top < 8) tip.style.top = (r.bottom + 8) + 'px';
+        if(tr.top < 8) tip.style.top = (r.bottom + 10) + 'px';
       };
       const hide = ()=>{ tip.classList.add('hidden'); document.querySelectorAll('.user-title-chip.title-tapped').forEach(x=>x.classList.remove('title-tapped')); };
       root.querySelectorAll?.('.user-title-chip[data-title-tooltip]')?.forEach(el=>{
@@ -2400,7 +2411,7 @@
         const footer = `${heartButton}${!isReply && canReplyToComments()?`<button class="comment-reply" data-reply-open="${c.id}">답글</button>`:''}${canDelete?`<button class="comment-delete" data-comment-del="${c.id}">삭제</button>`:''}`;
         const badges = renderNameBadges(badgesForUser(c.user_id));
         const title = renderUserTitle(titleForUser(c.user_id));
-        return `<article class="comment${isReply?' reply':''}"><div class="comment-head"><div>${title}<div class="comment-author-line"><span class="comment-author">${escapeHtml(c.author_name || '익명')}</span>${badges?`<span class="comment-badges">${badges}</span>`:''}</div><div class="comment-time">${fmtDate(c.created_at)}</div></div></div><div class="comment-body">${escapeHtml(c.body || '')}</div>${footer?`<div class="comment-footer">${footer}</div>`:''}${!isReply?`<div class="reply-form hidden" id="replyForm-${c.id}"><textarea id="replyBody-${c.id}" maxlength="1000" placeholder="답글을 입력하세요. 최대 1000자"></textarea><div class="comment-actions"><span class="comment-note">${escapeHtml(state.profile?.nickname || '')} 님으로 답글 작성</span><div><button class="btn" data-reply-cancel="${c.id}">취소</button> <button class="btn blue" data-reply-submit="${c.id}">답글 등록</button></div></div></div><div class="reply-list">${replies.map(r=>renderOne(r, true)).join('')}</div>`:''}</article>`;
+        return `<article class="comment${isReply?' reply':''}"><div class="comment-head"><div><div class="comment-author-line">${badges?`<span class="comment-badges">${badges}</span>`:''}<span class="comment-author">${escapeHtml(c.author_name || '익명')}</span>${title}</div><div class="comment-time">${fmtDate(c.created_at)}</div></div></div><div class="comment-body">${escapeHtml(c.body || '')}</div>${footer?`<div class="comment-footer">${footer}</div>`:''}${!isReply?`<div class="reply-form hidden" id="replyForm-${c.id}"><textarea id="replyBody-${c.id}" maxlength="1000" placeholder="답글을 입력하세요. 최대 1000자"></textarea><div class="comment-actions"><span class="comment-note">${escapeHtml(state.profile?.nickname || '')} 님으로 답글 작성</span><div><button class="btn" data-reply-cancel="${c.id}">취소</button> <button class="btn blue" data-reply-submit="${c.id}">답글 등록</button></div></div></div><div class="reply-list">${replies.map(r=>renderOne(r, true)).join('')}</div>`:''}</article>`;
       };
       list.innerHTML = parents.map(c=>renderOne(c, false)).join('');
       list.querySelectorAll('[data-comment-heart]').forEach(b=>b.onclick=()=>toggleCommentHeart(b.dataset.commentHeart, articleId));
