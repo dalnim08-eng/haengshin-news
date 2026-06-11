@@ -55,13 +55,45 @@
     .comment-badge.owner{border-color:#f59e0b;background:linear-gradient(90deg,#92400e,#facc15,#fff7ed,#facc15,#92400e);background-size:220% auto;color:#111827;text-shadow:0 0 8px rgba(250,204,21,.45);box-shadow:0 0 12px rgba(250,204,21,.25);animation:goldBadgeShine 2.4s linear infinite}
     @keyframes goldBadgeShine{0%{background-position:0% center}100%{background-position:220% center}}
     .badge-editor{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}.badge-editor label{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;background:#fff;padding:6px 9px;font-size:12px;color:#334155}.badge-editor .btn{padding:6px 9px;font-size:12px}
+
+    .admin-center-layout{display:grid;grid-template-columns:220px 1fr;gap:16px;min-height:420px}
+    .admin-center-menu{border:1px solid var(--line);border-radius:16px;background:#f8fafc;padding:10px;display:flex;flex-direction:column;gap:8px}
+    .admin-center-menu button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 12px;text-align:left;font-weight:800;color:#111827}
+    .admin-center-menu button:hover{border-color:#94a3b8;box-shadow:0 7px 18px rgba(15,23,42,.07)}
+    .admin-center-menu button.owner-only{background:#fff7ed;border-color:#fed7aa}
+    .admin-center-main{border:1px solid var(--line);border-radius:16px;background:#fff;padding:18px}
+    .admin-center-main h3{margin:0 0 10px;font-size:18px}
+    .admin-center-main p{margin:0 0 14px;color:#64748b}
+    .admin-center-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:12px}
+    .admin-center-card{border:1px solid var(--line);border-radius:14px;background:#f8fafc;padding:14px}
+    .admin-center-card strong{display:block;margin-bottom:5px}.admin-center-card span{font-size:12px;color:#64748b}
+
+    .admin-dashboard-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;border:1px solid var(--line);border-radius:16px;background:#f8fafc;padding:16px;margin-bottom:14px}
+    .admin-dashboard-head strong{display:block;font-size:20px;margin-bottom:4px}.admin-dashboard-head span{color:#64748b;font-size:13px}
+    .admin-dashboard-total{min-width:72px;text-align:center;border-radius:16px;background:#111827;color:#fff;padding:10px 12px;box-shadow:0 10px 24px rgba(15,23,42,.12)}
+    .admin-dashboard-total b{display:block;font-size:26px;line-height:1}.admin-dashboard-total small{display:block;font-size:11px;color:#d1d5db;margin-top:3px}
+    .admin-alert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0 16px}
+    .admin-alert-card{border:1px solid var(--line);border-radius:15px;background:#fff;padding:13px;text-align:left;min-height:92px;transition:.16s}
+    .admin-alert-card:hover{border-color:#94a3b8;box-shadow:0 10px 24px rgba(15,23,42,.07);transform:translateY(-1px)}
+    .admin-alert-card strong{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;font-size:14px}.admin-alert-card span{font-size:12px;color:#64748b}
+    .admin-alert-count{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:999px;background:#ef4444;color:#fff;font-weight:900;font-size:13px;box-shadow:0 0 0 4px rgba(239,68,68,.10)}
+    .admin-alert-count.zero{background:#e5e7eb;color:#64748b;box-shadow:none}
+    .admin-recent-list{display:grid;gap:8px;margin-top:10px}.admin-recent-item{border:1px solid var(--line);border-radius:13px;background:#fff;padding:11px 12px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+    .admin-recent-item strong{display:block;font-size:14px}.admin-recent-item span{display:block;color:#64748b;font-size:12px;margin-top:2px}.admin-recent-item button{padding:7px 10px;font-size:12px}
+    .admin-center-button{position:relative;overflow:visible}
+    .admin-center-button.admin-alert-active::after{content:"";position:absolute;right:-3px;top:-4px;width:10px;height:10px;border-radius:999px;background:#ef4444;border:2px solid #fff;box-shadow:0 0 0 0 rgba(239,68,68,.72),0 0 12px rgba(239,68,68,.95);animation:adminAlertPulse 1.35s ease-out infinite,adminAlertTwinkle 2.1s ease-in-out infinite;z-index:3}
+    .admin-center-button.admin-alert-active::before{content:"";position:absolute;right:-7px;top:-8px;width:20px;height:20px;border-radius:999px;background:radial-gradient(circle,rgba(239,68,68,.34) 0%,rgba(239,68,68,.14) 42%,rgba(239,68,68,0) 72%);animation:adminAlertHalo 1.35s ease-out infinite;z-index:2;pointer-events:none}
+    @keyframes adminAlertPulse{0%{transform:scale(.86);box-shadow:0 0 0 0 rgba(239,68,68,.72),0 0 12px rgba(239,68,68,.9)}70%{transform:scale(1.12);box-shadow:0 0 0 8px rgba(239,68,68,0),0 0 16px rgba(239,68,68,.95)}100%{transform:scale(.86);box-shadow:0 0 0 0 rgba(239,68,68,0),0 0 12px rgba(239,68,68,.9)}}
+    @keyframes adminAlertHalo{0%{opacity:.86;transform:scale(.7)}70%{opacity:.08;transform:scale(1.55)}100%{opacity:0;transform:scale(1.75)}}
+    @keyframes adminAlertTwinkle{0%,100%{filter:brightness(1)}45%{filter:brightness(1.45)}52%{filter:brightness(.92)}62%{filter:brightness(1.7)}}
+
     @media(max-width:1500px){.ad-rail{display:none!important}}
-    @media(max-width:860px){.masthead{grid-template-columns:1fr;text-align:center}.head-actions{justify-content:center}.brand h1{font-size:40px}.layout{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.article-card{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.article-view{padding:20px}.article-view h2{font-size:32px}.article-gallery-grid{gap:14px}.article-view .main-image img,.article-gallery-item img{max-height:420px}.image-viewer-shell img{max-width:calc(100vw - 40px);max-height:78vh}}
+    @media(max-width:860px){.admin-center-layout{grid-template-columns:1fr}.masthead{grid-template-columns:1fr;text-align:center}.head-actions{justify-content:center}.brand h1{font-size:40px}.layout{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.article-card{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.article-view{padding:20px}.article-view h2{font-size:32px}.article-gallery-grid{gap:14px}.article-view .main-image img,.article-gallery-item img{max-height:420px}.image-viewer-shell img{max-width:calc(100vw - 40px);max-height:78vh}}
   </style>
 </head>
 <body>
   <div class="topbar"><div class="topbar-inner"><div id="today"></div><div class="mini-links"><span id="memberStatusTop" class="role-badge hidden">승인 상태</span><button id="loginTopBtn">로그인</button><button id="publisherRequestTopBtn" class="hidden">게시 신청</button><button id="profileTopBtn" class="hidden">닉네임 설정</button><button id="logoutTopBtn" class="hidden">로그아웃</button></div></div></div>
-  <header><div class="masthead"><div class="date">소식 · 활동 기록 · 공지</div><div class="brand"><h1>haengshin news</h1><p>newsroom</p></div><div class="head-actions"><button class="btn hidden" id="suggestionBtn">건의함</button><button class="btn hidden" id="inboxAdminBtn">제보·건의 관리</button><button class="btn hidden" id="accountAdminBtn">계정 관리</button><button class="btn hidden" id="adAdminBtn">광고 관리</button><button class="btn hidden" id="policyAdminBtn">운영 방침</button><button class="btn dark hidden" id="manageBtn">기사 관리</button></div></div></header>
+  <header><div class="masthead"><div class="date">소식 · 활동 기록 · 공지</div><div class="brand"><h1>haengshin news</h1><p>newsroom</p></div><div class="head-actions"><button class="btn hidden" id="suggestionBtn">건의함</button><button class="btn dark hidden admin-center-button" id="adminCenterBtn">관리 센터</button><button class="btn hidden" id="inboxAdminBtn">제보·건의 관리</button><button class="btn hidden" id="accountHelpAdminBtn">계정 도움 관리</button><button class="btn hidden" id="accountAdminBtn">계정 관리</button><button class="btn hidden" id="adAdminBtn">광고 관리</button><button class="btn hidden" id="policyAdminBtn">운영 방침</button><button class="btn dark hidden" id="manageBtn">기사 관리</button></div></div></header>
   <nav><div class="nav-inner" id="nav"></div></nav>
   <section class="ticker"><div class="ticker-inner"><span class="ticker-label">NOTICE</span><span class="ticker-text" id="tickerText">새로운 소식이 등록되면 이곳에 최신 기사가 표시됩니다.</span></div></section>
   <main><div class="search-row"><input id="searchInput" placeholder="기사 검색" autocomplete="off" /><button class="btn" id="searchClear">초기화</button></div><div id="content"></div></main>
@@ -69,7 +101,17 @@
   <aside id="rightAdRail" class="ad-rail ad-rail-right hidden" aria-label="오른쪽 시범 광고"></aside>
   <footer class="footer"><div class="footer-inner"><span>© haengshin news</span><span>소식과 활동 기록을 공유하는 뉴스형 웹사이트</span></div></footer>
 
-  <dialog id="loginDialog"><div class="modal-head"><h2>계정</h2><button class="close" data-close="loginDialog">×</button></div><div class="modal-body"><div class="form-grid"><div class="field"><label>로그인 이메일</label><input id="loginEmail" type="email" placeholder="user@example.com"></div><div class="field"><label>로그인 비밀번호</label><input id="loginPassword" type="password" placeholder="비밀번호"></div></div><div class="editor-actions"><button class="btn blue" id="signinBtn">로그인</button></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h3 style="margin:0 0 10px">회원가입 신청</h3><div class="form-grid"><div class="field"><label>이메일</label><input id="signupEmail" type="email" placeholder="user@example.com"></div><div class="field"><label>비밀번호</label><input id="signupPassword" type="password" placeholder="6자 이상 비밀번호"></div><div class="field"><label>비밀번호 확인</label><input id="signupPassword2" type="password" placeholder="비밀번호 확인"></div><div class="field"><label>닉네임</label><input id="signupNickname" maxlength="20" placeholder="2~20자 닉네임"></div></div><p class="login-note">가입 신청 후 관리자가 승인해야 댓글 작성과 게시 계정 신청이 가능합니다. 이메일 인증은 사용하지 않으므로 이메일 주소는 본인이 실제로 사용하는 주소를 입력해 주세요.</p><div class="editor-actions"><button class="btn" id="signupBtn">회원가입 신청</button></div></div></dialog>
+  <dialog id="adminCenterDialog"><div class="modal-head"><h2>관리 센터</h2><button class="close" data-close="adminCenterDialog">×</button></div><div class="modal-body"><div class="admin-center-layout"><nav class="admin-center-menu" aria-label="관리 센터 메뉴"><button type="button" data-admin-action="dashboard">요청 현황</button><button type="button" data-admin-action="articles">기사 관리</button><button type="button" class="owner-only" data-admin-action="accounts">계정 관리</button><button type="button" class="owner-only" data-admin-action="accountHelp">계정 도움 관리</button><button type="button" class="owner-only" data-admin-action="inbox">제보·건의 관리</button><button type="button" class="owner-only" data-admin-action="ads">광고 관리</button><button type="button" class="owner-only" data-admin-action="policy">운영 방침</button></nav><section class="admin-center-main" id="adminCenterMain"><h3>요청 현황을 불러오는 중입니다</h3><p>새 요청과 처리할 항목을 확인하고 있습니다.</p></section></div></div></dialog>
+
+  <dialog id="loginDialog"><div class="modal-head"><h2>계정</h2><button class="close" data-close="loginDialog">×</button></div><div class="modal-body"><div class="form-grid"><div class="field"><label>로그인 이메일</label><input id="loginEmail" type="email" placeholder="user@example.com"></div><div class="field"><label>로그인 비밀번호</label><input id="loginPassword" type="password" placeholder="비밀번호"></div></div><div class="editor-actions"><button class="btn" id="accountHelpBtn">이메일 찾기 문의</button><button class="btn" id="forgotPasswordBtn">비밀번호 찾기</button><button class="btn blue" id="signinBtn">로그인</button></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h3 style="margin:0 0 10px">회원가입 신청</h3><div class="form-grid"><div class="field"><label>이메일</label><input id="signupEmail" type="email" placeholder="user@example.com"></div><div class="field"><label>비밀번호</label><input id="signupPassword" type="password" placeholder="6자 이상 비밀번호"></div><div class="field"><label>비밀번호 확인</label><input id="signupPassword2" type="password" placeholder="비밀번호 확인"></div><div class="field"><label>닉네임</label><input id="signupNickname" maxlength="20" placeholder="2~20자 닉네임"></div></div><p class="login-note">가입 신청 후 관리자가 승인해야 댓글 작성과 게시 계정 신청이 가능합니다. 이메일 인증은 사용하지 않으므로 이메일 주소는 본인이 실제로 사용하는 주소를 입력해 주세요.</p><div class="editor-actions"><button class="btn" id="signupBtn">회원가입 신청</button></div></div></dialog>
+
+  <dialog id="passwordResetDialog"><div class="modal-head"><h2>비밀번호 찾기</h2><button class="close" data-close="passwordResetDialog">×</button></div><div class="modal-body"><p class="login-note">가입한 이메일 주소를 입력하면 비밀번호 재설정 링크가 이메일로 발송됩니다. 링크를 누른 뒤 이 사이트로 돌아오면 새 비밀번호를 설정할 수 있습니다.</p><p class="login-note"><strong>안내:</strong> 같은 이메일 주소로는 1시간에 1회만 재설정 메일을 요청할 수 있습니다. 이미 보냈다면 메일함과 스팸함을 먼저 확인해 주세요.</p><div class="field"><label>가입 이메일</label><input id="resetEmail" type="email" placeholder="user@example.com"></div><div class="editor-actions"><button class="btn blue" id="sendPasswordResetBtn">재설정 메일 보내기</button></div></div></dialog>
+
+  <dialog id="passwordUpdateDialog"><div class="modal-head"><h2>새 비밀번호 설정</h2></div><div class="modal-body"><p class="login-note">새 비밀번호를 입력해 주세요. 저장 후에는 새 비밀번호로 로그인할 수 있습니다.</p><div class="form-grid"><div class="field"><label>새 비밀번호</label><input id="newPassword" type="password" placeholder="6자 이상 비밀번호"></div><div class="field"><label>새 비밀번호 확인</label><input id="newPassword2" type="password" placeholder="비밀번호 확인"></div></div><div class="editor-actions"><button class="btn blue" id="updatePasswordBtn">새 비밀번호 저장</button></div></div></dialog>
+
+  <dialog id="accountHelpDialog"><div class="modal-head"><h2>이메일 찾기 문의</h2><button class="close" data-close="accountHelpDialog">×</button></div><div class="modal-body"><p class="login-note">가입 이메일을 잊은 경우 관리자에게 확인 요청을 보낼 수 있습니다. 보안을 위해 사이트에서 이메일 전체를 바로 보여주지는 않습니다.</p><div class="form-grid"><div class="field"><label>닉네임 또는 이름</label><input id="helpName" maxlength="40" placeholder="가입할 때 사용한 닉네임"></div><div class="field"><label>연락 받을 방법</label><input id="helpContact" maxlength="120" placeholder="예: 카카오톡 이름, 다른 이메일 등"></div><div class="field full"><label>확인에 도움이 되는 내용</label><textarea id="helpMessage" maxlength="1000" placeholder="기억나는 이메일 일부, 가입 시기, 본인 확인에 도움이 되는 내용을 적어 주세요."></textarea></div></div><div class="editor-actions"><button class="btn blue" id="submitAccountHelpBtn">문의 보내기</button></div></div></dialog>
+
+  <dialog id="accountHelpAdminDialog"><div class="modal-head"><h2>계정 도움 관리</h2><button class="close" data-close="accountHelpAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자 전용 창구입니다. 이메일 찾기 문의와 비밀번호 재설정 시도 기록을 확인할 수 있습니다.</p><div class="admin-list"><h3>이메일 찾기 문의</h3><div id="accountHelpRequestList"></div></div><div class="admin-list"><h3>비밀번호 재설정 시도 내역</h3><div id="passwordResetAttemptList"></div></div></div></dialog>
 
   <dialog id="profileDialog"><div class="modal-head"><h2>닉네임 설정</h2><button class="close" data-close="profileDialog">×</button></div><div class="modal-body"><div class="field"><label>닉네임</label><input id="nicknameInput" maxlength="20" placeholder="2~20자 닉네임"></div><p class="login-note">댓글에는 이메일 대신 닉네임이 표시됩니다. 공백만 있는 닉네임은 사용할 수 없습니다.</p><div class="editor-actions"><button class="btn blue" id="saveNicknameBtn">닉네임 저장</button></div></div></dialog>
 
@@ -106,7 +148,7 @@
     const client = window.supabase.createClient(CONFIG.supabaseUrl, CONFIG.supabaseAnonKey, {
       auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
     });
-    let state = { articles: [], category: '종합', query: '', session: null, isEditor: false, editorRole: null, editorRecord: null, isOwner: false, profile: null, memberRequest: null, isApprovedMember: false, comments: [], commentBadgeMap: {}, activeArticleId: null, policyNotice: null, policyShown: false, maintenanceSettings: { enabled:false, allowedRoles:[], message:'현재 사이트 기능 점검 중입니다. 잠시 후 다시 접속해 주세요.' }, memberRequests: [], memberProfileBadges: {}, editorRequests: [], editorAccounts: [], ads: [], newsTips: [], suggestions: [] };
+    let state = { articles: [], category: '종합', query: '', session: null, isEditor: false, editorRole: null, editorRecord: null, isOwner: false, profile: null, memberRequest: null, isApprovedMember: false, comments: [], commentBadgeMap: {}, activeArticleId: null, policyNotice: null, policyShown: false, maintenanceSettings: { enabled:false, allowedRoles:[], message:'현재 사이트 기능 점검 중입니다. 잠시 후 다시 접속해 주세요.' }, memberRequests: [], memberProfileBadges: {}, editorRequests: [], editorAccounts: [], ads: [], newsTips: [], suggestions: [], accountHelpRequests: [], passwordResetAttempts: [] };
     const fmtDate = (v)=> new Intl.DateTimeFormat('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).format(new Date(v));
     const escapeHtml = (s='') => String(s).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 
@@ -553,13 +595,231 @@
       const orders = Object.values(config || {}).filter(item=>item && item.pinned).map(item=>Number(item.order ?? DEFAULT_PIN_ORDER)).filter(Number.isFinite);
       return orders.length ? Math.min(...orders) : DEFAULT_PIN_ORDER;
     }
+    function passwordResetRedirectUrl(){
+      return location.origin + location.pathname;
+    }
+    function openPasswordResetDialog(){
+      const email = $('loginEmail')?.value.trim() || $('signupEmail')?.value.trim() || '';
+      if($('resetEmail')) $('resetEmail').value = email;
+      openDialog('passwordResetDialog');
+    }
+    async function requestPasswordReset(){
+      const email = $('resetEmail')?.value.trim().toLowerCase();
+      if(!email){ showStatus('비밀번호를 재설정할 이메일을 입력하세요.','err'); return; }
+      const ok = confirm('비밀번호 재설정 메일은 같은 이메일 주소 기준 1시간에 1회만 보낼 수 있습니다.\n\n이미 요청했다면 메일함과 스팸함을 먼저 확인해 주세요.\n1시간 안에 다시 요청하면 메일은 발송되지 않고 시도 내역만 관리자에게 기록됩니다.\n\n이 주소로 재설정 메일을 보내시겠습니까?\n\n' + email);
+      if(!ok){ showStatus('비밀번호 재설정 메일 발송을 취소했습니다.',''); return; }
+      const btn = $('sendPasswordResetBtn');
+      let attemptId = null;
+      try{
+        if(btn) btn.disabled = true;
+        const { data: gate, error: gateError } = await client.rpc('request_password_reset_attempt', { p_email: email });
+        if(gateError) throw gateError;
+        const result = Array.isArray(gate) ? gate[0] : gate;
+        attemptId = result?.attempt_id || null;
+        if(!result?.allowed){
+          const remaining = Number(result?.retry_after_minutes || 60);
+          showStatus(`이 이메일은 이미 1시간 안에 재설정 메일을 요청했습니다. 약 ${remaining}분 후 다시 시도해 주세요.`, 'err');
+          return;
+        }
+        const { error } = await client.auth.resetPasswordForEmail(email, {
+          redirectTo: passwordResetRedirectUrl()
+        });
+        if(error) throw error;
+        if(attemptId) await client.rpc('mark_password_reset_attempt', { p_attempt_id: attemptId, p_status: 'sent', p_error_message: null });
+        closeDialog('passwordResetDialog');
+        showStatus('비밀번호 재설정 메일을 보냈습니다. 이메일의 링크를 확인하세요.','ok');
+      } catch(e){
+        if(attemptId) await client.rpc('mark_password_reset_attempt', { p_attempt_id: attemptId, p_status: 'send_failed', p_error_message: String(e.message || e).slice(0, 500) });
+        showStatus('비밀번호 재설정 메일 발송 실패: '+(e.message||e),'err');
+      } finally{
+        if(btn) btn.disabled = false;
+      }
+    }
+    function openAccountHelpDialog(){
+      if($('helpName')) $('helpName').value = state.profile?.nickname || $('signupNickname')?.value.trim() || '';
+      if($('helpContact')) $('helpContact').value = '';
+      if($('helpMessage')) $('helpMessage').value = '';
+      openDialog('accountHelpDialog');
+    }
+    async function submitAccountHelpRequest(){
+      const name = $('helpName')?.value.trim();
+      const contact = $('helpContact')?.value.trim();
+      const message = $('helpMessage')?.value.trim();
+      if(!name || !contact){ showStatus('닉네임 또는 이름과 연락 받을 방법을 입력하세요.','err'); return; }
+      const btn = $('submitAccountHelpBtn');
+      try{
+        if(btn) btn.disabled = true;
+        const basePayload = {
+          name,
+          contact,
+          message,
+          status: 'pending',
+          created_at: new Date().toISOString()
+        };
+        const payloadWithType = {
+          ...basePayload,
+          request_type: 'email_lookup',
+          note: message || null,
+          nickname: name || null
+        };
+        let { error } = await client.from('account_help_requests').insert(payloadWithType);
+        if(error && /request_type|note|nickname/i.test(error.message || '')){
+          const retry = await client.from('account_help_requests').insert(basePayload);
+          error = retry.error;
+        }
+        if(error) throw error;
+        closeDialog('accountHelpDialog');
+        showStatus('이메일 찾기 문의가 관리자에게 전달되었습니다.','ok');
+        await refreshAdminAlertIndicator();
+      } catch(e){
+        showStatus('문의 전송 실패: '+(e.message||e),'err');
+      } finally{
+        if(btn) btn.disabled = false;
+      }
+    }
+    async function loadAccountHelpAdminData(){
+      if(!state.isOwner){ showStatus('관리자만 계정 도움 내역을 볼 수 있습니다.','err'); return; }
+      state.accountHelpRequests = [];
+      state.passwordResetAttempts = [];
+
+      const helpRes = await client
+        .from('account_help_requests')
+        .select('*')
+        .order('created_at', { ascending:false })
+        .limit(100);
+      if(helpRes.error){
+        console.warn('account help load failed:', helpRes.error);
+        showStatus('이메일 찾기 문의 로드 실패: '+helpRes.error.message,'err');
+      } else {
+        state.accountHelpRequests = helpRes.data || [];
+      }
+
+      let resetRes = await client
+        .from('password_reset_attempts')
+        .select('*')
+        .order('requested_at', { ascending:false })
+        .limit(150);
+      if(resetRes.error && /requested_at/i.test(resetRes.error.message || '')){
+        resetRes = await client
+          .from('password_reset_attempts')
+          .select('*')
+          .order('created_at', { ascending:false })
+          .limit(150);
+      }
+      if(resetRes.error){
+        console.warn('password reset attempts load failed:', resetRes.error);
+        showStatus('비밀번호 재설정 시도 로드는 실패했지만 이메일 찾기 문의는 표시합니다: '+resetRes.error.message,'err');
+      } else {
+        state.passwordResetAttempts = resetRes.data || [];
+      }
+
+      renderAccountHelpAdmin();
+      await refreshAdminAlertIndicator();
+    }
+    async function openAccountHelpAdmin(){
+      if(!state.isOwner){ showStatus('관리자만 계정 도움 관리를 사용할 수 있습니다.','err'); return; }
+      await loadAccountHelpAdminData();
+      openDialog('accountHelpAdminDialog');
+    }
+    function resetStatusLabel(status){
+      return status === 'sent' ? '발송됨' : status === 'blocked_rate_limit' ? '1시간 제한 차단' : status === 'send_failed' ? '발송 실패' : status === 'allowed' ? '발송 시도 중' : status || '기록됨';
+    }
+    function safeDisplayDate(v){
+      if(!v) return '시간 정보 없음';
+      const d = new Date(v);
+      if(Number.isNaN(d.getTime())) return String(v);
+      try{ return fmtDate(v); } catch(_){ return d.toLocaleString('ko-KR'); }
+    }
+    function renderAccountHelpAdmin(){
+      const helpBox = $('accountHelpRequestList');
+      const resetBox = $('passwordResetAttemptList');
+      if(helpBox){
+        try{
+          const rows = Array.isArray(state.accountHelpRequests) ? state.accountHelpRequests : [];
+          helpBox.innerHTML = rows.length ? rows.map(r=>{
+            const displayName = r.name || r.nickname || r.user_name || r.target_name || '이름 없음';
+            const displayMessage = r.message || r.note || r.body || r.content || '';
+            const displayContact = r.contact || r.email || r.target_email || r.reply_to || '연락 방법 없음';
+            const statusText = newsTipStatusLabel(r.status || 'pending');
+            const createdText = safeDisplayDate(r.created_at || r.requested_at || r.inserted_at);
+            return `<div class="request-row"><div><strong>${escapeHtml(displayName)}</strong><span>상태: ${escapeHtml(statusText)} · ${escapeHtml(createdText)}<br>연락: ${escapeHtml(displayContact)}${displayMessage ? '<br>내용: '+escapeHtml(String(displayMessage).slice(0,240))+(String(displayMessage).length>240?'...':'') : ''}</span></div><div class="ops"><button class="btn blue" data-help-done="${r.id}">처리 완료</button><button class="btn red" data-help-del="${r.id}">삭제</button></div></div>`;
+          }).join('') : '<p style="color:#64748b">이메일 찾기 문의가 없습니다.</p>';
+          helpBox.querySelectorAll('[data-help-done]').forEach(b=>b.onclick=()=>updateAccountHelpStatus(b.dataset.helpDone, 'done'));
+          helpBox.querySelectorAll('[data-help-del]').forEach(b=>b.onclick=()=>deleteAccountHelpRequest(b.dataset.helpDel));
+        } catch(e){
+          console.error('account help render failed:', e, state.accountHelpRequests);
+          helpBox.innerHTML = `<p style="color:#991b1b">이메일 찾기 문의 표시 중 오류가 발생했습니다: ${escapeHtml(e.message || e)}</p>`;
+        }
+      }
+      if(resetBox){
+        try{
+          const rows = Array.isArray(state.passwordResetAttempts) ? state.passwordResetAttempts : [];
+          resetBox.innerHTML = rows.length ? rows.map(r=>{
+            const email = r.email || r.target_email || '이메일 없음';
+            const status = r.status || r.result || 'recorded';
+            const at = r.requested_at || r.created_at || r.inserted_at;
+            const err = r.error_message || r.note || r.message || '';
+            const allowedText = typeof r.allowed === 'boolean' ? (r.allowed ? '허용' : '차단') : resetStatusLabel(status);
+            return `<div class="request-row"><div><strong>${escapeHtml(email)}</strong><span>${escapeHtml(resetStatusLabel(status))} · ${escapeHtml(safeDisplayDate(at))}${err ? '<br>오류/메모: '+escapeHtml(err) : ''}</span></div><div class="ops"><span class="role-badge">${escapeHtml(allowedText)}</span></div></div>`;
+          }).join('') : '<p style="color:#64748b">비밀번호 재설정 시도 내역이 없습니다.</p>';
+        } catch(e){
+          console.error('password reset attempt render failed:', e, state.passwordResetAttempts);
+          resetBox.innerHTML = `<p style="color:#991b1b">비밀번호 재설정 기록 표시 중 오류가 발생했습니다: ${escapeHtml(e.message || e)}</p>`;
+        }
+      }
+    }
+    async function updateAccountHelpStatus(id, status){
+      if(!state.isOwner) return;
+      let { error } = await client.from('account_help_requests').update({ status, reviewed_by: state.session.user.id, reviewed_at: new Date().toISOString() }).eq('id', id);
+      if(error && /reviewed_by|reviewed_at/i.test(error.message || '')){
+        const retry = await client.from('account_help_requests').update({ status }).eq('id', id);
+        error = retry.error;
+      }
+      if(error){ showStatus('문의 상태 변경 실패: '+error.message,'err'); return; }
+      await loadAccountHelpAdminData();
+      showStatus('문의 상태가 변경되었습니다.','ok');
+    }
+    async function deleteAccountHelpRequest(id){
+      if(!state.isOwner) return;
+      if(!confirm('이 이메일 찾기 문의를 삭제하시겠습니까?')) return;
+      const { error } = await client.from('account_help_requests').delete().eq('id', id);
+      if(error){ showStatus('문의 삭제 실패: '+error.message,'err'); return; }
+      await loadAccountHelpAdminData();
+      showStatus('문의가 삭제되었습니다.','ok');
+    }
+    function openPasswordUpdateDialog(){
+      if($('newPassword')) $('newPassword').value = '';
+      if($('newPassword2')) $('newPassword2').value = '';
+      openDialog('passwordUpdateDialog');
+    }
+    async function updateRecoveredPassword(){
+      const password = $('newPassword')?.value || '';
+      const password2 = $('newPassword2')?.value || '';
+      if(password.length < 6){ showStatus('새 비밀번호는 6자 이상이어야 합니다.','err'); return; }
+      if(password !== password2){ showStatus('새 비밀번호 확인이 일치하지 않습니다.','err'); return; }
+      const btn = $('updatePasswordBtn');
+      try{
+        if(btn) btn.disabled = true;
+        const { error } = await client.auth.updateUser({ password });
+        if(error) throw error;
+        closeDialog('passwordUpdateDialog');
+        showStatus('비밀번호가 변경되었습니다. 새 비밀번호로 로그인할 수 있습니다.','ok');
+      } catch(e){
+        showStatus('비밀번호 변경 실패: '+(e.message||e),'err');
+      } finally{
+        if(btn) btn.disabled = false;
+      }
+    }
     async function loadSession(){
+      const authUrlText = String(location.hash || '') + String(location.search || '');
+      const isRecoveryRedirect = /type=(recovery|password_recovery)/i.test(authUrlText);
       const { data } = await client.auth.getSession();
       state.session = data.session;
       await checkEditor();
       await loadProfile();
       await loadMemberStatus();
       updateAuthUI();
+      if(isRecoveryRedirect && state.session) openPasswordUpdateDialog();
       cleanAuthHash();
       client.auth.onAuthStateChange(async (event, session)=>{
         state.session = session;
@@ -567,8 +827,13 @@
         await loadProfile();
         await loadMemberStatus();
         updateAuthUI();
+        await refreshAdminAlertIndicator();
         await renderCurrentView();
-        if(event === 'SIGNED_IN') cleanAuthHash();
+        if(event === 'PASSWORD_RECOVERY'){
+          openPasswordUpdateDialog();
+          cleanAuthHash();
+        }
+        else if(event === 'SIGNED_IN') cleanAuthHash();
       });
     }
     function cleanAuthHash(){
@@ -664,8 +929,11 @@
       $('policyAdminBtn').classList.toggle('hidden', !(loggedIn && state.isOwner));
       $('adAdminBtn').classList.toggle('hidden', !(loggedIn && state.isOwner));
       $('accountAdminBtn').classList.toggle('hidden', !(loggedIn && state.isOwner));
+      if($('accountHelpAdminBtn')) $('accountHelpAdminBtn').classList.toggle('hidden', !(loggedIn && state.isOwner));
       if($('inboxAdminBtn')) $('inboxAdminBtn').classList.toggle('hidden', !(loggedIn && state.isOwner));
       if($('suggestionBtn')) $('suggestionBtn').classList.toggle('hidden', !(loggedIn && approvedMember));
+      if($('adminCenterBtn')) $('adminCenterBtn').classList.toggle('hidden', !(loggedIn && (state.isOwner || state.isEditor)));
+      forceHideLegacyAdminButtons();
       $('publisherRequestTopBtn').classList.toggle('hidden', !(loggedIn && approvedMember && !state.isEditor));
       $('profileTopBtn').classList.toggle('hidden', !loggedIn);
       $('logoutTopBtn').classList.toggle('hidden', !loggedIn);
@@ -929,27 +1197,27 @@
       if(!state.isOwner) return;
       const { error } = await client.from('news_tips').update({ status, reviewed_by: state.session.user.id, reviewed_at: new Date().toISOString() }).eq('id', id);
       if(error){ showStatus('뉴스제보 상태 변경 실패: '+error.message,'err'); return; }
-      await loadNewsTips(); renderInboxAdmin(); showStatus('뉴스제보 상태가 변경되었습니다.','ok');
+      await loadNewsTips(); renderInboxAdmin(); await refreshAdminAlertIndicator(); showStatus('뉴스제보 상태가 변경되었습니다.','ok');
     }
     async function deleteNewsTip(id){
       if(!state.isOwner) return;
       if(!confirm('이 뉴스제보를 삭제하시겠습니까?')) return;
       const { error } = await client.from('news_tips').delete().eq('id', id);
       if(error){ showStatus('뉴스제보 삭제 실패: '+error.message,'err'); return; }
-      await loadNewsTips(); renderInboxAdmin(); showStatus('뉴스제보가 삭제되었습니다.','ok');
+      await loadNewsTips(); renderInboxAdmin(); await refreshAdminAlertIndicator(); showStatus('뉴스제보가 삭제되었습니다.','ok');
     }
     async function updateSuggestionStatus(id, status){
       if(!state.isOwner) return;
       const { error } = await client.from('suggestions').update({ status, reviewed_by: state.session.user.id, reviewed_at: new Date().toISOString() }).eq('id', id);
       if(error){ showStatus('건의 상태 변경 실패: '+error.message,'err'); return; }
-      await loadSuggestions(); renderInboxAdmin(); showStatus('건의 상태가 변경되었습니다.','ok');
+      await loadSuggestions(); renderInboxAdmin(); await refreshAdminAlertIndicator(); showStatus('건의 상태가 변경되었습니다.','ok');
     }
     async function deleteSuggestion(id){
       if(!state.isOwner) return;
       if(!confirm('이 건의를 삭제하시겠습니까?')) return;
       const { error } = await client.from('suggestions').delete().eq('id', id);
       if(error){ showStatus('건의 삭제 실패: '+error.message,'err'); return; }
-      await loadSuggestions(); renderInboxAdmin(); showStatus('건의가 삭제되었습니다.','ok');
+      await loadSuggestions(); renderInboxAdmin(); await refreshAdminAlertIndicator(); showStatus('건의가 삭제되었습니다.','ok');
     }
 
     async function loadArticles(){ const { data, error } = await client.from('articles').select('*').order('created_at',{ascending:false}); if(error){ console.error(error); showStatus('기사 목록을 불러오지 못했습니다. RLS 정책과 테이블 이름을 확인하세요.','err'); return; } state.articles=data||[]; await renderCurrentView(); }
@@ -1324,6 +1592,7 @@
         }
       });
       renderAccountAdmin();
+      await refreshAdminAlertIndicator();
     }
     async function openAccountAdmin(){
       if(!state.isOwner){ showStatus('관리자만 계정 관리가 가능합니다.','err'); return; }
@@ -1378,6 +1647,7 @@
       if(state.session?.user?.id === userId && state.profile) state.profile.badges = cleanBadges;
       showStatus('댓글 배지가 저장되었습니다.','ok');
       await loadAccountAdminData();
+      await refreshAdminAlertIndicator();
       if(state.activeArticleId) await loadComments(state.activeArticleId);
     }
     async function updateMemberStatus(memberId, status){
@@ -1433,6 +1703,142 @@
       showStatus('게시 계정을 삭제했습니다.','ok');
       await loadAccountAdminData();
     }
+
+    function setAdminAlertIndicator(count){
+      state.adminAlertCount = Number(count || 0);
+      const btn = $('adminCenterBtn');
+      if(!btn) return;
+      btn.classList.toggle('admin-alert-active', state.adminAlertCount > 0);
+      if(state.adminAlertCount > 0){
+        btn.setAttribute('title', `처리할 새 요청 ${state.adminAlertCount}개가 있습니다.`);
+        btn.setAttribute('aria-label', `관리 센터, 처리할 새 요청 ${state.adminAlertCount}개`);
+      } else {
+        btn.removeAttribute('title');
+        btn.setAttribute('aria-label', '관리 센터');
+      }
+    }
+    async function countRows(table, queryFn){
+      try{
+        let q = client.from(table).select('id', { count:'exact', head:true });
+        if(queryFn) q = queryFn(q);
+        const { count, error } = await q;
+        if(error){ console.warn('admin alert count failed:', table, error); return 0; }
+        return Number(count || 0);
+      } catch(e){
+        console.warn('admin alert count crashed:', table, e);
+        return 0;
+      }
+    }
+    async function refreshAdminAlertIndicator(){
+      const btn = $('adminCenterBtn');
+      if(!btn) return;
+      if(!state.isOwner){
+        state.adminAlertSummary = { memberPending:0, editorPending:0, helpPending:0, newsPending:0, suggestionPending:0, resetWarnings:0, total:0 };
+        setAdminAlertIndicator(0);
+        return;
+      }
+      const [memberPending, editorPending, helpPending, newsPending, suggestionPending, resetWarnings] = await Promise.all([
+        countRows('member_requests', q=>q.eq('status','pending')),
+        countRows('editor_requests', q=>q.eq('status','pending')),
+        countRows('account_help_requests', q=>q.eq('status','pending')),
+        countRows('news_tips', q=>q.eq('status','pending')),
+        countRows('suggestions', q=>q.eq('status','pending')),
+        countRows('password_reset_attempts', q=>q.in('status',['blocked_rate_limit','send_failed']))
+      ]);
+      const total = memberPending + editorPending + helpPending + newsPending + suggestionPending + resetWarnings;
+      state.adminAlertSummary = { memberPending, editorPending, helpPending, newsPending, suggestionPending, resetWarnings, total };
+      setAdminAlertIndicator(total);
+      if($('adminCenterMain') && $('adminCenterDialog')?.open) renderAdminCenterDashboard();
+    }
+    async function selectRecentRows(table, queryFn, mapFn, limit=5){
+      try{
+        let q = client.from(table).select('*');
+        if(queryFn) q = queryFn(q);
+        let { data, error } = await q.order('created_at', { ascending:false }).limit(limit);
+        if(error && /created_at/i.test(error.message || '')){
+          let q2 = client.from(table).select('*');
+          if(queryFn) q2 = queryFn(q2);
+          const retry = await q2.limit(limit);
+          data = retry.data; error = retry.error;
+        }
+        if(error){ console.warn('recent admin rows failed:', table, error); return []; }
+        return (data || []).map(mapFn);
+      } catch(e){
+        console.warn('recent admin rows crashed:', table, e);
+        return [];
+      }
+    }
+    async function loadAdminRecentRequests(){
+      if(!state.isOwner){ state.adminRecentRequests = []; return; }
+      const rows = await Promise.all([
+        selectRecentRows('member_requests', q=>q.eq('status','pending'), r=>({ type:'회원가입 승인', title:r.nickname || r.email || '회원 신청', detail:r.email || '', at:r.requested_at || r.created_at, action:'accounts' })),
+        selectRecentRows('editor_requests', q=>q.eq('status','pending'), r=>({ type:'게시 권한 신청', title:r.nickname || r.email || '게시 신청', detail:r.reason || r.email || '', at:r.requested_at || r.created_at, action:'accounts' })),
+        selectRecentRows('account_help_requests', q=>q.eq('status','pending'), r=>({ type:'이메일 찾기 문의', title:r.name || r.nickname || '이름 없음', detail:r.message || r.note || r.contact || '', at:r.created_at || r.requested_at, action:'accountHelp' })),
+        selectRecentRows('news_tips', q=>q.eq('status','pending'), r=>({ type:'뉴스제보', title:r.title || '제목 없음', detail:r.nickname || r.email || '', at:r.created_at, action:'inbox' })),
+        selectRecentRows('suggestions', q=>q.eq('status','pending'), r=>({ type:'건의함', title:r.title || '제목 없음', detail:r.nickname || r.email || '', at:r.created_at, action:'inbox' })),
+        selectRecentRows('password_reset_attempts', q=>q.in('status',['blocked_rate_limit','send_failed']), r=>({ type:'비밀번호 재설정 경고', title:r.email || r.target_email || '이메일 없음', detail:resetStatusLabel(r.status || r.result), at:r.requested_at || r.created_at, action:'accountHelp' }))
+      ]);
+      state.adminRecentRequests = rows.flat().sort((a,b)=>new Date(b.at || 0)-new Date(a.at || 0)).slice(0,10);
+    }
+    function adminAlertCard(label, count, action, desc){
+      const n = Number(count || 0);
+      return `<button type="button" class="admin-alert-card" data-admin-action="${escapeHtml(action)}"><strong>${escapeHtml(label)}<span class="admin-alert-count ${n ? '' : 'zero'}">${n}</span></strong><span>${escapeHtml(desc)}</span></button>`;
+    }
+    function renderAdminCenterDashboard(){
+      const main = $('adminCenterMain');
+      if(!main) return;
+      if(!state.isOwner){
+        main.innerHTML = `<h3>기사 관리</h3><p>게시 권한 계정은 기사 작성과 수정 기능을 사용할 수 있습니다.</p><div class="admin-center-grid"><button type="button" class="admin-alert-card" data-admin-action="articles"><strong>기사 관리<span class="admin-alert-count zero">열기</span></strong><span>게시물 작성, 수정, 카테고리 노출, 상단 고정을 관리합니다.</span></button></div>`;
+      } else {
+        const s = state.adminAlertSummary || { total:0 };
+        const recent = Array.isArray(state.adminRecentRequests) ? state.adminRecentRequests : [];
+        main.innerHTML = `<div class="admin-dashboard-head"><div><strong>오늘 처리할 항목</strong><span>새 요청은 이곳에 모아 보여줍니다. 각 카드를 누르면 해당 관리창으로 이동합니다.</span></div><div class="admin-dashboard-total"><b>${Number(s.total || 0)}</b><small>새 요청</small></div></div><div class="admin-alert-grid">${adminAlertCard('회원가입 승인', s.memberPending, 'accounts', '승인 대기 중인 회원가입 요청')}${adminAlertCard('게시 권한 신청', s.editorPending, 'accounts', '기사 게시 권한 신청')}${adminAlertCard('계정 도움 문의', s.helpPending, 'accountHelp', '이메일 찾기 문의와 계정 확인 요청')}${adminAlertCard('뉴스제보', s.newsPending, 'inbox', '회원이 등록한 뉴스 제보')}${adminAlertCard('건의함', s.suggestionPending, 'inbox', '사이트 이용 건의와 개선 요청')}${adminAlertCard('비밀번호 경고', s.resetWarnings, 'accountHelp', '재설정 실패 또는 1시간 제한 차단')}</div><h3>최근 요청</h3><div class="admin-recent-list">${recent.length ? recent.map(r=>`<div class="admin-recent-item"><div><strong>${escapeHtml(r.type)} · ${escapeHtml(r.title)}</strong><span>${escapeHtml(safeDisplayDate(r.at))}${r.detail ? ' · '+escapeHtml(String(r.detail).slice(0,80)) : ''}</span></div><button class="btn" type="button" data-admin-action="${escapeHtml(r.action)}">열기</button></div>`).join('') : '<p style="color:#64748b">최근 처리할 요청이 없습니다.</p>'}</div>`;
+      }
+      main.querySelectorAll('[data-admin-action]').forEach(btn=>btn.onclick=()=>runAdminCenterAction(btn.dataset.adminAction));
+    }
+    function forceHideLegacyAdminButtons(){
+      ['manageBtn','accountAdminBtn','accountHelpAdminBtn','inboxAdminBtn','adAdminBtn','policyAdminBtn'].forEach(id=>{ const el=$(id); if(el) el.classList.add('hidden'); });
+    }
+    function renderAdminCenter(){
+      const dialog = $('adminCenterDialog');
+      if(!dialog) return;
+      dialog.querySelectorAll('[data-admin-action]').forEach(btn=>{
+        const ownerOnly = btn.classList.contains('owner-only');
+        btn.classList.toggle('hidden', ownerOnly && !state.isOwner);
+        btn.onclick = ()=>runAdminCenterAction(btn.dataset.adminAction);
+      });
+      renderAdminCenterDashboard();
+    }
+    async function openAdminCenter(){
+      if(!(state.isOwner || state.isEditor)){ showStatus('관리 권한이 있는 계정만 사용할 수 있습니다.','err'); return; }
+      if(state.isOwner){
+        await refreshAdminAlertIndicator();
+        await loadAdminRecentRequests();
+      }
+      renderAdminCenter();
+      openDialog('adminCenterDialog');
+    }
+    function runAdminCenterAction(action){
+      if(action === 'dashboard'){
+        if(state.isOwner){ refreshAdminAlertIndicator().then(loadAdminRecentRequests).then(renderAdminCenterDashboard); }
+        else renderAdminCenterDashboard();
+        return;
+      }
+      closeDialog('adminCenterDialog');
+      setTimeout(()=>{
+        if(action === 'articles'){
+          if(!state.isEditor){ showStatus('승인된 기사 게시 계정만 기사 관리가 가능합니다.','err'); return; }
+          if(!$('articleId')?.value) renderArticleCategoryControls({ category:$('category')?.value || '공지' });
+          renderAdminList();
+          openDialog('editorDialog');
+        } else if(action === 'accounts') openAccountAdmin();
+        else if(action === 'accountHelp') openAccountHelpAdmin();
+        else if(action === 'inbox') openInboxAdmin();
+        else if(action === 'ads') openAdAdmin();
+        else if(action === 'policy') openPolicyEditor();
+      }, 0);
+    }
+
     function bind(){
       $('today').textContent=new Intl.DateTimeFormat('ko-KR',{dateStyle:'full'}).format(new Date());
       renderArticleCategoryControls({ category:'공지', visible_categories:['종합','공지'], pinned_by_category:{} });
@@ -1441,9 +1847,17 @@
       $('loginTopBtn').onclick=()=>openDialog('loginDialog');
       $('profileTopBtn').onclick=()=>{ $('nicknameInput').value=state.profile?.nickname||''; openDialog('profileDialog'); };
       $('signupBtn').onclick=submitSignupRequest;
+      $('forgotPasswordBtn').onclick=openPasswordResetDialog;
+      $('accountHelpBtn').onclick=openAccountHelpDialog;
+      if($('adminCenterBtn')) $('adminCenterBtn').onclick=openAdminCenter;
+      document.querySelectorAll('[data-admin-action]').forEach(b=>b.onclick=()=>runAdminCenterAction(b.dataset.adminAction));
+      $('submitAccountHelpBtn').onclick=submitAccountHelpRequest;
+      $('sendPasswordResetBtn').onclick=requestPasswordReset;
+      $('updatePasswordBtn').onclick=updateRecoveredPassword;
       $('publisherRequestTopBtn').onclick=openPublisherRequest;
       $('submitEditorRequestBtn').onclick=submitEditorRequest;
       $('accountAdminBtn').onclick=openAccountAdmin;
+      if($('accountHelpAdminBtn')) $('accountHelpAdminBtn').onclick=openAccountHelpAdmin;
       $('saveMaintenanceBtn').onclick=saveMaintenanceSettings;
       if($('suggestionBtn')) $('suggestionBtn').onclick=openSuggestionDialog;
       if($('inboxAdminBtn')) $('inboxAdminBtn').onclick=openInboxAdmin;
