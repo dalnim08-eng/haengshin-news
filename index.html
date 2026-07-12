@@ -605,6 +605,109 @@
     }
 
   </style>
+
+  <style id="auth-center-clean-v8">
+    /* ===== 로그인 화면 중앙 정렬 및 카드 흔적 제거 v8 ===== */
+
+    body.app-mode.app-auth-locked .auth-shell{
+      width:100%!important;
+      max-width:460px!important;
+      min-height:100dvh!important;
+      margin:0 auto!important;
+      padding:
+        calc(24px + env(safe-area-inset-top))
+        28px
+        calc(24px + env(safe-area-inset-bottom))!important;
+      display:flex!important;
+      flex-direction:column!important;
+      align-items:center!important;
+      justify-content:center!important;
+      background:transparent!important;
+      border:0!important;
+      border-radius:0!important;
+      box-shadow:none!important;
+    }
+
+    body.app-mode.app-auth-locked .auth-brand,
+    body.app-mode.app-auth-locked .auth-panel{
+      width:100%!important;
+      max-width:404px!important;
+      margin-left:auto!important;
+      margin-right:auto!important;
+    }
+
+    body.app-mode.app-auth-locked .auth-brand{
+      margin-top:0!important;
+      margin-bottom:30px!important;
+    }
+
+    body.app-mode.app-auth-locked .auth-panel{
+      padding:0!important;
+      background:transparent!important;
+      border:0!important;
+      border-radius:0!important;
+      box-shadow:none!important;
+      overflow:visible!important;
+    }
+
+    body.app-mode.app-auth-locked .auth-heading{
+      display:block!important;
+      width:100%!important;
+      margin:0 0 24px!important;
+      padding:0!important;
+      background:transparent!important;
+      border:0!important;
+      border-bottom:0!important;
+      border-radius:0!important;
+      box-shadow:none!important;
+      color:var(--theme-text)!important;
+    }
+
+    body.app-mode.app-auth-locked .auth-heading::before,
+    body.app-mode.app-auth-locked .auth-heading::after{
+      display:none!important;
+      content:none!important;
+    }
+
+    body.app-mode.app-auth-locked .auth-heading p,
+    body.app-mode.app-auth-locked .auth-heading h2{
+      background:transparent!important;
+      border:0!important;
+      box-shadow:none!important;
+    }
+
+    body.app-mode.app-auth-locked .auth-dialog{
+      width:100%!important;
+      max-width:none!important;
+      height:100dvh!important;
+      max-height:none!important;
+      margin:0!important;
+      padding:0!important;
+      background:var(--page-bg)!important;
+      border:0!important;
+      border-radius:0!important;
+      box-shadow:none!important;
+    }
+
+    body.app-mode.app-auth-locked .auth-dialog::backdrop{
+      background:var(--page-bg)!important;
+      backdrop-filter:none!important;
+    }
+
+    @media(max-width:560px){
+      body.app-mode.app-auth-locked .auth-shell{
+        max-width:none!important;
+        padding-left:24px!important;
+        padding-right:24px!important;
+      }
+
+      body.app-mode.app-auth-locked .auth-brand,
+      body.app-mode.app-auth-locked .auth-panel{
+        max-width:390px!important;
+      }
+    }
+  </style>
+
 </head>
 <body>
   <script>
