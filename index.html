@@ -2,7 +2,8 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#f1fbfd" />
   <script>
     (() => {
       const allowed = new Set(['system','pure-white','pure-black','aurora-white','aurora-black','aurora']);
@@ -11,6 +12,22 @@
       const resolved = choice === 'system' ? (dark ? 'aurora-black' : 'aurora-white') : choice;
       document.documentElement.dataset.themeChoice = choice;
       document.documentElement.dataset.theme = resolved;
+
+      const params = new URLSearchParams(location.search);
+      const explicitApp = params.get('app');
+      const ua = navigator.userAgent || '';
+      const webView =
+        /(?:;\s*wv\)|\bwv\b)/i.test(ua) ||
+        /HaengshinNewsApp/i.test(ua) ||
+        !!window.HaengshinApp ||
+        !!window.Android;
+      const standalone =
+        matchMedia('(display-mode: standalone)').matches ||
+        navigator.standalone === true;
+
+      if (explicitApp === '1' || (explicitApp !== '0' && (webView || standalone))) {
+        document.documentElement.dataset.appMode = '1';
+      }
     })();
   </script>
   <title>haengshin news</title>
@@ -197,7 +214,7 @@
     html[data-theme="pure-white"] .btn.blue,html[data-theme="pure-white"] .btn.dark{background:#000!important;color:#fff!important;border-color:#000!important}
     a.article-link{display:block;color:inherit;text-decoration:none}
     .pagination{display:flex;justify-content:center;align-items:center;gap:7px;flex-wrap:wrap;margin:24px 0 4px}.page-btn{min-width:40px;height:40px;border:1px solid var(--theme-line);border-radius:12px;background:var(--surface);color:var(--theme-text);font-weight:800}.page-btn.active{color:#fff;border-color:transparent;background:var(--brand-gradient)}.page-btn:disabled{opacity:.38;cursor:not-allowed}
-    .author-profile{display:inline-flex;align-items:center;gap:8px;min-width:0}.author-profile-text{display:flex;align-items:center;gap:5px;flex-wrap:wrap;min-width:0}.author-profile-name{font-weight:800;color:var(--theme-text)}
+    .author-profile{display:inline-flex;align-items:center;gap:8px;min-width:0}.author-profile-text{display:flex;align-items:center;gap:5px;flex-wrap:wrap;min-width:0}.author-profile-name{font-weight:800;color:var(--theme-text)}.panel .compact-item a{display:block;padding:0;border:0;background:transparent;text-align:left;color:var(--theme-text)!important;font-weight:700;text-decoration:none!important;line-height:1.45}.panel .compact-item a:visited{color:var(--theme-text)!important}.panel .compact-item a:hover{color:var(--accent)!important;text-decoration:none!important}.comment-form>.author-profile{margin-bottom:14px}.comment-form>textarea{display:block}
     .profile-avatar{position:relative;display:inline-grid;place-items:center;flex:0 0 auto;border-radius:50%;overflow:hidden;background:var(--brand-gradient);color:#fff;font-weight:900;box-shadow:0 5px 16px rgba(32,133,167,.18)}.profile-avatar.sm{width:30px;height:30px;font-size:12px}.profile-avatar.md{width:42px;height:42px;font-size:16px}.profile-avatar.lg{width:92px;height:92px;font-size:30px}.profile-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--surface)}
     .profile-avatar-editor{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}.profile-avatar-preview{display:grid;place-items:center;min-width:100px}
     .comment-head-main{display:flex;align-items:flex-start;gap:10px}.comment-head{align-items:flex-start}.comment-head .profile-avatar{margin-top:1px}
@@ -207,12 +224,110 @@
     .app-only{display:none!important}.app-header{position:fixed;left:0;right:0;top:0;z-index:70;height:calc(58px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 12px 0;align-items:center;justify-content:space-between;background:var(--surface)!important;border-bottom:1px solid var(--theme-line);backdrop-filter:blur(20px)}.app-brand-button{display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--theme-text);font-weight:900;font-size:18px}.app-h-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;color:transparent;background:var(--brand-gradient);background-clip:text;-webkit-background-clip:text;font-size:27px;font-weight:1000}.app-icon-button{width:42px;height:42px;border:0;border-radius:14px;background:var(--surface-2);color:var(--theme-text);font-size:24px}.app-bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:70;height:calc(66px + env(safe-area-inset-bottom));padding:6px 5px env(safe-area-inset-bottom);grid-template-columns:repeat(5,1fr);border-top:1px solid var(--theme-line);background:var(--surface)!important;backdrop-filter:blur(20px)}.app-bottom-nav button{border:0;background:transparent;color:var(--theme-muted);display:grid;place-items:center;gap:1px;font-size:17px}.app-bottom-nav button b{font-size:10px}.app-bottom-nav button.active{color:var(--accent2)}
     body.app-mode>.topbar,body.app-mode>header:not(.app-header),body.app-mode>nav:not(.app-bottom-nav),body.app-mode>.ticker,body.app-mode>.footer,body.app-mode>.ad-rail{display:none!important}body.app-mode .app-only{display:flex!important}body.app-mode .app-bottom-nav{display:grid!important}body.app-mode main{padding-top:calc(76px + env(safe-area-inset-top));padding-bottom:calc(92px + env(safe-area-inset-bottom));width:100%;max-width:760px}body.app-mode .layout{grid-template-columns:1fr}body.app-mode .sidecol{display:none}body.app-mode .search-row{position:sticky;top:calc(58px + env(safe-area-inset-top));z-index:12;background:var(--page-bg);padding:8px 0;margin-bottom:10px}body.app-mode .hero{grid-template-columns:1fr;border-radius:18px;box-shadow:var(--theme-shadow)}body.app-mode .article-card{grid-template-columns:118px 1fr;border-radius:16px}body.app-mode .article-card.no-image{grid-template-columns:1fr}body.app-mode .article-view{border:0;border-radius:0;box-shadow:none;padding:16px}body.app-mode .article-view .backline{display:none}body.app-mode dialog:not(.image-viewer-dialog){width:100%;max-width:none;height:100%;max-height:none;border-radius:0;margin:0}body.app-mode dialog:not(.image-viewer-dialog) .modal-body{max-height:calc(100vh - 66px);padding-bottom:calc(28px + env(safe-area-inset-bottom))}.app-category-list{display:grid;gap:9px}.app-category-list button{min-height:52px;border:1px solid var(--theme-line);border-radius:14px;background:var(--surface-2);color:var(--theme-text);font-weight:850;text-align:left;padding:0 16px}.app-category-list button.active{border-color:var(--brand-cyan);box-shadow:0 0 0 3px rgba(36,200,216,.13)}
     .special-board{border:1px solid var(--theme-line);border-radius:18px;padding:20px}.special-board .desc{color:var(--theme-muted)}.tip-form{border:1px solid var(--theme-line);border-radius:16px;padding:14px;margin:15px 0}.tip-card{border:1px solid var(--theme-line);border-radius:16px;padding:14px;margin-top:10px}.tip-card h3{margin:7px 0}.tip-card p{white-space:pre-wrap}.tip-status{font-weight:900;color:var(--accent2)}
-    @media(max-width:620px){.theme-choice-grid{grid-template-columns:1fr}.profile-avatar-editor{grid-template-columns:1fr}.article-card{grid-template-columns:110px 1fr}.pagination{gap:5px}.page-btn{min-width:36px;height:38px}.pagination .page-number.optional{display:none}}
+    /* 활성 메뉴와 버튼은 기존 고정 검정색 대신 현재 테마의 글자색을 사용합니다. */
+    .nav-btn:hover,.nav-btn.active{color:var(--theme-text)!important}
+    .theme-choice-grid label:has(input:checked),
+    .theme-choice-grid label:has(input:checked) b{color:var(--theme-text)!important}
+    .btn:focus-visible,.nav-btn:focus-visible,.tag:focus-visible,.page-btn:focus-visible,
+    .app-bottom-nav button:focus-visible,.app-icon-button:focus-visible{
+      outline:3px solid var(--focus,rgba(36,200,216,.24));
+      outline-offset:2px;
+    }
+    html[data-theme="aurora-black"] .btn.blue,
+    html[data-theme="aurora-black"] .btn.dark,
+    html[data-theme="aurora-black"] .page-btn.active{
+      color:#03151c!important;
+      text-shadow:0 1px 0 rgba(255,255,255,.22);
+    }
+    html[data-theme="aurora-black"] .nav-btn.active,
+    html[data-theme="aurora-black"] .nav-btn:hover{
+      color:#f4fbff!important;
+    }
+
+    /* 앱 상단바를 세 칸으로 고정하여 뒤로가기 버튼 유무와 관계없이 제목을 중앙에 둡니다. */
+    .app-header{
+      display:none;
+      grid-template-columns:44px minmax(0,1fr) 44px;
+      gap:6px;
+      height:calc(62px + env(safe-area-inset-top));
+      padding:env(safe-area-inset-top) 10px 0;
+    }
+    body.app-mode .app-header{display:grid!important}
+    body.app-mode .app-header #appBackBtn.hidden{
+      display:block!important;
+      visibility:hidden;
+      pointer-events:none;
+    }
+    .app-brand-button{
+      min-width:0;
+      width:100%;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .app-brand-button #appHeaderTitle{
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+    }
+    body.app-mode{
+      min-height:100dvh;
+      overscroll-behavior-y:none;
+    }
+    body.app-mode main{
+      padding-top:calc(76px + env(safe-area-inset-top));
+      padding-left:12px;
+      padding-right:12px;
+    }
+    body.app-mode .search-row{
+      top:calc(62px + env(safe-area-inset-top));
+      padding:9px 0;
+    }
+    body.app-mode .search-row input{
+      min-width:0;
+    }
+    body.app-mode .hero h2{
+      font-size:clamp(27px,7.8vw,36px);
+      line-height:1.12;
+    }
+    body.app-mode .hero-body{padding:20px}
+    body.app-mode .hero-img{min-height:220px;max-height:320px}
+    body.app-mode .article-card h3{font-size:18px}
+    body.app-mode .article-card p{
+      display:-webkit-box;
+      -webkit-line-clamp:3;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+    }
+    body.app-mode dialog:not(.image-viewer-dialog){
+      height:100dvh;
+    }
+    body.app-mode dialog:not(.image-viewer-dialog) .modal-body{
+      max-height:calc(100dvh - 66px);
+    }
+
+    @media(max-width:620px){
+      .theme-choice-grid{grid-template-columns:1fr}
+      .profile-avatar-editor{grid-template-columns:1fr}
+      .article-card{grid-template-columns:110px 1fr}
+      .pagination{gap:5px}
+      .page-btn{min-width:36px;height:38px}
+      .pagination .page-number.optional{display:none}
+      body.app-mode .article-card{grid-template-columns:104px minmax(0,1fr);gap:12px;padding:11px}
+      body.app-mode .article-card.no-image{grid-template-columns:1fr}
+      body.app-mode .thumb{min-height:104px;border-radius:11px}
+      body.app-mode .meta{gap:7px;font-size:12px}
+      body.app-mode .search-row .btn{flex:0 0 auto}
+    }
     @media(prefers-reduced-motion:reduce){html[data-theme="aurora"] body::before{animation:none!important}}
 
   </style>
 </head>
 <body>
+  <script>
+    if(document.documentElement.dataset.appMode === '1'){
+      document.body.classList.add('app-mode');
+    }
+  </script>
 
   <header id="appHeader" class="app-only app-header" aria-label="행신뉴스 앱 상단바">
     <button type="button" id="appBackBtn" class="app-icon-button hidden" aria-label="뒤로가기">‹</button>
@@ -3189,8 +3304,27 @@ async function deleteTitle(id){
     const HN_PAGE_SIZE = 10;
     const HN_THEME_VALUES = ['system','pure-white','pure-black','aurora-white','aurora-black','aurora'];
     const HN_PUSH_CATEGORIES = ['공지','인사이트','활동','칼럼','종합'];
+
+    function detectAppMode(params = new URLSearchParams(location.search)){
+      const explicit = params.get('app');
+      if(explicit === '0') return false;
+      if(explicit === '1') return true;
+
+      const ua = navigator.userAgent || '';
+      const webView =
+        /(?:;\s*wv\)|\bwv\b)/i.test(ua) ||
+        /HaengshinNewsApp/i.test(ua) ||
+        !!window.HaengshinApp ||
+        !!window.Android;
+      const standalone =
+        matchMedia('(display-mode: standalone)').matches ||
+        navigator.standalone === true;
+
+      return webView || standalone || document.documentElement.dataset.appMode === '1';
+    }
+
     state.page = 1;
-    state.appMode = new URLSearchParams(location.search).get('app') === '1';
+    state.appMode = detectAppMode();
     state.articleProfileMap = {};
     state.commentProfileMap = {};
     state.preferences = { push_enabled:true, push_categories:[...HN_PUSH_CATEGORIES], theme:'system' };
@@ -3209,6 +3343,14 @@ async function deleteTitle(id){
       if(persist) localStorage.setItem('hn_theme_v2', clean);
       const meta = document.querySelector('meta[name="theme-color"]') || document.head.appendChild(Object.assign(document.createElement('meta'),{name:'theme-color'}));
       meta.content = ({'pure-white':'#ffffff','pure-black':'#000000','aurora-white':'#f1fbfd','aurora-black':'#02060b','aurora':'#edfafd'})[resolved] || '#ffffff';
+
+      const darkSystemBars = ['pure-black','aurora-black'].includes(resolved);
+      try{
+        window.HaengshinApp?.setSystemBars?.(meta.content, darkSystemBars);
+      }catch(e){
+        console.warn('native system bar sync skipped:', e);
+      }
+
       document.querySelectorAll('input[name="themeChoice"]').forEach(r=>r.checked = r.value === clean);
     }
     const hnSystemThemeMedia = matchMedia('(prefers-color-scheme: dark)');
@@ -3277,8 +3419,18 @@ async function deleteTitle(id){
       state.page = Math.max(1, Number.parseInt(p.get('page') || '1',10) || 1);
       state.pendingArticleId = p.get('article') || null;
       state.activeArticleId = null;
-      state.appMode = p.get('app') === '1';
-      history.replaceState({hnRoute:true,directArticle:!!state.pendingArticleId},'',location.href);
+      state.appMode = detectAppMode(p);
+      document.documentElement.dataset.appMode = state.appMode ? '1' : '0';
+
+      const initialUrl = new URL(location.href);
+      if(state.appMode) initialUrl.searchParams.set('app','1');
+      else initialUrl.searchParams.delete('app');
+
+      history.replaceState(
+        {hnRoute:true,directArticle:!!state.pendingArticleId},
+        '',
+        initialUrl
+      );
     }
     function makeRouteUrl({article=null,category=state.category,page=state.page,q=state.query}={}){
       const url = new URL(location.href);
@@ -3333,9 +3485,17 @@ async function deleteTitle(id){
     function profileBadges(profile){ return normalizeBadges(profile?.badges); }
     function liveProfileName(profile,fallback){ return String(profile?.nickname || fallback || '편집부'); }
     function articleProfile(a){ if(!a?.created_by) return null; if(state.session?.user?.id && String(a.created_by)===String(state.session.user.id) && state.profile) return state.profile; return state.articleProfileMap?.[a.created_by] || null; }
-    function renderArticleAuthor(a,{compact=false}={}){
-      const p=articleProfile(a); const name=liveProfileName(p,a?.author||'편집부'); const badges=renderNameBadges(profileBadges(p)); const title=renderUserTitle(titleById(p?.featured_title_id));
-      return `<span class="author-profile">${avatarHtml(p,name,compact?'sm':'md')}<span class="author-profile-text">${badges?`<span class="comment-badges">${badges}</span>`:''}<span class="author-profile-name">${escapeHtml(name)}</span>${title}</span></span>`;
+    function renderArticleAuthor(a,options={}){
+      const compact = !!options.compact;
+      // 기사 목록·미리보기에서는 프로필 사진과 칭호를 숨깁니다.
+      // 기사 본문에서는 프로필 사진은 유지하되 칭호는 표시하지 않습니다.
+      const showAvatar = options.showAvatar ?? !compact;
+      const showTitle = options.showTitle ?? false;
+      const p = articleProfile(a);
+      const name = liveProfileName(p,a?.author||'편집부');
+      const badges = renderNameBadges(profileBadges(p));
+      const title = showTitle ? renderUserTitle(titleById(p?.featured_title_id)) : '';
+      return `<span class="author-profile">${showAvatar?avatarHtml(p,name,compact?'sm':'md'):''}<span class="author-profile-text">${badges?`<span class="comment-badges">${badges}</span>`:''}<span class="author-profile-name">${escapeHtml(name)}</span>${title}</span></span>`;
     }
     async function safeSelectProfilesWithBadges(userIds){
       const ids=[...new Set((userIds||[]).filter(Boolean))]; if(!ids.length) return [];
