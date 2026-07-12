@@ -437,6 +437,173 @@
       .policy-view{font-size:16.5px;line-height:1.78}
     }
 
+  
+
+    /* ===== 앱 프로필·페이지 번호·원본 워드마크·로그아웃 v7 ===== */
+    body.app-mode .app-header{
+      background:var(--surface)!important;
+      color:var(--theme-text)!important;
+    }
+    body.app-mode .app-brand-button{
+      justify-content:center;
+      color:var(--theme-text)!important;
+      background:transparent!important;
+      border:0!important;
+      box-shadow:none!important;
+      min-width:0;
+      overflow:visible;
+    }
+    .app-wordmark{
+      display:block;
+      color:var(--theme-text);
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:clamp(21px,6vw,28px);
+      font-weight:700;
+      line-height:1;
+      letter-spacing:-.055em;
+      white-space:nowrap;
+      text-transform:lowercase;
+    }
+    html[data-theme="pure-black"] .app-wordmark,
+    html[data-theme="aurora-black"] .app-wordmark{color:#f8fbff}
+    html[data-theme="pure-white"] .app-wordmark{color:#000}
+
+    body.app-mode #profileDialog{
+      width:100vw!important;
+      max-width:100vw!important;
+      min-width:0!important;
+      overflow:hidden!important;
+    }
+    body.app-mode #profileDialog .modal-head,
+    body.app-mode #profileDialog .modal-body,
+    body.app-mode #profileDialog .profile-settings-body,
+    body.app-mode #profileDialog .profile-section,
+    body.app-mode #profileDialog .profile-avatar-editor,
+    body.app-mode #profileDialog .profile-avatar-editor > *,
+    body.app-mode #profileDialog .field{
+      width:100%;
+      max-width:100%;
+      min-width:0;
+    }
+    body.app-mode #profileDialog .modal-body{
+      overflow-x:hidden!important;
+      overflow-y:auto!important;
+      padding-left:16px!important;
+      padding-right:16px!important;
+      scrollbar-gutter:stable;
+    }
+    body.app-mode #profileDialog .profile-settings-body{overflow:visible}
+    body.app-mode #profileDialog .profile-section{
+      padding:18px;
+      overflow:hidden;
+    }
+    body.app-mode #profileDialog input,
+    body.app-mode #profileDialog textarea,
+    body.app-mode #profileDialog select{
+      display:block;
+      width:100%!important;
+      max-width:100%!important;
+      min-width:0!important;
+    }
+    body.app-mode #profileDialog input[type="file"]{
+      height:auto;
+      padding:9px;
+      overflow:hidden;
+      white-space:normal;
+    }
+    body.app-mode #profileDialog input[type="file"]::file-selector-button{
+      max-width:45%;
+      margin-right:10px;
+      padding:9px 11px;
+      border:0;
+      border-radius:10px;
+      background:var(--surface);
+      color:var(--theme-text);
+      font-weight:750;
+    }
+    body.app-mode #profileDialog .login-note,
+    body.app-mode #profileDialog p,
+    body.app-mode #profileDialog label,
+    body.app-mode #profileDialog strong{
+      max-width:100%;
+      overflow-wrap:anywhere;
+      word-break:keep-all;
+    }
+    body.app-mode #profileDialog .profile-avatar-editor{
+      grid-template-columns:1fr!important;
+      gap:15px;
+    }
+    body.app-mode #profileDialog .profile-avatar-preview{min-width:0}
+    .profile-account-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      min-width:0;
+    }
+    .profile-account-row > div{display:grid;gap:3px;min-width:0}
+    .profile-account-label{font-size:12px;color:var(--theme-muted)}
+    #profileAccountEmail{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .profile-logout-btn{flex:0 0 auto;min-height:44px;padding-inline:16px!important}
+    .profile-save-actions{padding-bottom:4px}
+
+    /* generic nav styling must not turn pagination into a rectangular strip */
+    nav.pagination,
+    body.app-mode nav.pagination{
+      position:relative;
+      display:flex!important;
+      width:100%;
+      margin:32px 0 8px!important;
+      padding:25px 0 4px!important;
+      border:0!important;
+      border-top:0!important;
+      border-bottom:0!important;
+      background:transparent!important;
+      box-shadow:none!important;
+      overflow:visible!important;
+    }
+    nav.pagination::before{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      top:0;
+      height:1px;
+      background:var(--theme-line);
+    }
+    .pagination .page-btn{
+      background:var(--surface)!important;
+      color:var(--theme-text)!important;
+      border-color:var(--theme-line)!important;
+      box-shadow:none;
+    }
+    .pagination .page-btn:hover:not(:disabled){
+      border-color:var(--accent2)!important;
+      transform:translateY(-1px);
+    }
+    .pagination .page-btn.active{
+      color:#fff!important;
+      border-color:transparent!important;
+      background:var(--brand-gradient)!important;
+      box-shadow:0 9px 22px rgba(36,200,216,.20);
+    }
+    html[data-theme="pure-white"] .pagination .page-btn.active{background:#000!important;color:#fff!important}
+    html[data-theme="pure-black"] .pagination .page-btn.active{background:#fff!important;color:#000!important}
+    .pagination .page-btn:disabled{
+      color:var(--theme-muted)!important;
+      background:var(--surface-2)!important;
+      opacity:.48;
+    }
+
+    @media(max-width:420px){
+      body.app-mode #profileDialog .modal-body{padding-left:12px!important;padding-right:12px!important}
+      body.app-mode #profileDialog .profile-section{padding:16px}
+      .profile-account-row{align-items:stretch;flex-direction:column}
+      .profile-logout-btn{width:100%}
+      .pagination{gap:5px!important}
+      .pagination .page-btn{min-width:34px;height:38px;padding:0 10px}
+    }
+
   </style>
 </head>
 <body>
@@ -449,7 +616,7 @@
   <header id="appHeader" class="app-only app-header" aria-label="행신뉴스 앱 상단바">
     <button type="button" id="appBackBtn" class="app-icon-button hidden" aria-label="뒤로가기">‹</button>
     <button type="button" id="appHomeBrand" class="app-brand-button" aria-label="행신뉴스 홈">
-      <span class="app-h-mark">H</span><span id="appHeaderTitle">행신뉴스</span>
+      <span id="appHeaderTitle" class="app-wordmark">haengshin news</span>
     </button>
     <button type="button" id="appSettingsBtn" class="app-icon-button" aria-label="설정">⚙</button>
   </header>
@@ -520,7 +687,7 @@
 
   <dialog id="accountHelpAdminDialog"><div class="modal-head"><h2>계정 도움 관리</h2><button class="close" data-close="accountHelpAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자 전용 창구입니다. 이메일 찾기 문의와 비밀번호 재설정 시도 기록을 확인할 수 있습니다.</p><div class="admin-list"><h3>이메일 찾기 문의</h3><div id="accountHelpRequestList"></div></div><div class="admin-list"><h3>비밀번호 재설정 시도 내역</h3><div id="passwordResetAttemptList"></div></div></div></dialog>
 
-  <dialog id="profileDialog"><div class="modal-head"><h2>프로필 설정</h2><button class="close" data-close="profileDialog">×</button></div><div class="modal-body profile-settings-body"><section class="profile-section"><h3>프로필 사진</h3><div class="profile-avatar-editor"><div id="profileAvatarPreview" class="profile-avatar-preview"></div><div><input type="hidden" id="profileAvatarUrl"><input type="hidden" id="profileAvatarPath"><div class="field"><label>새 프로필 사진</label><input id="profileAvatarFile" type="file" accept="image/*"></div><div class="editor-actions" style="justify-content:flex-start;margin-top:4px"><button type="button" class="btn red" id="removeAvatarBtn">사진 삭제</button></div><p class="login-note">5MB 이하의 정사각형 이미지를 권장합니다. 댓글과 기사 작성자 영역에 표시됩니다.</p></div></div></section><section class="profile-section"><h3>기본 정보</h3><p class="login-note">기사와 댓글에 표시될 이름을 설정합니다.</p><div class="field"><label>닉네임</label><input id="nicknameInput" maxlength="20" placeholder="2~20자 닉네임"></div><div class="field"><label>소개</label><textarea id="profileBioInput" maxlength="160" placeholder="짧은 소개를 입력할 수 있습니다."></textarea></div><div class="field"><label>역할 배지</label><div id="profileBadgePreview" class="comment-badges"><span class="role-badge">일반 회원</span></div></div></section><section class="profile-section"><h3>칭호 설정</h3><p class="login-note">여러 칭호를 보유해도 댓글과 게시물에는 대표 칭호 1개만 표시됩니다.</p><div class="field"><label>대표 칭호</label><select id="featuredTitleSelect"><option value="">칭호 없음</option></select></div><div class="field"><label>내가 보유한 칭호</label><div id="ownedTitleList" class="owned-title-list"><span class="owned-title-empty">보유한 칭호를 불러오는 중입니다.</span></div></div></section><div class="editor-actions"><button class="btn blue" id="saveNicknameBtn">프로필 저장</button></div></div></dialog>
+  <dialog id="profileDialog"><div class="modal-head"><h2>프로필 설정</h2><button class="close" data-close="profileDialog">×</button></div><div class="modal-body profile-settings-body"><section class="profile-section"><h3>프로필 사진</h3><div class="profile-avatar-editor"><div id="profileAvatarPreview" class="profile-avatar-preview"></div><div><input type="hidden" id="profileAvatarUrl"><input type="hidden" id="profileAvatarPath"><div class="field"><label>새 프로필 사진</label><input id="profileAvatarFile" type="file" accept="image/*"></div><div class="editor-actions" style="justify-content:flex-start;margin-top:4px"><button type="button" class="btn red" id="removeAvatarBtn">사진 삭제</button></div><p class="login-note">5MB 이하의 정사각형 이미지를 권장합니다. 댓글과 기사 작성자 영역에 표시됩니다.</p></div></div></section><section class="profile-section"><h3>기본 정보</h3><p class="login-note">기사와 댓글에 표시될 이름을 설정합니다.</p><div class="field"><label>닉네임</label><input id="nicknameInput" maxlength="20" placeholder="2~20자 닉네임"></div><div class="field"><label>소개</label><textarea id="profileBioInput" maxlength="160" placeholder="짧은 소개를 입력할 수 있습니다."></textarea></div><div class="field"><label>역할 배지</label><div id="profileBadgePreview" class="comment-badges"><span class="role-badge">일반 회원</span></div></div></section><section class="profile-section"><h3>칭호 설정</h3><p class="login-note">여러 칭호를 보유해도 댓글과 게시물에는 대표 칭호 1개만 표시됩니다.</p><div class="field"><label>대표 칭호</label><select id="featuredTitleSelect"><option value="">칭호 없음</option></select></div><div class="field"><label>내가 보유한 칭호</label><div id="ownedTitleList" class="owned-title-list"><span class="owned-title-empty">보유한 칭호를 불러오는 중입니다.</span></div></div></section><section class="profile-section profile-account-section"><h3>계정</h3><div class="profile-account-row"><div><span class="profile-account-label">로그인 계정</span><strong id="profileAccountEmail">계정 정보를 불러오는 중입니다.</strong></div><button type="button" class="btn red profile-logout-btn" id="appLogoutBtn">로그아웃</button></div></section><div class="editor-actions profile-save-actions"><button class="btn blue" id="saveNicknameBtn">프로필 저장</button></div></div></dialog>
 
   <dialog id="editorRequestDialog"><div class="modal-head"><h2>기사 게시 계정 신청</h2><button class="close" data-close="editorRequestDialog">×</button></div><div class="modal-body"><p class="login-note">승인된 일반 회원만 게시 권한을 신청할 수 있습니다. 관리자가 승인하기 전까지 기사 작성 권한은 부여되지 않습니다.</p><div class="form-grid"><div class="field"><label>이메일</label><input id="requestEmail" type="email" readonly></div><div class="field"><label>표시 이름</label><input id="requestNickname" maxlength="20" readonly></div><div class="field full"><label>신청 사유</label><textarea id="requestReason" placeholder="기사를 게시해야 하는 이유나 담당 역할을 적어 주세요."></textarea></div></div><div class="editor-actions"><button class="btn blue" id="submitEditorRequestBtn">게시 권한 신청</button></div></div></dialog>
 
@@ -1063,6 +1230,7 @@
       }
       if(locked && id !== 'loginDialog' && $('loginDialog')?.open) $('loginDialog').close();
       if(!dialog.open) dialog.showModal();
+      setTimeout(syncAppUI, 0);
     }
     function closeDialog(id){
       const dialog = $(id);
@@ -1070,6 +1238,7 @@
       const locked = state.appMode && state.authResolved && !state.session;
       if(id === 'loginDialog' && locked) return;
       if(dialog.open) dialog.close();
+      setTimeout(syncAppUI, 0);
       if(locked && APP_AUTH_DIALOG_IDS.has(id) && id !== 'loginDialog') setTimeout(syncAppAuthGate,0);
     }
     function openImageViewer(src, caption=''){
@@ -3747,6 +3916,7 @@ async function deleteTitle(id){
       if(!state.session){ openDialog('loginDialog'); return; }
       $('nicknameInput').value=state.profile?.nickname||state.memberRequest?.nickname||'';
       if($('profileBioInput')) $('profileBioInput').value=state.profile?.bio||'';
+      if($('profileAccountEmail')) $('profileAccountEmail').textContent=state.session?.user?.email||'이메일 정보 없음';
       if($('profileAvatarUrl')) $('profileAvatarUrl').value=state.profile?.avatar_url||'';
       if($('profileAvatarPath')) $('profileAvatarPath').value=state.profile?.avatar_path||'';
       if($('profileAvatarFile')) $('profileAvatarFile').value='';
@@ -3978,12 +4148,64 @@ async function deleteTitle(id){
 
     function fillAppCategories(){if(!$('appCategoryList'))return;$('appCategoryList').innerHTML=CATEGORIES.map(c=>`<button type="button" data-app-category="${c}" class="${c===state.category?'active':''}">${c}</button>`).join('');$('appCategoryList').querySelectorAll('[data-app-category]').forEach(b=>b.onclick=()=>navigateCategory(b.dataset.appCategory));}
     function syncAppUI(){
-      document.body.classList.toggle('app-mode',!!state.appMode);if(!state.appMode)return;
-      if($('appHeaderTitle'))$('appHeaderTitle').textContent=state.activeArticleId?(state.articles.find(a=>String(a.id)===String(state.activeArticleId))?.title||'기사'):(state.category==='종합'?'행신뉴스':state.category);
-      $('appBackBtn')?.classList.toggle('hidden',!state.activeArticleId);
-      document.querySelectorAll('[data-app-tab]').forEach(b=>{const tab=b.dataset.appTab;const active=(tab==='home'&&!state.activeArticleId&&state.category==='종합')||(tab==='tips'&&state.category==='뉴스제보')||(tab==='notifications'&&$('personalMessageDialog')?.open)||(tab==='profile'&&$('profileDialog')?.open);b.classList.toggle('active',active);});
+      document.body.classList.toggle('app-mode', !!state.appMode);
+      if(!state.appMode) return;
+      if($('appHeaderTitle')) $('appHeaderTitle').textContent='haengshin news';
+      $('appBackBtn')?.classList.toggle('hidden', !state.activeArticleId);
+
+      let activeTab = null;
+      if($('profileDialog')?.open) activeTab = 'profile';
+      else if($('personalMessageDialog')?.open) activeTab = 'notifications';
+      else if($('appCategoryDialog')?.open) activeTab = 'categories';
+      else if(state.category === '뉴스제보') activeTab = 'tips';
+      else if(!state.activeArticleId && state.category === '종합') activeTab = 'home';
+
+      document.querySelectorAll('[data-app-tab]').forEach(button=>{
+        button.classList.toggle('active', button.dataset.appTab === activeTab);
+      });
     }
+
+    async function logoutCurrentUser(){
+      if(!state.session){
+        syncAppAuthGate();
+        return;
+      }
+      if(!confirm('행신뉴스에서 로그아웃하시겠습니까?')) return;
+      const logoutButtons = [$('appLogoutBtn'), $('logoutTopBtn')].filter(Boolean);
+      logoutButtons.forEach(button=>button.disabled=true);
+      try{
+        const { error } = await client.auth.signOut();
+        if(error) throw error;
+        ['profileDialog','settingsDialog','personalMessageDialog'].forEach(id=>{
+          const dialog=$(id);
+          if(dialog?.open) dialog.close();
+        });
+        state.session=null;
+        state.isEditor=false;
+        state.isOwner=false;
+        state.editorRole=null;
+        state.editorRecord=null;
+        state.profile=null;
+        state.memberRequest=null;
+        state.isApprovedMember=false;
+        state.authResolved=true;
+        updateAuthUI();
+        syncAppAuthGate();
+      }catch(error){
+        showStatus('로그아웃 실패: '+(error?.message||error),'err');
+      }finally{
+        logoutButtons.forEach(button=>button.disabled=false);
+      }
+    }
+
     function bindEnhancements(){
+      if($('appLogoutBtn')) $('appLogoutBtn').onclick=logoutCurrentUser;
+      if($('logoutTopBtn')) $('logoutTopBtn').onclick=logoutCurrentUser;
+      document.querySelectorAll('dialog').forEach(dialog=>{
+        if(dialog.dataset.appCloseSyncBound==='1') return;
+        dialog.dataset.appCloseSyncBound='1';
+        dialog.addEventListener('close',()=>setTimeout(syncAppUI,0));
+      });
       document.body.classList.toggle('app-mode',state.appMode);if($('searchInput')){$('searchInput').value=state.query;let timer=null;$('searchInput').oninput=e=>{clearTimeout(timer);state.query=e.target.value;state.page=1;timer=setTimeout(()=>{updateRoute({category:state.category,page:1,q:state.query},{replace:true});render();},180);};}$('searchClear').onclick=()=>{state.query='';state.page=1;$('searchInput').value='';navigateCategory('종합',{replace:true});};
       const brandTitle=document.querySelector('.brand h1');if(brandTitle)brandTitle.onclick=()=>{state.query='';if($('searchInput'))$('searchInput').value='';navigateCategory('종합');};
       if($('profileTopBtn'))$('profileTopBtn').onclick=prepareProfileDialog;if($('settingsTopBtn'))$('settingsTopBtn').onclick=openSettings;if($('appSettingsBtn'))$('appSettingsBtn').onclick=openSettings;if($('appHomeBrand'))$('appHomeBrand').onclick=()=>navigateCategory('종합');if($('appBackBtn'))$('appBackBtn').onclick=()=>{if(history.state?.fromList)history.back();else navigateList({replace:true});};
