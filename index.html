@@ -767,6 +767,347 @@
     }
   </style>
 
+
+  <style id="avatar-update-release-v10">
+    /* ===== 프로필 기본 이미지 및 앱 업데이트 관리 v10 ===== */
+    .profile-avatar{
+      isolation:isolate;
+      background:var(--surface-2)!important;
+      color:var(--theme-muted)!important;
+    }
+    .profile-avatar.has-image{
+      background:var(--surface)!important;
+    }
+    .profile-avatar-default{
+      position:absolute;
+      inset:0;
+      z-index:1;
+      display:grid;
+      place-items:center;
+      color:var(--theme-muted);
+      background:
+        radial-gradient(circle at 35% 25%,rgba(255,255,255,.42),transparent 38%),
+        var(--surface-2);
+    }
+    .profile-avatar-default svg{
+      width:62%;
+      height:62%;
+      display:block;
+      fill:currentColor;
+      opacity:.72;
+    }
+    .profile-avatar.has-image .profile-avatar-default{
+      display:none;
+    }
+    .profile-avatar img{
+      z-index:2;
+      background:var(--surface)!important;
+      object-fit:cover;
+    }
+
+    .app-release-summary{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:10px;
+      margin:0 0 16px;
+    }
+    .app-release-summary-card{
+      border:1px solid var(--theme-line);
+      border-radius:15px;
+      background:var(--surface-2);
+      padding:13px 14px;
+    }
+    .app-release-summary-card span{
+      display:block;
+      color:var(--theme-muted);
+      font-size:12px;
+      margin-bottom:4px;
+    }
+    .app-release-summary-card strong{
+      display:block;
+      color:var(--theme-text);
+      font-size:18px;
+    }
+    .app-release-upload-note{
+      border:1px solid var(--theme-line);
+      border-radius:14px;
+      background:var(--surface-2);
+      padding:12px 13px;
+      color:var(--theme-muted);
+      font-size:13px;
+      line-height:1.6;
+      margin:10px 0 0;
+    }
+    .app-release-row{
+      border:1px solid var(--theme-line);
+      border-radius:15px;
+      background:var(--surface);
+      padding:13px;
+      margin-bottom:9px;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:12px;
+      align-items:center;
+    }
+    .app-release-row.active{
+      border-color:var(--brand-cyan);
+      box-shadow:0 0 0 3px rgba(36,200,216,.10);
+    }
+    .app-release-row strong{
+      display:block;
+      color:var(--theme-text);
+    }
+    .app-release-row span{
+      display:block;
+      color:var(--theme-muted);
+      font-size:12px;
+      margin-top:3px;
+      overflow-wrap:anywhere;
+    }
+    .app-release-row .ops{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .release-active-badge{
+      display:inline-flex!important;
+      width:max-content;
+      align-items:center;
+      margin:0 0 5px!important;
+      padding:3px 8px;
+      border-radius:999px;
+      background:#dcfce7;
+      color:#166534!important;
+      border:1px solid #86efac;
+      font-weight:900;
+    }
+    @media(max-width:620px){
+      .app-release-row{grid-template-columns:1fr}
+      .app-release-row .ops{justify-content:flex-start}
+    }
+  </style>
+
+
+  <style id="comment-theme-fix-v11">
+    /* ===== 댓글 테마 대비 및 버튼 정리 v11 ===== */
+    :root{
+      --comment-text:#334155;
+      --comment-meta:#64748b;
+      --comment-action:#2563eb;
+      --comment-action-bg:#eff6ff;
+      --comment-action-border:#bfdbfe;
+      --comment-danger:#b4232f;
+      --comment-danger-bg:#fff1f2;
+      --comment-danger-border:#fecdd3;
+      --comment-heart-bg:#ffffff;
+      --comment-heart-border:#d7dee8;
+      --comment-heart-text:#64748b;
+      --comment-heart-hover:#be123c;
+      --comment-heart-active-bg:#fff1f2;
+      --comment-heart-active-border:#f9a8d4;
+      --comment-heart-active-text:#e11d48;
+    }
+
+    html[data-theme="pure-white"]{
+      --comment-text:#20242a;
+      --comment-meta:#62676f;
+      --comment-action:#174ea6;
+      --comment-action-bg:#f4f7fb;
+      --comment-action-border:#d6e0ef;
+      --comment-danger:#a61b29;
+      --comment-danger-bg:#fff7f7;
+      --comment-danger-border:#efc9cd;
+      --comment-heart-bg:#fff;
+      --comment-heart-border:#d8d8d8;
+      --comment-heart-text:#62676f;
+    }
+
+    html[data-theme="pure-black"]{
+      --comment-text:#e7e7e7;
+      --comment-meta:#a8a8a8;
+      --comment-action:#7dd3fc;
+      --comment-action-bg:#07141c;
+      --comment-action-border:#164e63;
+      --comment-danger:#fda4af;
+      --comment-danger-bg:#1f0a0e;
+      --comment-danger-border:#7f1d1d;
+      --comment-heart-bg:#090909;
+      --comment-heart-border:#3a3a3a;
+      --comment-heart-text:#c6c6c6;
+      --comment-heart-hover:#fb7185;
+      --comment-heart-active-bg:#250b12;
+      --comment-heart-active-border:#9f1239;
+      --comment-heart-active-text:#fb7185;
+    }
+
+    html[data-theme="aurora-white"],
+    html[data-theme="aurora"]{
+      --comment-text:#294357;
+      --comment-meta:#667d8e;
+      --comment-action:#147ea4;
+      --comment-action-bg:rgba(36,200,216,.10);
+      --comment-action-border:rgba(36,160,184,.28);
+      --comment-danger:#b83b4a;
+      --comment-danger-bg:rgba(244,63,94,.07);
+      --comment-danger-border:rgba(225,29,72,.20);
+      --comment-heart-bg:rgba(255,255,255,.72);
+      --comment-heart-border:rgba(69,151,174,.26);
+      --comment-heart-text:#62798b;
+      --comment-heart-hover:#c02655;
+      --comment-heart-active-bg:rgba(255,241,242,.88);
+      --comment-heart-active-border:#f9a8d4;
+      --comment-heart-active-text:#d91f4d;
+    }
+
+    html[data-theme="aurora-black"]{
+      --comment-text:#dcebf4;
+      --comment-meta:#9eb4c5;
+      --comment-action:#67e8f9;
+      --comment-action-bg:rgba(34,211,238,.09);
+      --comment-action-border:rgba(103,232,249,.22);
+      --comment-danger:#fda4af;
+      --comment-danger-bg:rgba(244,63,94,.10);
+      --comment-danger-border:rgba(251,113,133,.24);
+      --comment-heart-bg:rgba(7,15,25,.74);
+      --comment-heart-border:rgba(112,204,213,.25);
+      --comment-heart-text:#b5c8d5;
+      --comment-heart-hover:#fda4af;
+      --comment-heart-active-bg:rgba(136,19,55,.24);
+      --comment-heart-active-border:rgba(251,113,133,.55);
+      --comment-heart-active-text:#fda4af;
+    }
+
+    .comment{
+      color:var(--theme-text)!important;
+      border-color:var(--theme-line)!important;
+    }
+
+    .comment-body{
+      color:var(--comment-text)!important;
+      line-height:1.72;
+      overflow-wrap:anywhere;
+      word-break:keep-all;
+    }
+
+    .comment-time{
+      color:var(--comment-meta)!important;
+    }
+
+    .comment-footer{
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:6px!important;
+      margin-top:11px!important;
+    }
+
+    .comment-reply,
+    .comment-delete{
+      min-height:28px;
+      padding:5px 10px!important;
+      border:1px solid transparent!important;
+      border-radius:999px;
+      font-size:12px!important;
+      font-weight:800;
+      line-height:1!important;
+      text-decoration:none;
+      transition:
+        background-color .16s ease,
+        border-color .16s ease,
+        color .16s ease,
+        transform .16s ease;
+    }
+
+    .comment-reply{
+      color:var(--comment-action)!important;
+      background:var(--comment-action-bg)!important;
+      border-color:var(--comment-action-border)!important;
+    }
+
+    .comment-delete{
+      color:var(--comment-danger)!important;
+      background:var(--comment-danger-bg)!important;
+      border-color:var(--comment-danger-border)!important;
+    }
+
+    .comment-heart{
+      min-height:28px;
+      padding:4px 9px!important;
+      border-color:var(--comment-heart-border)!important;
+      background:var(--comment-heart-bg)!important;
+      color:var(--comment-heart-text)!important;
+      box-shadow:none!important;
+      backdrop-filter:blur(10px);
+    }
+
+    .comment-heart.hearted{
+      border-color:var(--comment-heart-active-border)!important;
+      background:var(--comment-heart-active-bg)!important;
+      color:var(--comment-heart-active-text)!important;
+    }
+
+    .comment-heart:disabled{
+      color:var(--comment-meta)!important;
+      background:var(--comment-heart-bg)!important;
+      border-color:var(--comment-heart-border)!important;
+      opacity:.72!important;
+    }
+
+    .comment-heart-icon{
+      color:inherit!important;
+    }
+
+    @media(hover:hover){
+      .comment-reply:hover,
+      .comment-delete:hover,
+      .comment-heart:not(:disabled):hover{
+        transform:translateY(-1px);
+      }
+
+      .comment-reply:hover{
+        filter:brightness(1.05);
+      }
+
+      .comment-delete:hover{
+        filter:brightness(1.04);
+      }
+
+      .comment-heart:not(:disabled):hover{
+        color:var(--comment-heart-hover)!important;
+        border-color:var(--comment-heart-active-border)!important;
+        background:var(--comment-heart-active-bg)!important;
+      }
+    }
+
+    .comment-reply:focus-visible,
+    .comment-delete:focus-visible,
+    .comment-heart:focus-visible{
+      outline:3px solid rgba(36,200,216,.22);
+      outline-offset:2px;
+    }
+
+    @media(max-width:620px){
+      .comment{
+        padding:13px!important;
+      }
+
+      .comment-body{
+        font-size:14.5px;
+      }
+
+      .comment-footer{
+        gap:5px!important;
+      }
+
+      .comment-reply,
+      .comment-delete,
+      .comment-heart{
+        min-height:30px;
+      }
+    }
+  </style>
+
 </head>
 <body>
   <script>
@@ -808,7 +1149,7 @@
   <aside id="rightAdRail" class="ad-rail ad-rail-right hidden" aria-label="오른쪽 시범 광고"></aside>
   <footer class="footer"><div class="footer-inner"><span>© haengshin news</span><span>소식과 활동 기록을 공유하는 뉴스형 웹사이트</span></div></footer>
 
-  <dialog id="adminCenterDialog"><div class="modal-head"><h2>관리 센터</h2><button class="close" data-close="adminCenterDialog">×</button></div><div class="modal-body"><div class="admin-center-layout"><nav class="admin-center-menu" aria-label="관리 센터 메뉴"><button type="button" data-admin-action="dashboard">요청 현황</button><button type="button" data-admin-action="articles">기사 관리</button><button type="button" class="owner-only" data-admin-action="accounts">계정 관리</button><button type="button" class="owner-only" data-admin-action="accountHelp">계정 도움 관리</button><button type="button" class="owner-only" data-admin-action="inbox">제보·건의 관리</button><button type="button" class="owner-only" data-admin-action="personalMessages">개인 알림 관리</button><button type="button" class="owner-only" data-admin-action="titles">칭호 관리</button><button type="button" class="owner-only" data-admin-action="ads">광고 관리</button><button type="button" class="owner-only" data-admin-action="policy">운영 방침</button></nav><section class="admin-center-main" id="adminCenterMain"><h3>요청 현황을 불러오는 중입니다</h3><p>새 요청과 처리할 항목을 확인하고 있습니다.</p></section></div></div></dialog>
+  <dialog id="adminCenterDialog"><div class="modal-head"><h2>관리 센터</h2><button class="close" data-close="adminCenterDialog">×</button></div><div class="modal-body"><div class="admin-center-layout"><nav class="admin-center-menu" aria-label="관리 센터 메뉴"><button type="button" data-admin-action="dashboard">요청 현황</button><button type="button" data-admin-action="articles">기사 관리</button><button type="button" class="owner-only" data-admin-action="accounts">계정 관리</button><button type="button" class="owner-only" data-admin-action="accountHelp">계정 도움 관리</button><button type="button" class="owner-only" data-admin-action="inbox">제보·건의 관리</button><button type="button" class="owner-only" data-admin-action="personalMessages">개인 알림 관리</button><button type="button" class="owner-only" data-admin-action="titles">칭호 관리</button><button type="button" class="owner-only" data-admin-action="ads">광고 관리</button><button type="button" class="owner-only" data-admin-action="appReleases">앱 업데이트 관리</button><button type="button" class="owner-only" data-admin-action="policy">운영 방침</button></nav><section class="admin-center-main" id="adminCenterMain"><h3>요청 현황을 불러오는 중입니다</h3><p>새 요청과 처리할 항목을 확인하고 있습니다.</p></section></div></div></dialog>
 
   <dialog id="loginDialog" class="auth-dialog">
     <div class="auth-shell">
@@ -881,6 +1222,59 @@
   <dialog id="inboxAdminDialog"><div class="modal-head"><h2>제보·건의 관리</h2><button class="close" data-close="inboxAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자만 뉴스제보와 건의함 내용을 확인하고 처리할 수 있습니다.</p><div class="admin-list"><h3>뉴스제보 목록</h3><div id="newsTipAdminList"></div></div><div class="admin-list"><h3>건의함 목록</h3><div id="suggestionAdminList"></div></div></div></dialog>
 
 
+
+  <dialog id="appReleaseAdminDialog">
+    <div class="modal-head">
+      <h2>앱 업데이트 관리</h2>
+      <button class="close" data-close="appReleaseAdminDialog">×</button>
+    </div>
+    <div class="modal-body">
+      <p class="login-note">대표 관리자만 새 Android APK를 배포할 수 있습니다. 사용자는 앱 실행 시 새 버전을 감지하고, 동의 후 APK를 내려받아 Android 설치 화면에서 최종 업데이트를 승인합니다.</p>
+
+      <div class="app-release-summary">
+        <div class="app-release-summary-card"><span>현재 서버 배포 버전</span><strong id="currentReleaseVersion">등록 없음</strong></div>
+        <div class="app-release-summary-card"><span>앱에서 보고한 버전</span><strong id="nativeAppVersion">웹 브라우저</strong></div>
+      </div>
+
+      <section class="profile-section">
+        <h3>새 버전 배포</h3>
+        <div class="form-grid">
+          <div class="field">
+            <label>버전 이름</label>
+            <input id="releaseVersionName" maxlength="30" placeholder="예: 2.5.0">
+          </div>
+          <div class="field">
+            <label>버전 코드</label>
+            <input id="releaseVersionCode" type="number" min="1" step="1" placeholder="예: 15">
+          </div>
+          <div class="field full">
+            <label>배포 APK</label>
+            <input id="releaseApkFile" type="file" accept=".apk,application/vnd.android.package-archive">
+          </div>
+          <div class="field full">
+            <label>업데이트 내용</label>
+            <textarea id="releaseNotes" maxlength="3000" placeholder="이번 버전에서 달라진 내용을 입력하세요."></textarea>
+          </div>
+          <div class="field full">
+            <label class="setting-switch">
+              <input id="releaseRequired" type="checkbox">
+              <span><b>필수 업데이트</b><small>켜면 업데이트를 완료하기 전까지 앱 이용을 계속할 수 없게 안내합니다.</small></span>
+            </label>
+          </div>
+        </div>
+        <div class="app-release-upload-note" id="releaseFileInfo">APK를 선택하면 파일 크기와 SHA-256 계산 준비 상태를 표시합니다. APK는 기존 앱과 같은 applicationId 및 서명 키를 사용하고, versionCode를 반드시 높여 빌드해야 합니다.</div>
+        <div class="editor-actions">
+          <button type="button" class="btn blue" id="publishReleaseBtn">새 버전 배포</button>
+        </div>
+      </section>
+
+      <div class="admin-list">
+        <h3>배포 기록</h3>
+        <div id="appReleaseList"><p style="color:#64748b">배포 기록을 불러오는 중입니다.</p></div>
+      </div>
+    </div>
+  </dialog>
+
   <dialog id="settingsDialog"><div class="modal-head"><h2>설정</h2><button class="close" data-close="settingsDialog">×</button></div><div class="modal-body"><section class="profile-section"><h3>화면 테마</h3><p class="login-note">선택 즉시 적용됩니다. 시스템 설정은 기기의 라이트·다크 모드에 따라 오로라 화이트와 오로라 블랙을 자동으로 선택합니다.</p><div class="theme-choice-grid" id="themeChoiceGrid"><label><input type="radio" name="themeChoice" value="system"><span class="theme-sample system-sample"></span><b>시스템 설정</b></label><label><input type="radio" name="themeChoice" value="pure-white"><span class="theme-sample pure-white-sample"></span><b>완전 화이트</b></label><label><input type="radio" name="themeChoice" value="pure-black"><span class="theme-sample pure-black-sample"></span><b>완전 블랙</b></label><label><input type="radio" name="themeChoice" value="aurora-white"><span class="theme-sample aurora-white-sample"></span><b>오로라 화이트</b></label><label><input type="radio" name="themeChoice" value="aurora-black"><span class="theme-sample aurora-black-sample"></span><b>오로라 블랙</b></label><label><input type="radio" name="themeChoice" value="aurora"><span class="theme-sample aurora-full-sample"></span><b>오로라</b></label></div></section><section class="profile-section"><h3>푸시 알림</h3><label class="setting-switch"><input type="checkbox" id="pushEnabled"><span><b>알림 받기</b><small>끄면 이 계정으로 발송되는 모든 기사 알림을 중지합니다.</small></span></label><div id="pushCategorySettings" class="notification-category-grid"><label><input type="checkbox" value="공지"> 공지</label><label><input type="checkbox" value="인사이트"> 인사이트</label><label><input type="checkbox" value="활동"> 활동</label><label><input type="checkbox" value="칼럼"> 칼럼</label><label><input type="checkbox" value="종합"> 종합</label></div><p class="login-note" id="pushLoginNote">로그인 계정에서는 설정이 Supabase에 동기화됩니다. 실제 FCM 발송 서버에서도 이 값을 확인해야 합니다.</p></section><div class="editor-actions"><button class="btn blue" id="saveSettingsBtn">설정 저장</button></div></div></dialog>
 
   <dialog id="appCategoryDialog" class="app-sheet-dialog"><div class="modal-head"><h2>분야 선택</h2><button class="close" data-close="appCategoryDialog">×</button></div><div class="modal-body"><div id="appCategoryList" class="app-category-list"></div></div></dialog>
@@ -892,7 +1286,8 @@
       supabaseUrl: 'https://vcveyhhbnoikziicpljk.supabase.co',
       supabaseAnonKey: 'sb_publishable_fgqKwRloiNvNb83PhCNZow_PM59mBYA',
       bucket: 'article-images',
-      fileBucket: 'article-files'
+      fileBucket: 'article-files',
+      releaseBucket: 'app-releases'
     };
     const CATEGORIES = ['종합','공지','인사이트','뉴스제보','활동','칼럼'];
     const ARTICLE_DISPLAY_CATEGORIES = CATEGORIES.filter(c => c !== '뉴스제보');
@@ -901,7 +1296,7 @@
     const client = window.supabase.createClient(CONFIG.supabaseUrl, CONFIG.supabaseAnonKey, {
       auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
     });
-    let state = { articles: [], category: '종합', query: '', session: null, isEditor: false, editorRole: null, editorRecord: null, isOwner: false, profile: null, memberRequest: null, isApprovedMember: false, comments: [], commentBadgeMap: {}, commentHeartCounts: {}, myCommentHearts: new Set(), activeArticleId: null, policyNotice: null, policyShown: false, maintenanceSettings: { enabled:false, allowedRoles:[], message:'현재 사이트 기능 점검 중입니다. 잠시 후 다시 접속해 주세요.' }, memberRequests: [], memberProfileBadges: {}, editorRequests: [], editorAccounts: [], ads: [], newsTips: [], suggestions: [], accountHelpRequests: [], passwordResetAttempts: [], mySuggestions: [], suggestionAnswerNoticeCount: 0, personalMessages: [], personalMessageNoticeCount: 0, personalMessageRecipients: [], personalMessageAdminRows: [], titles: [], myTitles: [], commentTitleMap: {}, titleAdminRecipients: [], articleReadSession: null, authResolved: false };
+    let state = { articles: [], category: '종합', query: '', session: null, isEditor: false, editorRole: null, editorRecord: null, isOwner: false, profile: null, memberRequest: null, isApprovedMember: false, comments: [], commentBadgeMap: {}, commentHeartCounts: {}, myCommentHearts: new Set(), activeArticleId: null, policyNotice: null, policyShown: false, maintenanceSettings: { enabled:false, allowedRoles:[], message:'현재 사이트 기능 점검 중입니다. 잠시 후 다시 접속해 주세요.' }, memberRequests: [], memberProfileBadges: {}, editorRequests: [], editorAccounts: [], ads: [], newsTips: [], suggestions: [], accountHelpRequests: [], passwordResetAttempts: [], mySuggestions: [], suggestionAnswerNoticeCount: 0, personalMessages: [], personalMessageNoticeCount: 0, personalMessageRecipients: [], personalMessageAdminRows: [], titles: [], myTitles: [], commentTitleMap: {}, titleAdminRecipients: [], articleReadSession: null, authResolved: false, appReleases: [] };
     const fmtDate = (v)=> new Intl.DateTimeFormat('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).format(new Date(v));
     const escapeHtml = (s='') => String(s).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 
@@ -3714,6 +4109,160 @@ async function deleteTitle(id){
     function forceHideLegacyAdminButtons(){
       ['manageBtn','accountAdminBtn','accountHelpAdminBtn','inboxAdminBtn','adAdminBtn','policyAdminBtn'].forEach(id=>{ const el=$(id); if(el) el.classList.add('hidden'); });
     }
+
+    function formatReleaseBytes(bytes){
+      const n=Number(bytes||0);
+      if(!Number.isFinite(n)||n<=0)return '크기 정보 없음';
+      const units=['B','KB','MB','GB'];
+      let v=n,i=0;
+      while(v>=1024&&i<units.length-1){v/=1024;i++;}
+      return `${v>=10||i===0?v.toFixed(0):v.toFixed(1)} ${units[i]}`;
+    }
+    async function sha256File(file){
+      if(!window.crypto?.subtle) throw new Error('이 브라우저에서는 SHA-256 계산을 지원하지 않습니다.');
+      const digest=await crypto.subtle.digest('SHA-256',await file.arrayBuffer());
+      return [...new Uint8Array(digest)].map(v=>v.toString(16).padStart(2,'0')).join('');
+    }
+    function currentNativeAppVersion(){
+      const app=window.__HAENGSHIN_APP__;
+      if(!app) return '웹 브라우저';
+      const name=String(app.version||'알 수 없음');
+      const code=String(app.versionCode||new URLSearchParams(location.search).get('appv')||'');
+      return code ? `${name} · code ${code}` : name;
+    }
+    async function loadAppReleases(){
+      if(!state.isOwner){state.appReleases=[];return;}
+      const {data,error}=await client.from('app_releases').select('*').order('version_code',{ascending:false});
+      if(error){
+        state.appReleases=[];
+        const box=$('appReleaseList');
+        if(box)box.innerHTML=`<p style="color:#991b1b">배포 기록을 불러오지 못했습니다: ${escapeHtml(error.message||error)}<br>앱 업데이트 SQL을 먼저 실행했는지 확인하세요.</p>`;
+        return;
+      }
+      state.appReleases=data||[];
+      renderAppReleaseAdmin();
+    }
+    function renderAppReleaseAdmin(){
+      const rows=Array.isArray(state.appReleases)?state.appReleases:[];
+      const active=rows.find(r=>r.active);
+      if($('currentReleaseVersion'))$('currentReleaseVersion').textContent=active?`${active.version_name} · code ${active.version_code}`:'등록 없음';
+      if($('nativeAppVersion'))$('nativeAppVersion').textContent=currentNativeAppVersion();
+      const list=$('appReleaseList');
+      if(!list)return;
+      if(!rows.length){
+        list.innerHTML='<p style="color:#64748b">아직 앱 배포 기록이 없습니다.</p>';
+        return;
+      }
+      list.innerHTML=rows.map(r=>`<article class="app-release-row ${r.active?'active':''}"><div>${r.active?'<span class="release-active-badge">현재 배포 중</span>':''}<strong>${escapeHtml(r.version_name||'버전 이름 없음')} · code ${Number(r.version_code||0)}</strong><span>${escapeHtml(r.file_name||'APK')} · ${escapeHtml(formatReleaseBytes(r.file_size))} · ${r.required?'필수 업데이트':'선택 업데이트'}<br>${escapeHtml(safeDisplayDate(r.created_at))}${r.release_notes?'<br>'+escapeHtml(String(r.release_notes).slice(0,220))+(String(r.release_notes).length>220?'…':''):''}</span></div><div class="ops">${r.active?'':`<button type="button" class="btn green" data-release-activate="${escapeHtml(r.id)}">이 버전 배포</button>`}<button type="button" class="btn red" data-release-delete="${escapeHtml(r.id)}">삭제</button></div></article>`).join('');
+      list.querySelectorAll('[data-release-activate]').forEach(b=>b.onclick=()=>activateAppRelease(b.dataset.releaseActivate));
+      list.querySelectorAll('[data-release-delete]').forEach(b=>b.onclick=()=>deleteAppRelease(b.dataset.releaseDelete));
+    }
+    function resetReleaseForm(){
+      if($('releaseVersionName'))$('releaseVersionName').value='';
+      if($('releaseVersionCode')){
+        const max=Math.max(0,...(state.appReleases||[]).map(r=>Number(r.version_code||0)));
+        $('releaseVersionCode').value=String(max+1);
+      }
+      if($('releaseApkFile'))$('releaseApkFile').value='';
+      if($('releaseNotes'))$('releaseNotes').value='';
+      if($('releaseRequired'))$('releaseRequired').checked=false;
+      if($('releaseFileInfo'))$('releaseFileInfo').textContent='APK를 선택하면 파일 크기와 SHA-256 계산 준비 상태를 표시합니다. APK는 기존 앱과 같은 applicationId 및 서명 키를 사용하고, versionCode를 반드시 높여 빌드해야 합니다.';
+    }
+    async function openAppReleaseAdmin(){
+      if(!state.isOwner){showStatus('대표 관리자만 앱 업데이트를 관리할 수 있습니다.','err');return;}
+      await loadAppReleases();
+      resetReleaseForm();
+      renderAppReleaseAdmin();
+      openDialog('appReleaseAdminDialog');
+    }
+    function validateReleaseFile(file){
+      if(!file)throw new Error('배포할 APK 파일을 선택하세요.');
+      if(!/\.apk$/i.test(file.name))throw new Error('확장자가 .apk인 Android 설치 파일만 배포할 수 있습니다.');
+      if(file.size<=0)throw new Error('비어 있는 APK 파일은 배포할 수 없습니다.');
+      if(file.size>250*1024*1024)throw new Error('APK 파일은 250MB 이하여야 합니다.');
+    }
+    async function uploadReleaseApk(file,versionCode){
+      validateReleaseFile(file);
+      const safeName=String(file.name||`haengshin-news-${versionCode}.apk`).replace(/[^가-힣a-zA-Z0-9._-]/g,'_');
+      const path=`releases/${versionCode}/${Date.now()}-${safeName}`;
+      const type='application/vnd.android.package-archive';
+      const {error}=await client.storage.from(CONFIG.releaseBucket).upload(path,file,{cacheControl:'3600',upsert:false,contentType:type});
+      if(error)throw error;
+      const {data}=client.storage.from(CONFIG.releaseBucket).getPublicUrl(path);
+      return {path,url:data.publicUrl,fileName:safeName};
+    }
+    async function removeReleaseStorage(path){
+      if(!path)return;
+      try{await client.storage.from(CONFIG.releaseBucket).remove([path]);}
+      catch(e){console.warn('release apk cleanup skipped',e);}
+    }
+    async function publishAppRelease(){
+      if(!state.isOwner){showStatus('대표 관리자만 앱 업데이트를 배포할 수 있습니다.','err');return;}
+      const file=$('releaseApkFile')?.files?.[0];
+      const versionName=($('releaseVersionName')?.value||'').trim();
+      const versionCode=Number($('releaseVersionCode')?.value||0);
+      const releaseNotes=($('releaseNotes')?.value||'').trim();
+      const required=!!$('releaseRequired')?.checked;
+      if(!versionName){showStatus('버전 이름을 입력하세요.','err');return;}
+      if(!Number.isInteger(versionCode)||versionCode<1){showStatus('버전 코드는 1 이상의 정수여야 합니다.','err');return;}
+      try{validateReleaseFile(file);}catch(e){showStatus(e.message||e,'err');return;}
+      if((state.appReleases||[]).some(r=>Number(r.version_code)===versionCode)){showStatus('같은 버전 코드가 이미 등록되어 있습니다. 더 높은 versionCode를 사용하세요.','err');return;}
+      const btn=$('publishReleaseBtn');
+      let uploaded=null;
+      try{
+        if(btn){btn.disabled=true;btn.textContent='SHA-256 계산 중…';}
+        if($('releaseFileInfo'))$('releaseFileInfo').textContent=`${file.name} · ${formatReleaseBytes(file.size)} · SHA-256 계산 중…`;
+        const sha256=await sha256File(file);
+        if($('releaseFileInfo'))$('releaseFileInfo').textContent=`${file.name} · ${formatReleaseBytes(file.size)} · SHA-256 ${sha256}`;
+        if(btn)btn.textContent='APK 업로드 중…';
+        uploaded=await uploadReleaseApk(file,versionCode);
+        if(btn)btn.textContent='배포 정보 저장 중…';
+        const {error}=await client.rpc('publish_app_release',{
+          p_version_code:versionCode,
+          p_version_name:versionName,
+          p_apk_url:uploaded.url,
+          p_apk_path:uploaded.path,
+          p_file_name:uploaded.fileName,
+          p_file_size:file.size,
+          p_sha256:sha256,
+          p_release_notes:releaseNotes||null,
+          p_required:required
+        });
+        if(error)throw error;
+        showStatus(`행신뉴스 ${versionName} 배포를 시작했습니다.`,'ok');
+        await loadAppReleases();
+        resetReleaseForm();
+      }catch(e){
+        if(uploaded?.path)await removeReleaseStorage(uploaded.path);
+        showStatus('앱 배포 실패: '+(e.message||e)+' / 앱 업데이트 SQL과 Storage 정책을 확인하세요.','err');
+      }finally{
+        if(btn){btn.disabled=false;btn.textContent='새 버전 배포';}
+      }
+    }
+    async function activateAppRelease(id){
+      if(!state.isOwner)return;
+      const target=(state.appReleases||[]).find(r=>String(r.id)===String(id));
+      if(!target)return;
+      if(!confirm(`행신뉴스 ${target.version_name}을 현재 배포 버전으로 지정하시겠습니까?`))return;
+      const {error}=await client.rpc('activate_app_release',{p_release_id:id});
+      if(error){showStatus('배포 버전 변경 실패: '+error.message,'err');return;}
+      await loadAppReleases();
+      showStatus('현재 배포 버전을 변경했습니다.','ok');
+    }
+    async function deleteAppRelease(id){
+      if(!state.isOwner)return;
+      const target=(state.appReleases||[]).find(r=>String(r.id)===String(id));
+      if(!target)return;
+      if(target.active){showStatus('현재 배포 중인 버전은 먼저 다른 버전을 배포 상태로 바꾼 뒤 삭제하세요.','err');return;}
+      if(!confirm(`앱 배포 기록 ${target.version_name}과 APK 파일을 삭제하시겠습니까?`))return;
+      const {data,error}=await client.from('app_releases').delete().eq('id',id).select('id');
+      if(error){showStatus('배포 기록 삭제 실패: '+error.message,'err');return;}
+      if(!data?.length){showStatus('배포 기록이 삭제되지 않았습니다. RLS 정책을 확인하세요.','err');return;}
+      await removeReleaseStorage(target.apk_path);
+      await loadAppReleases();
+      showStatus('이전 앱 배포 기록과 APK를 삭제했습니다.','ok');
+    }
+
     function renderAdminCenter(){
       const dialog = $('adminCenterDialog');
       if(!dialog) return;
@@ -3752,6 +4301,7 @@ async function deleteTitle(id){
         else if(action === 'personalMessages') openPersonalMessageAdmin();
         else if(action === 'titles') openTitleAdmin();
         else if(action === 'ads') openAdAdmin();
+        else if(action === 'appReleases') openAppReleaseAdmin();
         else if(action === 'policy') openPolicyEditor();
       }, 0);
     }
@@ -3827,6 +4377,8 @@ async function deleteTitle(id){
       };
       $('saveArticleBtn').onclick=saveArticle;
       $('saveAdBtn').onclick=saveAd;
+      if($('publishReleaseBtn'))$('publishReleaseBtn').onclick=publishAppRelease;
+      if($('releaseApkFile'))$('releaseApkFile').onchange=()=>{const file=$('releaseApkFile')?.files?.[0];if(!file){if($('releaseFileInfo'))$('releaseFileInfo').textContent='APK를 선택하면 파일 크기와 SHA-256 계산 준비 상태를 표시합니다.';return;}try{validateReleaseFile(file);if($('releaseFileInfo'))$('releaseFileInfo').textContent=`${file.name} · ${formatReleaseBytes(file.size)} · 배포 시 SHA-256을 계산합니다.`;}catch(e){$('releaseApkFile').value='';showStatus(e.message||e,'err');}};
       $('newAdBtn').onclick=resetAdForm;
       $('newArticleBtn').onclick=resetForm;
       $('category').onchange=()=>{ if(!$('articleId')?.value) renderArticleCategoryControls({ category:$('category').value, visible_categories:['종합',$('category').value] }); };
@@ -4022,11 +4574,17 @@ async function deleteTitle(id){
       render();
     }
 
-    function avatarInitial(name='?'){ return ([...String(name||'?').trim()][0] || '?').toUpperCase(); }
+    function defaultAvatarIcon(){
+      return `<span class="profile-avatar-default" aria-hidden="true"><svg viewBox="0 0 64 64" focusable="false"><circle cx="32" cy="22" r="12"></circle><path d="M10 57c1.8-14 10.2-22 22-22s20.2 8 22 22H10z"></path></svg></span>`;
+    }
     function avatarHtml(profile,name,size='md'){
       const url = String(profile?.avatar_url || '').trim();
       const label = String(profile?.nickname || name || '사용자');
-      return `<span class="profile-avatar ${escapeHtml(size)}" aria-label="${escapeHtml(label)} 프로필 사진"><span>${escapeHtml(avatarInitial(label))}</span>${url?`<img src="${escapeHtml(url)}" alt="" loading="lazy" onerror="this.remove()">`:''}</span>`;
+      const cls = url ? 'has-image' : 'is-default';
+      const image = url
+        ? `<img src="${escapeHtml(url)}" alt="${escapeHtml(label)} 프로필 사진" loading="lazy" onerror="this.parentElement.classList.remove('has-image');this.parentElement.classList.add('is-default');this.remove()">`
+        : '';
+      return `<span class="profile-avatar ${escapeHtml(size)} ${cls}" aria-label="${escapeHtml(label)} 프로필 사진">${defaultAvatarIcon()}${image}</span>`;
     }
     function profileBadges(profile){ return normalizeBadges(profile?.badges); }
     function liveProfileName(profile,fallback){ return String(profile?.nickname || fallback || '편집부'); }
