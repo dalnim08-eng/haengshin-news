@@ -3,6 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <script>
+    (() => {
+      const allowed = new Set(['system','pure-white','pure-black','aurora-white','aurora-black','aurora']);
+      const choice = allowed.has(localStorage.getItem('hn_theme_v2')) ? localStorage.getItem('hn_theme_v2') : 'system';
+      const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+      const resolved = choice === 'system' ? (dark ? 'aurora-black' : 'aurora-white') : choice;
+      document.documentElement.dataset.themeChoice = choice;
+      document.documentElement.dataset.theme = resolved;
+    })();
+  </script>
   <title>haengshin news</title>
   <meta name="description" content="haengshin news - 소식과 활동 기록을 공유하는 뉴스형 웹사이트" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -157,10 +167,68 @@
     @media(max-width:1420px){.ad-rail{--rail-gap:8px}.ad-rail .ad-box{padding:4px;margin-bottom:8px}.ad-rail .ad-label,.ad-rail .ad-title,.ad-rail .ad-note{display:none}.ad-rail img{border-radius:8px}}
     @media(max-width:1339px){.ad-rail{display:none!important}}
     @media(max-width:860px){.admin-center-layout{grid-template-columns:1fr}.masthead{grid-template-columns:1fr;text-align:center}.head-actions{justify-content:center}.brand h1{font-size:40px}.layout{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.article-card{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.article-view{padding:20px}.article-view h2{font-size:32px}.article-gallery-grid{gap:14px}.article-view .main-image img,.article-gallery-item img{max-height:420px}.image-viewer-shell img{max-width:calc(100vw - 40px);max-height:78vh}}
+
+
+    /* ===== 행신뉴스 앱·프로필·테마 통합 개편 ===== */
+    :root{
+      --page-bg:#f7f7f5;--surface:#fff;--surface-2:#f8fafc;--theme-text:#111827;--theme-muted:#64748b;--theme-line:#e5e7eb;
+      --brand-blue:#4778ff;--brand-cyan:#24c8d8;--brand-green:#74dfa5;
+      --brand-gradient:linear-gradient(125deg,var(--brand-blue),var(--brand-cyan) 48%,var(--brand-green));
+      --theme-shadow:0 18px 40px rgba(15,23,42,.08);--theme-top:#0b1220;--theme-top-text:#fff;
+    }
+    html[data-theme="pure-white"]{--page-bg:#fff;--surface:#fff;--surface-2:#fff;--theme-text:#000;--theme-muted:#565656;--theme-line:#dedede;--theme-shadow:none;--theme-top:#fff;--theme-top-text:#000;--accent:#000;--accent2:#000}
+    html[data-theme="pure-black"]{color-scheme:dark;--page-bg:#000;--surface:#000;--surface-2:#080808;--theme-text:#fff;--theme-muted:#aaa;--theme-line:#292929;--theme-shadow:none;--theme-top:#000;--theme-top-text:#fff;--accent:#fff;--accent2:#fff}
+    html[data-theme="aurora-white"]{--page-bg:#f1fbfd;--surface:rgba(255,255,255,.88);--surface-2:rgba(246,253,255,.9);--theme-text:#102237;--theme-muted:#61768a;--theme-line:rgba(79,147,172,.22);--theme-shadow:0 22px 58px rgba(28,124,151,.13);--theme-top:#102237;--theme-top-text:#fff;--accent:#218fc1;--accent2:#28aebf}
+    html[data-theme="aurora-black"]{color-scheme:dark;--page-bg:#02060b;--surface:rgba(7,15,25,.91);--surface-2:rgba(12,24,38,.94);--theme-text:#f4fbff;--theme-muted:#9eb4c5;--theme-line:rgba(112,204,213,.18);--theme-shadow:0 22px 65px rgba(0,0,0,.42);--theme-top:#02060b;--theme-top-text:#fff;--accent:#49d6df;--accent2:#72dfa5}
+    html[data-theme="aurora"]{--page-bg:#edfafd;--surface:rgba(255,255,255,.72);--surface-2:rgba(255,255,255,.82);--theme-text:#102237;--theme-muted:#60778a;--theme-line:rgba(70,158,176,.22);--theme-shadow:0 25px 70px rgba(33,144,173,.16);--theme-top:#102237;--theme-top-text:#fff;--accent:#218fc1;--accent2:#26bdc9}
+    html[data-theme="aurora"] body::before,html[data-theme="aurora-white"] body::before,html[data-theme="aurora-black"] body::before{content:"";position:fixed;inset:-20%;z-index:-2;pointer-events:none;background:radial-gradient(circle at 13% 13%,rgba(71,120,255,.23),transparent 31%),radial-gradient(circle at 88% 30%,rgba(36,200,216,.22),transparent 34%),radial-gradient(circle at 45% 92%,rgba(116,223,165,.22),transparent 32%)}
+    html[data-theme="aurora"] body::before{animation:hnAuroraDrift 14s ease-in-out infinite alternate;filter:blur(10px)}
+    @keyframes hnAuroraDrift{from{transform:translate3d(-1%,-1%,0) scale(1)}to{transform:translate3d(3%,2%,0) scale(1.06)}}
+    body{background:var(--page-bg)!important;color:var(--theme-text)!important;transition:background .22s,color .22s}
+    header,nav,.ticker,.footer,.panel,.hero,.article-card,.article-view,.empty,.comment,.comment-form,.profile-section,.admin-center-main,.admin-center-menu,.maintenance-card,.special-board,.tip-form,.tip-card,dialog{background-color:var(--surface)!important;color:var(--theme-text)!important;border-color:var(--theme-line)!important}
+    .topbar{background:var(--theme-top)!important;color:var(--theme-top-text)!important}.topbar-inner,.mini-links button{color:var(--theme-top-text)!important}
+    .brand h1,.article-view h2,.article-card h3,.hero h2,.panel h3,.comment-author,.modal-head h2{color:var(--theme-text)!important}
+    .summary,.meta,.login-note,.comment-note,.comment-time,.article-card p,.compact-item span,.brand p,.date,.footer,.footer-inner,.personal-message-meta{color:var(--theme-muted)!important}
+    input,textarea,select,.rich-editor,.rich-toolbar,.preview,.gallery-preview,.policy-view,.maintenance-settings,.category-pin-grid,.request-row,.admin-row,.personal-message-card{background:var(--surface-2)!important;color:var(--theme-text)!important;border-color:var(--theme-line)!important}
+    .btn,.tag,.nav-btn,.close{background:var(--surface-2);color:var(--theme-text);border-color:var(--theme-line)}
+    html[data-theme^="aurora"] .btn.blue,html[data-theme="aurora"] .btn.blue,html[data-theme^="aurora"] .btn.dark,html[data-theme="aurora"] .btn.dark{background:var(--brand-gradient)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 10px 26px rgba(35,154,190,.22)}
+    html[data-theme^="aurora"] .nav-btn.active,html[data-theme="aurora"] .nav-btn.active{border-bottom-color:var(--brand-cyan)!important;background:linear-gradient(180deg,transparent,rgba(36,200,216,.09))!important}
+    html[data-theme="pure-black"] .btn.blue,html[data-theme="pure-black"] .btn.dark{background:#fff!important;color:#000!important;border-color:#fff!important}
+    html[data-theme="pure-white"] .btn.blue,html[data-theme="pure-white"] .btn.dark{background:#000!important;color:#fff!important;border-color:#000!important}
+    a.article-link{display:block;color:inherit;text-decoration:none}
+    .pagination{display:flex;justify-content:center;align-items:center;gap:7px;flex-wrap:wrap;margin:24px 0 4px}.page-btn{min-width:40px;height:40px;border:1px solid var(--theme-line);border-radius:12px;background:var(--surface);color:var(--theme-text);font-weight:800}.page-btn.active{color:#fff;border-color:transparent;background:var(--brand-gradient)}.page-btn:disabled{opacity:.38;cursor:not-allowed}
+    .author-profile{display:inline-flex;align-items:center;gap:8px;min-width:0}.author-profile-text{display:flex;align-items:center;gap:5px;flex-wrap:wrap;min-width:0}.author-profile-name{font-weight:800;color:var(--theme-text)}
+    .profile-avatar{position:relative;display:inline-grid;place-items:center;flex:0 0 auto;border-radius:50%;overflow:hidden;background:var(--brand-gradient);color:#fff;font-weight:900;box-shadow:0 5px 16px rgba(32,133,167,.18)}.profile-avatar.sm{width:30px;height:30px;font-size:12px}.profile-avatar.md{width:42px;height:42px;font-size:16px}.profile-avatar.lg{width:92px;height:92px;font-size:30px}.profile-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--surface)}
+    .profile-avatar-editor{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}.profile-avatar-preview{display:grid;place-items:center;min-width:100px}
+    .comment-head-main{display:flex;align-items:flex-start;gap:10px}.comment-head{align-items:flex-start}.comment-head .profile-avatar{margin-top:1px}
+    .locked-author{min-height:44px;display:flex;align-items:center;border:1px solid var(--theme-line);border-radius:12px;padding:8px 11px;background:var(--surface-2)}
+    .theme-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.theme-choice-grid label{display:grid;grid-template-columns:auto 42px 1fr;align-items:center;gap:9px;border:1px solid var(--theme-line);border-radius:14px;padding:11px;background:var(--surface-2);cursor:pointer}.theme-choice-grid label:has(input:checked){outline:3px solid rgba(36,200,216,.18);border-color:var(--brand-cyan)}.theme-sample{display:block;width:38px;height:25px;border-radius:8px;border:1px solid rgba(127,127,127,.35)}.system-sample{background:linear-gradient(90deg,#fff 0 50%,#050505 50%)}.pure-white-sample{background:#fff}.pure-black-sample{background:#000}.aurora-white-sample{background:linear-gradient(125deg,#fff,#dff9fc,#dff8e8)}.aurora-black-sample{background:linear-gradient(125deg,#02060b,#0d3541,#153d2a)}.aurora-full-sample{background:var(--brand-gradient)}
+    .setting-switch{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--theme-line);border-radius:14px;padding:13px;background:var(--surface-2)}.setting-switch span{display:grid;gap:3px}.setting-switch small{color:var(--theme-muted)}.notification-category-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.notification-category-grid label{border:1px solid var(--theme-line);border-radius:999px;padding:8px 11px;background:var(--surface-2)}
+    .app-only{display:none!important}.app-header{position:fixed;left:0;right:0;top:0;z-index:70;height:calc(58px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 12px 0;align-items:center;justify-content:space-between;background:var(--surface)!important;border-bottom:1px solid var(--theme-line);backdrop-filter:blur(20px)}.app-brand-button{display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--theme-text);font-weight:900;font-size:18px}.app-h-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;color:transparent;background:var(--brand-gradient);background-clip:text;-webkit-background-clip:text;font-size:27px;font-weight:1000}.app-icon-button{width:42px;height:42px;border:0;border-radius:14px;background:var(--surface-2);color:var(--theme-text);font-size:24px}.app-bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:70;height:calc(66px + env(safe-area-inset-bottom));padding:6px 5px env(safe-area-inset-bottom);grid-template-columns:repeat(5,1fr);border-top:1px solid var(--theme-line);background:var(--surface)!important;backdrop-filter:blur(20px)}.app-bottom-nav button{border:0;background:transparent;color:var(--theme-muted);display:grid;place-items:center;gap:1px;font-size:17px}.app-bottom-nav button b{font-size:10px}.app-bottom-nav button.active{color:var(--accent2)}
+    body.app-mode>.topbar,body.app-mode>header:not(.app-header),body.app-mode>nav:not(.app-bottom-nav),body.app-mode>.ticker,body.app-mode>.footer,body.app-mode>.ad-rail{display:none!important}body.app-mode .app-only{display:flex!important}body.app-mode .app-bottom-nav{display:grid!important}body.app-mode main{padding-top:calc(76px + env(safe-area-inset-top));padding-bottom:calc(92px + env(safe-area-inset-bottom));width:100%;max-width:760px}body.app-mode .layout{grid-template-columns:1fr}body.app-mode .sidecol{display:none}body.app-mode .search-row{position:sticky;top:calc(58px + env(safe-area-inset-top));z-index:12;background:var(--page-bg);padding:8px 0;margin-bottom:10px}body.app-mode .hero{grid-template-columns:1fr;border-radius:18px;box-shadow:var(--theme-shadow)}body.app-mode .article-card{grid-template-columns:118px 1fr;border-radius:16px}body.app-mode .article-card.no-image{grid-template-columns:1fr}body.app-mode .article-view{border:0;border-radius:0;box-shadow:none;padding:16px}body.app-mode .article-view .backline{display:none}body.app-mode dialog:not(.image-viewer-dialog){width:100%;max-width:none;height:100%;max-height:none;border-radius:0;margin:0}body.app-mode dialog:not(.image-viewer-dialog) .modal-body{max-height:calc(100vh - 66px);padding-bottom:calc(28px + env(safe-area-inset-bottom))}.app-category-list{display:grid;gap:9px}.app-category-list button{min-height:52px;border:1px solid var(--theme-line);border-radius:14px;background:var(--surface-2);color:var(--theme-text);font-weight:850;text-align:left;padding:0 16px}.app-category-list button.active{border-color:var(--brand-cyan);box-shadow:0 0 0 3px rgba(36,200,216,.13)}
+    .special-board{border:1px solid var(--theme-line);border-radius:18px;padding:20px}.special-board .desc{color:var(--theme-muted)}.tip-form{border:1px solid var(--theme-line);border-radius:16px;padding:14px;margin:15px 0}.tip-card{border:1px solid var(--theme-line);border-radius:16px;padding:14px;margin-top:10px}.tip-card h3{margin:7px 0}.tip-card p{white-space:pre-wrap}.tip-status{font-weight:900;color:var(--accent2)}
+    @media(max-width:620px){.theme-choice-grid{grid-template-columns:1fr}.profile-avatar-editor{grid-template-columns:1fr}.article-card{grid-template-columns:110px 1fr}.pagination{gap:5px}.page-btn{min-width:36px;height:38px}.pagination .page-number.optional{display:none}}
+    @media(prefers-reduced-motion:reduce){html[data-theme="aurora"] body::before{animation:none!important}}
+
   </style>
 </head>
 <body>
-  <div class="topbar"><div class="topbar-inner"><div id="today"></div><div class="mini-links"><span id="memberStatusTop" class="role-badge hidden">승인 상태</span><button id="loginTopBtn">로그인</button><button id="publisherRequestTopBtn" class="hidden">게시 신청</button><button id="profileTopBtn" class="hidden">프로필 설정</button><button id="logoutTopBtn" class="hidden">로그아웃</button></div></div></div>
+
+  <header id="appHeader" class="app-only app-header" aria-label="행신뉴스 앱 상단바">
+    <button type="button" id="appBackBtn" class="app-icon-button hidden" aria-label="뒤로가기">‹</button>
+    <button type="button" id="appHomeBrand" class="app-brand-button" aria-label="행신뉴스 홈">
+      <span class="app-h-mark">H</span><span id="appHeaderTitle">행신뉴스</span>
+    </button>
+    <button type="button" id="appSettingsBtn" class="app-icon-button" aria-label="설정">⚙</button>
+  </header>
+  <nav id="appBottomNav" class="app-only app-bottom-nav" aria-label="앱 주요 메뉴">
+    <button type="button" data-app-tab="home"><span>⌂</span><b>홈</b></button>
+    <button type="button" data-app-tab="categories"><span>☰</span><b>분야</b></button>
+    <button type="button" data-app-tab="tips"><span>＋</span><b>제보</b></button>
+    <button type="button" data-app-tab="notifications"><span>●</span><b>알림</b></button>
+    <button type="button" data-app-tab="profile"><span>○</span><b>내 정보</b></button>
+  </nav>
+  <div class="topbar"><div class="topbar-inner"><div id="today"></div><div class="mini-links"><span id="memberStatusTop" class="role-badge hidden">승인 상태</span><button id="loginTopBtn">로그인</button><button id="publisherRequestTopBtn" class="hidden">게시 신청</button><button id="profileTopBtn" class="hidden">프로필 설정</button><button id="settingsTopBtn">설정</button><button id="logoutTopBtn" class="hidden">로그아웃</button></div></div></div>
   <header><div class="masthead"><div class="date">소식 · 활동 기록 · 공지</div><div class="brand"><h1>haengshin news</h1><p>newsroom</p></div><div class="head-actions"><button class="btn hidden" id="suggestionBtn">건의함</button><button class="btn hidden" id="personalMessageBtn">알림</button><button class="btn dark hidden admin-center-button" id="adminCenterBtn">관리 센터</button><button class="btn hidden" id="inboxAdminBtn">제보·건의 관리</button><button class="btn hidden" id="accountHelpAdminBtn">계정 도움 관리</button><button class="btn hidden" id="accountAdminBtn">계정 관리</button><button class="btn hidden" id="adAdminBtn">광고 관리</button><button class="btn hidden" id="policyAdminBtn">운영 방침</button><button class="btn dark hidden" id="manageBtn">기사 관리</button></div></div></header>
   <nav><div class="nav-inner" id="nav"></div></nav>
   <section class="ticker"><div class="ticker-inner"><span class="ticker-label">NOTICE</span><span class="ticker-text" id="tickerText">새로운 소식이 등록되면 이곳에 최신 기사가 표시됩니다.</span></div></section>
@@ -181,13 +249,13 @@
 
   <dialog id="accountHelpAdminDialog"><div class="modal-head"><h2>계정 도움 관리</h2><button class="close" data-close="accountHelpAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자 전용 창구입니다. 이메일 찾기 문의와 비밀번호 재설정 시도 기록을 확인할 수 있습니다.</p><div class="admin-list"><h3>이메일 찾기 문의</h3><div id="accountHelpRequestList"></div></div><div class="admin-list"><h3>비밀번호 재설정 시도 내역</h3><div id="passwordResetAttemptList"></div></div></div></dialog>
 
-  <dialog id="profileDialog"><div class="modal-head"><h2>프로필 설정</h2><button class="close" data-close="profileDialog">×</button></div><div class="modal-body profile-settings-body"><section class="profile-section"><h3>기본 정보</h3><p class="login-note">사이트에서 표시될 이름을 설정합니다. 추후 소개글, 프로필 이미지, 배경 설정도 이 영역에 추가할 수 있습니다.</p><div class="field"><label>닉네임</label><input id="nicknameInput" maxlength="20" placeholder="2~20자 닉네임"></div></section><section class="profile-section"><h3>칭호 설정</h3><p class="login-note">여러 칭호를 보유해도 댓글과 게시물에는 대표 칭호 1개만 표시됩니다. 보유 칭호 목록에서 원하는 칭호를 대표 칭호로 선택할 수 있습니다.</p><div class="field"><label>대표 칭호</label><select id="featuredTitleSelect"><option value="">칭호 없음</option></select></div><div class="field"><label>내가 보유한 칭호</label><div id="ownedTitleList" class="owned-title-list"><span class="owned-title-empty">보유한 칭호를 불러오는 중입니다.</span></div></div><p class="login-note">칭호 획득 조건은 사용자에게 숫자까지 공개되지 않으며, 사이트 활동 중 조건을 만족하면 자동 또는 관리자 지급으로 보유 목록에 추가됩니다.</p></section><div class="editor-actions"><button class="btn blue" id="saveNicknameBtn">프로필 저장</button></div></div></dialog>
+  <dialog id="profileDialog"><div class="modal-head"><h2>프로필 설정</h2><button class="close" data-close="profileDialog">×</button></div><div class="modal-body profile-settings-body"><section class="profile-section"><h3>프로필 사진</h3><div class="profile-avatar-editor"><div id="profileAvatarPreview" class="profile-avatar-preview"></div><div><input type="hidden" id="profileAvatarUrl"><input type="hidden" id="profileAvatarPath"><div class="field"><label>새 프로필 사진</label><input id="profileAvatarFile" type="file" accept="image/*"></div><div class="editor-actions" style="justify-content:flex-start;margin-top:4px"><button type="button" class="btn red" id="removeAvatarBtn">사진 삭제</button></div><p class="login-note">5MB 이하의 정사각형 이미지를 권장합니다. 댓글과 기사 작성자 영역에 표시됩니다.</p></div></div></section><section class="profile-section"><h3>기본 정보</h3><p class="login-note">기사와 댓글에 표시될 이름을 설정합니다.</p><div class="field"><label>닉네임</label><input id="nicknameInput" maxlength="20" placeholder="2~20자 닉네임"></div><div class="field"><label>소개</label><textarea id="profileBioInput" maxlength="160" placeholder="짧은 소개를 입력할 수 있습니다."></textarea></div><div class="field"><label>역할 배지</label><div id="profileBadgePreview" class="comment-badges"><span class="role-badge">일반 회원</span></div></div></section><section class="profile-section"><h3>칭호 설정</h3><p class="login-note">여러 칭호를 보유해도 댓글과 게시물에는 대표 칭호 1개만 표시됩니다.</p><div class="field"><label>대표 칭호</label><select id="featuredTitleSelect"><option value="">칭호 없음</option></select></div><div class="field"><label>내가 보유한 칭호</label><div id="ownedTitleList" class="owned-title-list"><span class="owned-title-empty">보유한 칭호를 불러오는 중입니다.</span></div></div></section><div class="editor-actions"><button class="btn blue" id="saveNicknameBtn">프로필 저장</button></div></div></dialog>
 
   <dialog id="editorRequestDialog"><div class="modal-head"><h2>기사 게시 계정 신청</h2><button class="close" data-close="editorRequestDialog">×</button></div><div class="modal-body"><p class="login-note">승인된 일반 회원만 게시 권한을 신청할 수 있습니다. 관리자가 승인하기 전까지 기사 작성 권한은 부여되지 않습니다.</p><div class="form-grid"><div class="field"><label>이메일</label><input id="requestEmail" type="email" readonly></div><div class="field"><label>표시 이름</label><input id="requestNickname" maxlength="20" readonly></div><div class="field full"><label>신청 사유</label><textarea id="requestReason" placeholder="기사를 게시해야 하는 이유나 담당 역할을 적어 주세요."></textarea></div></div><div class="editor-actions"><button class="btn blue" id="submitEditorRequestBtn">게시 권한 신청</button></div></div></dialog>
 
   <dialog id="accountAdminDialog"><div class="modal-head"><h2>계정 관리</h2><button class="close" data-close="accountAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자만 회원가입 승인과 게시 권한 승인, 점검 모드를 관리할 수 있습니다.</p><div class="admin-list"><h3>점검 모드</h3><div class="maintenance-settings"><label class="policy-check"><input type="checkbox" id="maintenanceEnabled"> 점검 모드 사용</label><p class="login-note">점검 중에는 관리자는 항상 접속 가능하며, 아래에서 선택한 등급만 추가로 접속할 수 있습니다.</p><div class="check-grid"><label><input type="checkbox" class="maintenance-role" value="publisher"> 게시자</label><label><input type="checkbox" class="maintenance-role" value="editor"> 편집자</label><label><input type="checkbox" class="maintenance-role" value="member"> 승인 회원</label></div><div class="field" style="margin-top:12px"><label>점검 안내 문구</label><textarea id="maintenanceMessage" placeholder="현재 사이트 기능 점검 중입니다. 잠시 후 다시 접속해 주세요."></textarea></div><div class="editor-actions"><button class="btn blue" id="saveMaintenanceBtn">점검 설정 저장</button></div></div></div><div class="admin-list"><h3>회원가입 승인 대기</h3><div id="memberRequestList"></div></div><div class="admin-list"><h3>회원 목록</h3><div id="memberAccountList"></div></div><div class="admin-list"><h3>게시 권한 승인 대기</h3><div id="editorRequestList"></div></div><div class="admin-list"><h3>승인된 게시 계정</h3><div id="editorAccountList"></div></div></div></dialog>
 
-  <dialog id="editorDialog"><div class="modal-head"><h2>기사 관리</h2><button class="close" data-close="editorDialog">×</button></div><div class="modal-body"><input type="hidden" id="articleId"><input type="hidden" id="currentImagePath"><input type="hidden" id="currentImageUrl"><input type="hidden" id="currentGalleryImages"><div class="form-grid"><div class="field full"><label>제목</label><input id="title" placeholder="기사 제목"></div><div class="field"><label>분야</label><select id="category"><option>공지</option><option>인사이트</option><option>활동</option><option>칼럼</option><option>종합</option></select></div><div class="field"><label>작성자</label><input id="author" placeholder="편집부"></div><div class="field full"><label>요약</label><textarea id="summary" placeholder="목록에 표시될 짧은 요약"></textarea></div><div class="field full"><label>본문</label><div class="rich-toolbar" id="bodyToolbar" aria-label="본문 편집 도구"><button type="button" data-cmd="bold"><b>B</b></button><button type="button" data-cmd="italic"><i>I</i></button><button type="button" data-cmd="underline"><u>U</u></button><select id="formatBlockSelect" title="문단 형식"><option value="P">본문</option><option value="H2">큰 제목</option><option value="H3">작은 제목</option><option value="BLOCKQUOTE">인용문</option></select><select id="fontSizeSelect" title="글씨 크기"><option value="">크기</option><option value="14px">14</option><option value="16px">16</option><option value="18px">18</option><option value="22px">22</option><option value="28px">28</option></select><input id="fontColorInput" type="color" title="글자색" value="#111827"><button type="button" data-cmd="justifyLeft">왼쪽</button><button type="button" data-cmd="justifyCenter">가운데</button><button type="button" data-cmd="insertUnorderedList">목록</button><button type="button" data-cmd="insertOrderedList">번호</button><button type="button" id="insertLinkBtn">링크</button><button type="button" data-cmd="removeFormat">서식 제거</button></div><div id="bodyEditor" class="rich-editor" contenteditable="true" data-placeholder="기사 본문을 입력하세요."></div><textarea id="body" class="hidden"></textarea></div><div class="field"><label>대표 사진</label><input id="imageFile" type="file" accept="image/*"><small style="color:#64748b">선택하지 않으면 기존 사진이 유지됩니다.</small></div><div class="field"><label>사진 미리보기</label><div class="preview" id="imagePreview">대표 사진 없음</div></div><div class="field full"><label>추가 사진</label><input id="galleryFiles" type="file" accept="image/*" multiple><small style="color:#64748b">여러 장을 한 번에 선택할 수 있습니다. 기존 추가 사진은 유지되고, 새로 선택한 사진은 뒤에 추가됩니다.</small></div><div class="field full"><label>추가 사진 미리보기</label><div class="gallery-preview" id="galleryPreview">추가 사진 없음</div><div class="editor-actions" style="justify-content:flex-start;margin-top:8px"><button type="button" class="btn red" id="clearGalleryBtn">추가 사진 전체 삭제</button></div></div><div class="field full"><label>대표 사진 설명</label><input id="caption" placeholder="대표 사진 설명 또는 출처"></div><div class="field full"><label>표시할 카테고리</label><div class="check-grid" id="visibleCategoryChecks"></div><small style="color:#64748b">체크한 카테고리 화면에만 게시물이 표시됩니다. 예: 공지와 인사이트만 체크하고 종합을 해제하면 종합에는 뜨지 않습니다.</small></div><div class="field full"><label>카테고리별 상단 고정</label><div class="category-pin-grid" id="pinnedCategorySettings"></div><small style="color:#64748b">체크한 카테고리 안에서만 상단 고정이 적용됩니다. 순서 숫자가 낮을수록 위에 표시됩니다.</small></div></div><div class="editor-actions"><button class="btn" id="newArticleBtn">새 글</button><button class="btn blue" id="saveArticleBtn">저장</button></div><div class="admin-list"><h3>등록된 기사</h3><div id="adminList"></div></div></div></dialog>
+  <dialog id="editorDialog"><div class="modal-head"><h2>기사 관리</h2><button class="close" data-close="editorDialog">×</button></div><div class="modal-body"><input type="hidden" id="articleId"><input type="hidden" id="currentImagePath"><input type="hidden" id="currentImageUrl"><input type="hidden" id="currentGalleryImages"><div class="form-grid"><div class="field full"><label>제목</label><input id="title" placeholder="기사 제목"></div><div class="field"><label>분야</label><select id="category"><option>공지</option><option>인사이트</option><option>활동</option><option>칼럼</option><option>종합</option></select></div><div class="field"><label>작성자</label><div id="articleAuthorPreview" class="locked-author">로그인한 계정의 프로필로 자동 지정됩니다.</div><input id="author" type="hidden"></div><div class="field"><label>공개 범위</label><select id="articleVisibility"><option value="members">로그인 회원 전용</option><option value="public">비로그인 공개</option></select><small style="color:#64748b">비로그인 공개는 대표 관리자만 설정할 수 있습니다.</small></div><div class="field full"><label>요약</label><textarea id="summary" placeholder="목록에 표시될 짧은 요약"></textarea></div><div class="field full"><label>본문</label><div class="rich-toolbar" id="bodyToolbar" aria-label="본문 편집 도구"><button type="button" data-cmd="bold"><b>B</b></button><button type="button" data-cmd="italic"><i>I</i></button><button type="button" data-cmd="underline"><u>U</u></button><select id="formatBlockSelect" title="문단 형식"><option value="P">본문</option><option value="H2">큰 제목</option><option value="H3">작은 제목</option><option value="BLOCKQUOTE">인용문</option></select><select id="fontSizeSelect" title="글씨 크기"><option value="">크기</option><option value="14px">14</option><option value="16px">16</option><option value="18px">18</option><option value="22px">22</option><option value="28px">28</option></select><input id="fontColorInput" type="color" title="글자색" value="#111827"><button type="button" data-cmd="justifyLeft">왼쪽</button><button type="button" data-cmd="justifyCenter">가운데</button><button type="button" data-cmd="insertUnorderedList">목록</button><button type="button" data-cmd="insertOrderedList">번호</button><button type="button" id="insertLinkBtn">링크</button><button type="button" data-cmd="removeFormat">서식 제거</button></div><div id="bodyEditor" class="rich-editor" contenteditable="true" data-placeholder="기사 본문을 입력하세요."></div><textarea id="body" class="hidden"></textarea></div><div class="field"><label>대표 사진</label><input id="imageFile" type="file" accept="image/*"><small style="color:#64748b">선택하지 않으면 기존 사진이 유지됩니다.</small></div><div class="field"><label>사진 미리보기</label><div class="preview" id="imagePreview">대표 사진 없음</div></div><div class="field full"><label>추가 사진</label><input id="galleryFiles" type="file" accept="image/*" multiple><small style="color:#64748b">여러 장을 한 번에 선택할 수 있습니다. 기존 추가 사진은 유지되고, 새로 선택한 사진은 뒤에 추가됩니다.</small></div><div class="field full"><label>추가 사진 미리보기</label><div class="gallery-preview" id="galleryPreview">추가 사진 없음</div><div class="editor-actions" style="justify-content:flex-start;margin-top:8px"><button type="button" class="btn red" id="clearGalleryBtn">추가 사진 전체 삭제</button></div></div><div class="field full"><label>대표 사진 설명</label><input id="caption" placeholder="대표 사진 설명 또는 출처"></div><div class="field full"><label>표시할 카테고리</label><div class="check-grid" id="visibleCategoryChecks"></div><small style="color:#64748b">체크한 카테고리 화면에만 게시물이 표시됩니다. 예: 공지와 인사이트만 체크하고 종합을 해제하면 종합에는 뜨지 않습니다.</small></div><div class="field full"><label>카테고리별 상단 고정</label><div class="category-pin-grid" id="pinnedCategorySettings"></div><small style="color:#64748b">체크한 카테고리 안에서만 상단 고정이 적용됩니다. 순서 숫자가 낮을수록 위에 표시됩니다.</small></div></div><div class="editor-actions"><button class="btn" id="newArticleBtn">새 글</button><button class="btn blue" id="saveArticleBtn">저장</button></div><div class="admin-list"><h3>등록된 기사</h3><div id="adminList"></div></div></div></dialog>
 
   <dialog id="adAdminDialog"><div class="modal-head"><h2>광고 관리</h2><button class="close" data-close="adAdminDialog">×</button></div><div class="modal-body"><input type="hidden" id="adId"><input type="hidden" id="currentAdImagePath"><input type="hidden" id="currentAdImageUrl"><p class="login-note">관리자만 가상 광고를 등록·수정·삭제할 수 있습니다. 등록한 광고 이미지는 사이드바, 좌우 고정 여백, 기사 하단 중 선택한 위치에 표시되며, 링크를 넣으면 이미지 클릭 시 해당 주소로 이동합니다.</p><div class="form-grid"><div class="field"><label>광고 제목</label><input id="adTitle" placeholder="예: 행신 스터디 카페"></div><div class="field"><label>클릭 링크</label><input id="adLinkUrl" placeholder="https://example.com 또는 빈칸"></div><div class="field"><label>표시 위치</label><select id="adPlacement"><option value="sidebar">오른쪽 사이드바</option><option value="left_rail">왼쪽 여백</option><option value="right_rail">오른쪽 여백</option><option value="article_bottom">기사 하단 - 작게 제한</option></select></div><div class="field"><label>표시 순서</label><input id="adSortOrder" type="number" value="0" step="1"></div><div class="field"><label>활성 상태</label><select id="adActive"><option value="true">표시</option><option value="false">숨김</option></select></div><div class="field"><label>광고 이미지</label><input id="adImageFile" type="file" accept="image/*"><small style="color:#64748b">새 이미지를 선택하지 않으면 기존 이미지가 유지됩니다.</small></div><div class="field full"><label>광고 설명</label><input id="adAltText" placeholder="이미지 대체 텍스트 또는 설명"></div><div class="field full"><label>미리보기</label><div class="ad-admin-preview" id="adImagePreview">광고 이미지 없음</div></div></div><div class="editor-actions"><button class="btn" id="newAdBtn">새 광고</button><button class="btn blue" id="saveAdBtn">광고 저장</button></div><div class="admin-list"><h3>등록된 광고</h3><div id="adAdminList"></div></div></div></dialog>
 
@@ -211,6 +279,11 @@
 
 
   <dialog id="inboxAdminDialog"><div class="modal-head"><h2>제보·건의 관리</h2><button class="close" data-close="inboxAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자만 뉴스제보와 건의함 내용을 확인하고 처리할 수 있습니다.</p><div class="admin-list"><h3>뉴스제보 목록</h3><div id="newsTipAdminList"></div></div><div class="admin-list"><h3>건의함 목록</h3><div id="suggestionAdminList"></div></div></div></dialog>
+
+
+  <dialog id="settingsDialog"><div class="modal-head"><h2>설정</h2><button class="close" data-close="settingsDialog">×</button></div><div class="modal-body"><section class="profile-section"><h3>화면 테마</h3><p class="login-note">선택 즉시 적용됩니다. 시스템 설정은 기기의 라이트·다크 모드에 따라 오로라 화이트와 오로라 블랙을 자동으로 선택합니다.</p><div class="theme-choice-grid" id="themeChoiceGrid"><label><input type="radio" name="themeChoice" value="system"><span class="theme-sample system-sample"></span><b>시스템 설정</b></label><label><input type="radio" name="themeChoice" value="pure-white"><span class="theme-sample pure-white-sample"></span><b>완전 화이트</b></label><label><input type="radio" name="themeChoice" value="pure-black"><span class="theme-sample pure-black-sample"></span><b>완전 블랙</b></label><label><input type="radio" name="themeChoice" value="aurora-white"><span class="theme-sample aurora-white-sample"></span><b>오로라 화이트</b></label><label><input type="radio" name="themeChoice" value="aurora-black"><span class="theme-sample aurora-black-sample"></span><b>오로라 블랙</b></label><label><input type="radio" name="themeChoice" value="aurora"><span class="theme-sample aurora-full-sample"></span><b>오로라</b></label></div></section><section class="profile-section"><h3>푸시 알림</h3><label class="setting-switch"><input type="checkbox" id="pushEnabled"><span><b>알림 받기</b><small>끄면 이 계정으로 발송되는 모든 기사 알림을 중지합니다.</small></span></label><div id="pushCategorySettings" class="notification-category-grid"><label><input type="checkbox" value="공지"> 공지</label><label><input type="checkbox" value="인사이트"> 인사이트</label><label><input type="checkbox" value="활동"> 활동</label><label><input type="checkbox" value="칼럼"> 칼럼</label><label><input type="checkbox" value="종합"> 종합</label></div><p class="login-note" id="pushLoginNote">로그인 계정에서는 설정이 Supabase에 동기화됩니다. 실제 FCM 발송 서버에서도 이 값을 확인해야 합니다.</p></section><div class="editor-actions"><button class="btn blue" id="saveSettingsBtn">설정 저장</button></div></div></dialog>
+
+  <dialog id="appCategoryDialog" class="app-sheet-dialog"><div class="modal-head"><h2>분야 선택</h2><button class="close" data-close="appCategoryDialog">×</button></div><div class="modal-body"><div id="appCategoryList" class="app-category-list"></div></div></dialog>
 
   <dialog id="imageViewerDialog" class="image-viewer-dialog"><div class="image-viewer-shell"><button class="image-viewer-close" id="imageViewerCloseBtn" aria-label="사진 크게 보기 닫기">×</button><img id="imageViewerImg" alt="크게 보기"><div class="image-viewer-caption" id="imageViewerCaption"></div></div></dialog>
   <div class="status" id="status"></div>
@@ -818,7 +891,7 @@
       return orders.length ? Math.min(...orders) : DEFAULT_PIN_ORDER;
     }
     function passwordResetRedirectUrl(){
-      return location.origin + location.pathname;
+      return location.origin + location.pathname + (state.appMode ? '?app=1' : '');
     }
     function openPasswordResetDialog(){
       const email = $('loginEmail')?.value.trim() || $('signupEmail')?.value.trim() || '';
@@ -3110,7 +3183,375 @@ async function deleteTitle(id){
       $('bodyEditor').addEventListener('input', syncBodyFromEditor);
       $('bodyEditor').addEventListener('blur', syncBodyFromEditor);
     }
-    (async function init(){ bind(); buildNav(); await loadSession(); await loadPolicyNotice(); await loadMaintenanceSettings(); await loadAds(); await refreshTitleState(); await loadNewsTips(); if(state.isOwner) await loadSuggestions(); await loadArticles(); maybeShowPolicy(); })();
+
+
+    /* ===== 행신뉴스 앱·URL·페이지·프로필·설정 통합 개편 ===== */
+    const HN_PAGE_SIZE = 10;
+    const HN_THEME_VALUES = ['system','pure-white','pure-black','aurora-white','aurora-black','aurora'];
+    const HN_PUSH_CATEGORIES = ['공지','인사이트','활동','칼럼','종합'];
+    state.page = 1;
+    state.appMode = new URLSearchParams(location.search).get('app') === '1';
+    state.articleProfileMap = {};
+    state.commentProfileMap = {};
+    state.preferences = { push_enabled:true, push_categories:[...HN_PUSH_CATEGORIES], theme:'system' };
+    state.removeAvatarRequested = false;
+    state.pendingArticleId = null;
+
+    function resolveThemeChoice(choice){
+      if(choice !== 'system') return choice;
+      return matchMedia('(prefers-color-scheme: dark)').matches ? 'aurora-black' : 'aurora-white';
+    }
+    function applyThemeChoice(choice, {persist=true}={}){
+      const clean = HN_THEME_VALUES.includes(choice) ? choice : 'system';
+      const resolved = resolveThemeChoice(clean);
+      document.documentElement.dataset.themeChoice = clean;
+      document.documentElement.dataset.theme = resolved;
+      if(persist) localStorage.setItem('hn_theme_v2', clean);
+      const meta = document.querySelector('meta[name="theme-color"]') || document.head.appendChild(Object.assign(document.createElement('meta'),{name:'theme-color'}));
+      meta.content = ({'pure-white':'#ffffff','pure-black':'#000000','aurora-white':'#f1fbfd','aurora-black':'#02060b','aurora':'#edfafd'})[resolved] || '#ffffff';
+      document.querySelectorAll('input[name="themeChoice"]').forEach(r=>r.checked = r.value === clean);
+    }
+    const hnSystemThemeMedia = matchMedia('(prefers-color-scheme: dark)');
+    hnSystemThemeMedia.addEventListener?.('change',()=>{ if((document.documentElement.dataset.themeChoice||'system')==='system') applyThemeChoice('system',{persist:false}); });
+
+    function defaultPreferences(){ return { push_enabled:true, push_categories:[...HN_PUSH_CATEGORIES], theme:localStorage.getItem('hn_theme_v2') || 'system' }; }
+    function normalizePreferences(raw={}){
+      const base = defaultPreferences();
+      const cats = Array.isArray(raw.push_categories) ? raw.push_categories.filter(c=>HN_PUSH_CATEGORIES.includes(c)) : base.push_categories;
+      return { push_enabled: raw.push_enabled !== false, push_categories: cats.length ? [...new Set(cats)] : [], theme: HN_THEME_VALUES.includes(raw.theme) ? raw.theme : base.theme };
+    }
+    function readLocalPreferences(){
+      try{ return normalizePreferences(JSON.parse(localStorage.getItem('hn_preferences_v2') || '{}')); }
+      catch(_){ return defaultPreferences(); }
+    }
+    function saveLocalPreferences(prefs){
+      const clean = normalizePreferences(prefs);
+      localStorage.setItem('hn_preferences_v2', JSON.stringify(clean));
+      localStorage.setItem('hn_theme_v2', clean.theme);
+      state.preferences = clean;
+      applyThemeChoice(clean.theme);
+    }
+    async function loadPreferences(){
+      let prefs = readLocalPreferences();
+      if(state.session?.user?.id){
+        const { data, error } = await client.from('user_preferences').select('push_enabled,push_categories,theme').eq('user_id',state.session.user.id).maybeSingle();
+        if(!error && data) prefs = normalizePreferences(data);
+        else if(error) console.warn('user_preferences load skipped:', error.message || error);
+      }
+      saveLocalPreferences(prefs);
+      populateSettingsForm();
+    }
+    function populateSettingsForm(){
+      const prefs = normalizePreferences(state.preferences || readLocalPreferences());
+      applyThemeChoice(prefs.theme,{persist:false});
+      document.querySelectorAll('input[name="themeChoice"]').forEach(r=>r.checked = r.value === prefs.theme);
+      if($('pushEnabled')) $('pushEnabled').checked = !!prefs.push_enabled;
+      document.querySelectorAll('#pushCategorySettings input[type="checkbox"]').forEach(c=>c.checked = prefs.push_categories.includes(c.value));
+      syncPushControls();
+      if($('pushLoginNote')) $('pushLoginNote').textContent = state.session ? '이 설정은 계정에 저장됩니다. 실제 FCM 발송 서버에서도 반드시 이 값을 확인해야 합니다.' : '로그인 전에는 이 기기에만 저장됩니다. 로그인하면 계정 설정과 동기화할 수 있습니다.';
+    }
+    function syncPushControls(){
+      const enabled = !!$('pushEnabled')?.checked;
+      document.querySelectorAll('#pushCategorySettings input').forEach(c=>c.disabled = !enabled);
+      $('pushCategorySettings')?.classList.toggle('disabled',!enabled);
+    }
+    async function saveSettings(){
+      const theme = document.querySelector('input[name="themeChoice"]:checked')?.value || 'system';
+      const prefs = normalizePreferences({ push_enabled:!!$('pushEnabled')?.checked, push_categories:Array.from(document.querySelectorAll('#pushCategorySettings input:checked')).map(x=>x.value), theme });
+      saveLocalPreferences(prefs);
+      if(state.session?.user?.id){
+        const { error } = await client.from('user_preferences').upsert({ user_id:state.session.user.id, ...prefs, updated_at:new Date().toISOString() }, { onConflict:'user_id' });
+        if(error){ showStatus('기기 설정은 저장됐지만 계정 동기화에 실패했습니다. SQL 마이그레이션을 먼저 적용하세요: '+error.message,'err'); return; }
+      }
+      closeDialog('settingsDialog');
+      showStatus('설정이 저장되었습니다.','ok');
+    }
+    function openSettings(){ populateSettingsForm(); openDialog('settingsDialog'); }
+
+    function routeParams(){ return new URLSearchParams(location.search); }
+    function applyInitialRoute(){
+      const p = routeParams();
+      const category = p.get('category');
+      state.category = CATEGORIES.includes(category) ? category : '종합';
+      state.query = p.get('q') || '';
+      state.page = Math.max(1, Number.parseInt(p.get('page') || '1',10) || 1);
+      state.pendingArticleId = p.get('article') || null;
+      state.activeArticleId = null;
+      state.appMode = p.get('app') === '1';
+      history.replaceState({hnRoute:true,directArticle:!!state.pendingArticleId},'',location.href);
+    }
+    function makeRouteUrl({article=null,category=state.category,page=state.page,q=state.query}={}){
+      const url = new URL(location.href);
+      const p = url.searchParams;
+      if(state.appMode) p.set('app','1'); else p.delete('app');
+      if(article){ p.set('article',String(article)); }
+      else p.delete('article');
+      if(category && category !== '종합') p.set('category',category); else p.delete('category');
+      if(!article && page > 1) p.set('page',String(page)); else p.delete('page');
+      if(q) p.set('q',q); else p.delete('q');
+      return url.pathname + (p.toString() ? '?' + p.toString() : '') + url.hash;
+    }
+    function updateRoute(options={}, {replace=false,stateData={}}={}){
+      const url = makeRouteUrl(options);
+      const data = {hnRoute:true,...stateData};
+      if(replace) history.replaceState(data,'',url); else history.pushState(data,'',url);
+    }
+    function articleUrl(id){ return makeRouteUrl({article:id,category:state.category,page:state.page,q:state.query}); }
+    async function handlePopState(){
+      const p = routeParams();
+      const article = p.get('article');
+      state.category = CATEGORIES.includes(p.get('category')) ? p.get('category') : '종합';
+      state.query = p.get('q') || '';
+      state.page = Math.max(1,Number.parseInt(p.get('page')||'1',10)||1);
+      if($('searchInput')) $('searchInput').value = state.query;
+      if(article){ await openArticle(article,{fromRoute:true,skipViewIncrement:true}); }
+      else { await finishArticleReadSession(); state.activeArticleId=null; state.pendingArticleId=null; state.comments=[]; render(); }
+    }
+    function navigateCategory(category,{replace=false}={}){
+      state.category = CATEGORIES.includes(category) ? category : '종합'; state.page=1; state.activeArticleId=null; state.pendingArticleId=null;
+      updateRoute({category:state.category,page:1,q:state.query},{replace});
+      if(state.category==='뉴스제보') loadNewsTips().then(render); else render();
+      closeDialog('appCategoryDialog');
+    }
+    function navigatePage(page){
+      state.page=Math.max(1,Number(page)||1); state.activeArticleId=null;
+      updateRoute({category:state.category,page:state.page,q:state.query});
+      render(); scrollTo({top:0,behavior:'smooth'});
+    }
+    function navigateList({replace=false}={}){
+      state.activeArticleId=null; state.pendingArticleId=null; state.comments=[];
+      updateRoute({category:state.category,page:state.page,q:state.query},{replace});
+      render();
+    }
+
+    function avatarInitial(name='?'){ return ([...String(name||'?').trim()][0] || '?').toUpperCase(); }
+    function avatarHtml(profile,name,size='md'){
+      const url = String(profile?.avatar_url || '').trim();
+      const label = String(profile?.nickname || name || '사용자');
+      return `<span class="profile-avatar ${escapeHtml(size)}" aria-label="${escapeHtml(label)} 프로필 사진"><span>${escapeHtml(avatarInitial(label))}</span>${url?`<img src="${escapeHtml(url)}" alt="" loading="lazy" onerror="this.remove()">`:''}</span>`;
+    }
+    function profileBadges(profile){ return normalizeBadges(profile?.badges); }
+    function liveProfileName(profile,fallback){ return String(profile?.nickname || fallback || '편집부'); }
+    function articleProfile(a){ if(!a?.created_by) return null; if(state.session?.user?.id && String(a.created_by)===String(state.session.user.id) && state.profile) return state.profile; return state.articleProfileMap?.[a.created_by] || null; }
+    function renderArticleAuthor(a,{compact=false}={}){
+      const p=articleProfile(a); const name=liveProfileName(p,a?.author||'편집부'); const badges=renderNameBadges(profileBadges(p)); const title=renderUserTitle(titleById(p?.featured_title_id));
+      return `<span class="author-profile">${avatarHtml(p,name,compact?'sm':'md')}<span class="author-profile-text">${badges?`<span class="comment-badges">${badges}</span>`:''}<span class="author-profile-name">${escapeHtml(name)}</span>${title}</span></span>`;
+    }
+    async function safeSelectProfilesWithBadges(userIds){
+      const ids=[...new Set((userIds||[]).filter(Boolean))]; if(!ids.length) return [];
+      let res=await client.from('profiles').select('user_id,nickname,badges,featured_title_id,avatar_url,avatar_path,bio').in('user_id',ids);
+      if(res.error){
+        console.warn('extended profile load fallback:',res.error.message||res.error);
+        res=await client.from('profiles').select('user_id,nickname,badges,featured_title_id').in('user_id',ids);
+        if(res.error){ res=await client.from('profiles').select('user_id,nickname').in('user_id',ids); }
+      }
+      return res.error ? [] : (res.data||[]);
+    }
+    async function loadArticleProfiles(){
+      state.articleProfileMap={};
+      const ids=[...new Set((state.articles||[]).map(a=>a.created_by).filter(Boolean))];
+      const profiles=await safeSelectProfilesWithBadges(ids);
+      profiles.forEach(p=>state.articleProfileMap[p.user_id]=p);
+    }
+    async function loadProfile(){
+      state.profile=null; if(!state.session?.user?.id) return;
+      let res=await client.from('profiles').select('user_id,nickname,badges,featured_title_id,avatar_url,avatar_path,bio').eq('user_id',state.session.user.id).maybeSingle();
+      if(res.error){
+        console.warn('extended profile fallback:',res.error.message||res.error);
+        res=await client.from('profiles').select('user_id,nickname,badges,featured_title_id').eq('user_id',state.session.user.id).maybeSingle();
+        if(res.error) res=await client.from('profiles').select('user_id,nickname').eq('user_id',state.session.user.id).maybeSingle();
+      }
+      if(!res.error && res.data) state.profile={...res.data,badges:normalizeBadges(res.data.badges)};
+    }
+    function renderProfilePreview(){
+      const name=$('nicknameInput')?.value.trim() || state.profile?.nickname || '사용자';
+      const tempUrl=state.removeAvatarRequested ? '' : ($('profileAvatarPreview')?.dataset.tempUrl || $('profileAvatarUrl')?.value || state.profile?.avatar_url || '');
+      if($('profileAvatarPreview')) $('profileAvatarPreview').innerHTML=avatarHtml({avatar_url:tempUrl,nickname:name},name,'lg');
+      if($('profileBadgePreview')){ const badges=renderNameBadges(state.profile?.badges||[]); $('profileBadgePreview').innerHTML=badges || '<span class="role-badge">일반 회원</span>'; }
+    }
+    function prepareProfileDialog(){
+      if(!state.session){ openDialog('loginDialog'); return; }
+      $('nicknameInput').value=state.profile?.nickname||state.memberRequest?.nickname||'';
+      if($('profileBioInput')) $('profileBioInput').value=state.profile?.bio||'';
+      if($('profileAvatarUrl')) $('profileAvatarUrl').value=state.profile?.avatar_url||'';
+      if($('profileAvatarPath')) $('profileAvatarPath').value=state.profile?.avatar_path||'';
+      if($('profileAvatarFile')) $('profileAvatarFile').value='';
+      if($('profileAvatarPreview')) delete $('profileAvatarPreview').dataset.tempUrl;
+      state.removeAvatarRequested=false; renderProfilePreview();
+      refreshTitleState().then(()=>{renderOwnedTitleControls();openDialog('profileDialog');});
+    }
+    async function uploadAvatar(file){
+      if(!file) return null;
+      if(!String(file.type||'').startsWith('image/')) throw new Error('이미지 파일만 사용할 수 있습니다.');
+      if(file.size>5*1024*1024) throw new Error('프로필 사진은 5MB 이하여야 합니다.');
+      const ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');
+      const path=`avatars/${state.session.user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const {error}=await client.storage.from(CONFIG.bucket).upload(path,file,{cacheControl:'3600',upsert:false,contentType:file.type}); if(error) throw error;
+      const {data}=client.storage.from(CONFIG.bucket).getPublicUrl(path); return {path,url:data.publicUrl};
+    }
+    async function removeStorageObject(path){ if(!path) return; try{ await client.storage.from(CONFIG.bucket).remove([path]); }catch(e){console.warn('storage cleanup skipped',e);} }
+    async function saveNickname(){
+      if(!state.session){openDialog('loginDialog');return;}
+      const nickname=$('nicknameInput').value.trim(); if(!isValidNickname(nickname)){showStatus('닉네임은 2~20자로 입력하세요.','err');return;}
+      const selectedTitle=$('featuredTitleSelect')?.value||null;
+      if(selectedTitle && !(state.myTitles||[]).some(t=>String(t.id)===String(selectedTitle))){showStatus('보유한 칭호만 대표 칭호로 설정할 수 있습니다.','err');return;}
+      const previousPath=state.profile?.avatar_path||''; let uploaded=null;
+      try{
+        const file=$('profileAvatarFile')?.files?.[0]; if(file) uploaded=await uploadAvatar(file);
+        const avatarUrl=state.removeAvatarRequested ? null : (uploaded?.url || state.profile?.avatar_url || null);
+        const avatarPath=state.removeAvatarRequested ? null : (uploaded?.path || state.profile?.avatar_path || null);
+        const payload={user_id:state.session.user.id,nickname,featured_title_id:selectedTitle,avatar_url:avatarUrl,avatar_path:avatarPath,bio:($('profileBioInput')?.value||'').trim().slice(0,160),updated_at:new Date().toISOString()};
+        let {error}=await client.from('profiles').upsert(payload,{onConflict:'user_id'});
+        if(error && /avatar_url|avatar_path|bio|featured_title_id|column|schema/i.test(error.message||'')){
+          const fallback=await client.from('profiles').upsert({user_id:state.session.user.id,nickname,featured_title_id:selectedTitle,updated_at:new Date().toISOString()},{onConflict:'user_id'}); error=fallback.error;
+          if(!error) showStatus('닉네임과 칭호는 저장됐지만 사진·소개 컬럼이 없습니다. 함께 제공한 SQL을 적용하세요.','err');
+        }
+        if(error) throw error;
+        if((uploaded || state.removeAvatarRequested) && previousPath && previousPath!==uploaded?.path) await removeStorageObject(previousPath);
+        await loadProfile(); await loadArticleProfiles();
+        closeDialog('profileDialog'); showStatus('프로필이 저장되었습니다.','ok');
+        if(state.activeArticleId) await loadComments(state.activeArticleId); else render();
+      }catch(e){ if(uploaded?.path) await removeStorageObject(uploaded.path); showStatus('프로필 저장 실패: '+(e.message||e),'err'); }
+    }
+
+    function canViewArticle(a){ return !!state.session || String(a?.visibility||'members')==='public'; }
+    function buildNav(){
+      $('nav').innerHTML=''; const wrap=document.createElement('div'); wrap.className='nav-inner';
+      CATEGORIES.forEach(c=>{const b=document.createElement('button');b.className='nav-btn'+(state.category===c?' active':'');b.textContent=c;b.onclick=()=>navigateCategory(c);wrap.appendChild(b);}); $('nav').appendChild(wrap);
+    }
+    async function loadArticles(){
+      let q=client.from('articles').select('*').order('created_at',{ascending:false});
+      if(!state.session) q=q.eq('visibility','public');
+      const {data,error}=await q;
+      if(error){
+        console.error(error); state.articles=[]; state.articleProfileMap={};
+        if(!state.session && /visibility|column|schema/i.test(error.message||'')) showStatus('비로그인 기사 노출을 안전하게 차단했습니다. 공개 범위 SQL 마이그레이션을 적용해야 공개 기사를 표시할 수 있습니다.','err');
+        else showStatus('기사 목록을 불러오지 못했습니다. RLS 정책과 테이블을 확인하세요.','err');
+      } else { state.articles=data||[]; await loadArticleProfiles(); }
+      if(state.pendingArticleId){ const id=state.pendingArticleId; state.pendingArticleId=null; await openArticle(id,{fromRoute:true}); }
+      else await renderCurrentView();
+    }
+    function paginationHtml(totalPages){
+      if(totalPages<=1) return '';
+      const current=state.page; const nums=[];
+      for(let p=1;p<=totalPages;p++){ if(p===1||p===totalPages||Math.abs(p-current)<=2) nums.push(p); }
+      let last=0; const numberHtml=nums.map((p,i)=>{const gap=p-last>1?'<span class="page-gap">…</span>':'';last=p;const optional=(p!==1&&p!==totalPages&&p!==current)?' optional':'';return gap+`<button class="page-btn page-number${optional} ${p===current?'active':''}" data-page="${p}" aria-label="${p}페이지">${p}</button>`;}).join('');
+      return `<nav class="pagination" aria-label="기사 페이지"><button class="page-btn" data-page="${current-1}" ${current<=1?'disabled':''}>이전</button>${numberHtml}<button class="page-btn" data-page="${current+1}" ${current>=totalPages?'disabled':''}>다음</button></nav>`;
+    }
+    function bindArticleAndPageLinks(root=document){
+      root.querySelectorAll('[data-open]').forEach(el=>el.onclick=(e)=>{e?.preventDefault();openArticle(el.dataset.open);});
+      root.querySelectorAll('[data-page]').forEach(el=>el.onclick=()=>navigatePage(el.dataset.page));
+      root.querySelectorAll('[data-cat]').forEach(el=>el.onclick=()=>navigateCategory(el.dataset.cat));
+    }
+    function render(){
+      buildNav(); syncAppUI();
+      if(!hasMaintenanceAccess()){showMaintenancePage();renderAdminList();return;}
+      if(state.category==='뉴스제보'){renderNewsTipBoard();renderAdminList();syncAppUI();return;}
+      updateSideRailAds(); const allItems=filteredArticles(); const content=$('content'); const categoryItems=categoryArticles(state.category);
+      $('tickerText').textContent=categoryItems.length?categoryItems[0].title:(state.session?'새로운 소식이 등록되면 이곳에 최신 기사가 표시됩니다.':'비로그인 공개 기사가 없습니다.');
+      const totalPages=Math.max(1,Math.ceil(allItems.length/HN_PAGE_SIZE)); const clamped=Math.min(Math.max(1,state.page),totalPages);
+      if(clamped!==state.page){state.page=clamped;updateRoute({category:state.category,page:state.page,q:state.query},{replace:true});}
+      if(!allItems.length){
+        const emptyMessage=!state.session?'<strong>공개된 기사가 없습니다</strong><span>로그인하면 회원 전용 기사를 확인할 수 있습니다.</span><div style="margin-top:14px"><button class="btn blue" id="articleLoginBtn">로그인</button></div>':'<strong>등록된 기사가 없습니다</strong><span>편집자가 새 기사를 저장하면 이곳에 표시됩니다.</span>';
+        content.innerHTML=`<div class="empty">${emptyMessage}</div>`; if($('articleLoginBtn')) $('articleLoginBtn').onclick=()=>openDialog('loginDialog'); renderAdminList(); return;
+      }
+      const start=(state.page-1)*HN_PAGE_SIZE; const pageItems=allItems.slice(start,start+HN_PAGE_SIZE); const [lead,...rest]=pageItems; const leadImg=hasArticleImage(lead);
+      const latest=categoryItems.slice(0,5).map(a=>`<div class="compact-item"><a href="${escapeHtml(articleUrl(a.id))}" data-open="${a.id}">${escapeHtml(a.title)}</a><span>${escapeHtml(a.category)} · ${fmtDate(a.created_at)}</span></div>`).join('');
+      content.innerHTML=`<div class="layout"><section class="maincol"><a class="article-link" href="${escapeHtml(articleUrl(lead.id))}" data-open="${lead.id}"><article class="hero ${leadImg?'':'no-image'}">${leadImg?`<div class="hero-img"><img src="${escapeHtml(lead.image_url)}" alt=""></div>`:''}<div class="hero-body"><span class="kicker">${escapeHtml(lead.category)}</span><h2>${escapeHtml(lead.title)}</h2><p class="summary">${escapeHtml(lead.summary||'')}</p><div class="meta">${renderArticleAuthor(lead,{compact:true})}<span>${fmtDate(lead.created_at)}</span><span>조회 ${lead.views||0}</span></div></div></article></a><div id="articleList"></div>${paginationHtml(totalPages)}</section><aside class="sidecol"><div class="panel"><h3>최신 소식</h3><div class="list-compact">${latest||'<div class="compact-item"><span>표시할 소식이 없습니다.</span></div>'}</div></div><div class="panel"><h3>분야</h3><div class="tag-cloud">${CATEGORIES.map(c=>`<button class="tag" data-cat="${c}">${c}</button>`).join('')}</div></div>${renderSidebarAds()}</aside></div>`;
+      $('articleList').innerHTML=rest.map(a=>{const img=hasArticleImage(a);return `<a class="article-link" href="${escapeHtml(articleUrl(a.id))}" data-open="${a.id}"><article class="article-card ${img?'':'no-image'}">${img?`<div class="thumb"><img src="${escapeHtml(a.image_url)}" alt=""></div>`:''}<div><span class="kicker">${escapeHtml(a.category)}</span><h3>${escapeHtml(a.title)}</h3><p>${escapeHtml(a.summary||'')}</p><div class="meta">${renderArticleAuthor(a,{compact:true})}<span>${fmtDate(a.created_at)}</span><span>조회 ${a.views||0}</span></div></div></article></a>`;}).join('');
+      bindArticleAndPageLinks(content); bindAdCloseButtons(); renderAdminList();
+    }
+    async function renderCurrentView(){
+      updateSideRailAds();
+      if(state.activeArticleId){ const a=state.articles.find(x=>String(x.id)===String(state.activeArticleId)); if(a&&canViewArticle(a)&&hasMaintenanceAccess()){await openArticle(a.id,{fromRoute:true,skipViewIncrement:true});return;} state.activeArticleId=null; }
+      render();
+    }
+    async function openArticle(id,options={}){
+      if(state.articleReadSession?.article_id && String(state.articleReadSession.article_id)!==String(id)) await finishArticleReadSession();
+      const a=state.articles.find(x=>String(x.id)===String(id));
+      if(!a){
+        $('content').innerHTML=`<div class="empty"><strong>${state.session?'기사를 찾을 수 없습니다':'로그인이 필요하거나 공개되지 않은 기사입니다'}</strong><span>${state.session?'삭제되었거나 접근 권한이 없는 기사입니다.':'로그인 후 다시 시도해 주세요.'}</span>${!state.session?'<div style="margin-top:14px"><button class="btn blue" id="missingArticleLogin">로그인</button></div>':''}</div>`;
+        if($('missingArticleLogin')) $('missingArticleLogin').onclick=()=>openDialog('loginDialog'); syncAppUI(); return;
+      }
+      if(!canViewArticle(a)){showStatus('로그인 후 볼 수 있는 게시물입니다.','err');openDialog('loginDialog');return;}
+      if(!options.fromRoute) updateRoute({article:a.id,category:state.category,page:state.page,q:state.query},{stateData:{fromList:true}});
+      state.activeArticleId=a.id;
+      if(!options.skipViewIncrement){await incrementViews(a);await recordActivityEvent('article_view',{article_id:a.id,category:a.category||null});}
+      $('content').innerHTML=`<div class="article-view"><div class="backline"><button class="btn" id="backBtn">← 목록으로</button></div><span class="kicker">${escapeHtml(a.category)}</span><h2>${escapeHtml(a.title)}</h2><div class="meta">${renderArticleAuthor(a)}<span>${fmtDate(a.created_at)}</span><span>조회 ${a.views||0}</span></div>${hasArticleImage(a)?`<div class="main-image"><img class="article-image-zoom" src="${escapeHtml(a.image_url)}" alt="${escapeHtml(a.caption||a.title||'대표 사진')}" data-image-view="${escapeHtml(a.image_url)}" data-image-caption="${escapeHtml(a.caption||a.title||'대표 사진')}"><div class="caption">${escapeHtml(a.caption||'')}</div></div>`:''}${renderArticleGallery(a)}<p class="summary">${escapeHtml(a.summary||'')}</p><hr style="border:0;border-top:1px solid var(--theme-line);margin:22px 0"><div class="article-body rich-content">${renderArticleBody(a.body||'')}</div>${renderArticleBottomAds()}<section class="comments" id="commentsBox"><h3>댓글</h3><div id="commentFormBox"></div><div class="comment-list" id="commentList"><div class="comment-note">댓글을 불러오는 중입니다.</div></div></section></div>`;
+      $('backBtn').onclick=()=>{ if(history.state?.fromList) history.back(); else navigateList({replace:true}); };
+      bindAdCloseButtons();bindImageViewers();startArticleReadSession(a);syncAppUI();await loadComments(a.id);
+    }
+    async function loadCommentBadges(){
+      state.commentBadgeMap={};state.commentTitleMap={};state.commentProfileMap={};
+      const ids=[...new Set((state.comments||[]).map(c=>c.user_id).filter(Boolean))]; if(!ids.length)return;
+      const profiles=await safeSelectProfilesWithBadges(ids);
+      profiles.forEach(p=>{state.commentProfileMap[p.user_id]=p;state.commentBadgeMap[p.user_id]=normalizeBadges(p.badges);const t=titleById(p.featured_title_id);if(t)state.commentTitleMap[p.user_id]=t;});
+    }
+    function renderComments(articleId){
+      const formBox=$('commentFormBox');
+      if(formBox){
+        if(state.session){if(!canUseMemberFeatures())formBox.innerHTML=`<div class="comment-form"><div class="comment-note">회원 승인 후 댓글을 작성할 수 있습니다. 현재 상태: ${escapeHtml(memberStatusLabel(state.memberRequest?.status))}</div></div>`;else if(state.profile?.nickname){formBox.innerHTML=`<div class="comment-form"><div class="author-profile">${avatarHtml(state.profile,state.profile.nickname,'sm')}<b>${escapeHtml(state.profile.nickname)}</b></div><textarea id="commentBody" maxlength="1000" placeholder="댓글을 입력하세요. 최대 1000자"></textarea><div class="comment-actions"><span class="comment-note">현재 프로필로 작성됩니다.</span><button class="btn blue" id="commentSubmitBtn">댓글 등록</button></div></div>`;$('commentSubmitBtn').onclick=()=>saveComment(articleId);}else{formBox.innerHTML='<div class="comment-form"><div class="comment-note">댓글을 작성하려면 먼저 프로필을 설정해야 합니다.</div><div class="comment-actions"><span></span><button class="btn blue" id="commentProfileBtn">프로필 설정</button></div></div>';$('commentProfileBtn').onclick=prepareProfileDialog;}}
+        else{formBox.innerHTML='<div class="comment-form"><div class="comment-note">댓글 작성은 로그인 후 가능합니다.</div><div class="comment-actions"><span></span><button class="btn" id="commentLoginBtn">로그인</button></div></div>';$('commentLoginBtn').onclick=()=>openDialog('loginDialog');}
+      }
+      const list=$('commentList');if(!list)return;if(!state.comments.length){list.innerHTML='<div class="comment-note">아직 댓글이 없습니다.</div>';return;}
+      const parents=state.comments.filter(c=>!c.parent_id);const repliesByParent=state.comments.reduce((acc,c)=>{if(c.parent_id)(acc[c.parent_id]||=[]).push(c);return acc;},{});
+      const renderOne=(c,isReply=false)=>{const p=state.commentProfileMap?.[c.user_id]||null;const name=liveProfileName(p,c.author_name||'익명');const canDelete=state.isOwner||(state.session?.user?.id&&state.session.user.id===c.user_id);const replies=repliesByParent[c.id]||[];const footer=`${renderCommentHeartButton(c)}${!isReply&&canReplyToComments()?`<button class="comment-reply" data-reply-open="${c.id}">답글</button>`:''}${canDelete?`<button class="comment-delete" data-comment-del="${c.id}">삭제</button>`:''}`;const badges=renderNameBadges(badgesForUser(c.user_id));const title=renderUserTitle(titleForUser(c.user_id));return `<article class="comment${isReply?' reply':''}"><div class="comment-head"><div class="comment-head-main">${avatarHtml(p,name,'md')}<div><div class="comment-author-line">${badges?`<span class="comment-badges">${badges}</span>`:''}<span class="comment-author">${escapeHtml(name)}</span>${title}</div><div class="comment-time">${fmtDate(c.created_at)}</div></div></div></div><div class="comment-body">${escapeHtml(c.body||'')}</div><div class="comment-footer">${footer}</div>${!isReply?`<div class="reply-form hidden" id="replyForm-${c.id}"><textarea id="replyBody-${c.id}" maxlength="1000" placeholder="답글을 입력하세요. 최대 1000자"></textarea><div class="comment-actions"><span class="comment-note">${escapeHtml(state.profile?.nickname||'')} 님으로 답글 작성</span><div><button class="btn" data-reply-cancel="${c.id}">취소</button> <button class="btn blue" data-reply-submit="${c.id}">답글 등록</button></div></div></div><div class="reply-list">${replies.map(r=>renderOne(r,true)).join('')}</div>`:''}</article>`;};
+      list.innerHTML=parents.map(c=>renderOne(c)).join('');list.querySelectorAll('[data-comment-heart]').forEach(b=>b.onclick=()=>toggleCommentHeart(b.dataset.commentHeart,articleId));list.querySelectorAll('[data-comment-del]').forEach(b=>b.onclick=()=>deleteComment(b.dataset.commentDel,articleId));list.querySelectorAll('[data-reply-open]').forEach(b=>b.onclick=()=>openReplyForm(b.dataset.replyOpen));list.querySelectorAll('[data-reply-cancel]').forEach(b=>b.onclick=()=>closeReplyForm(b.dataset.replyCancel));list.querySelectorAll('[data-reply-submit]').forEach(b=>b.onclick=()=>saveReply(articleId,b.dataset.replySubmit));bindTitleTooltips(list);
+    }
+
+    function currentAuthorName(){return state.profile?.nickname||state.editorRecord?.nickname||state.memberRequest?.nickname||'';}
+    function updateArticleAuthorPreview(article=null){const p=article?.created_by?state.articleProfileMap?.[article.created_by]:state.profile;const name=article?liveProfileName(p,article.author||'편집부'):currentAuthorName()||'프로필 설정 필요';if($('articleAuthorPreview'))$('articleAuthorPreview').innerHTML=renderArticleAuthor(article||{created_by:state.session?.user?.id,author:name},{compact:true});if($('author'))$('author').value=name;}
+    async function saveArticle(){
+      if(!state.session){openDialog('loginDialog');return;}if(!state.isEditor){showStatus('승인된 기사 게시 계정만 저장할 수 있습니다.','err');return;}if(!currentAuthorName()){showStatus('기사를 작성하기 전에 프로필 닉네임을 설정하세요.','err');prepareProfileDialog();return;}
+      syncBodyFromEditor();const title=$('title').value.trim(),body=$('body').value.trim();if(!title||!body){showStatus('제목과 본문은 필수입니다.','err');return;}
+      const id=$('articleId').value;const existing=id?state.articles.find(x=>String(x.id)===String(id)):null;if(id&&(!existing||!canEditArticle(existing))){showStatus('본인이 게시한 기사만 수정할 수 있습니다.','err');return;}
+      try{$('saveArticleBtn').disabled=true;let imageUrl=$('currentImageUrl').value||null,imagePath=$('currentImagePath').value||null;const file=$('imageFile').files[0];if(file){const uploaded=await uploadImage(file);imageUrl=uploaded.url;imagePath=uploaded.path;}const {currentCaptions,newCaptions}=collectGalleryCaptionInputs();const currentGallery=getCurrentGalleryImages().map((img,idx)=>({...img,caption:currentCaptions[idx]??img.caption??''}));const galleryUploads=await uploadGalleryImages($('galleryFiles')?.files||[]);const galleryImages=[...currentGallery,...galleryUploads.map((img,idx)=>({...img,caption:newCaptions[idx]||''}))];const articleForDefaults={...existing,category:$('category').value};const visibleCategories=selectedVisibleCategoriesFromForm(articleForDefaults);const pinnedByCategory=state.isOwner?selectedPinnedConfigFromForm():pinnedConfigForArticle(existing||{});const visibility=state.isOwner?($('articleVisibility')?.value||'members'):(existing?.visibility||'members');const payload={title,category:$('category').value,summary:$('summary').value.trim(),body,image_url:imageUrl,image_path:imagePath,gallery_images:galleryImages,caption:$('caption').value.trim(),visible_categories:visibleCategories,pinned_by_category:pinnedByCategory,pinned:state.isOwner?hasPinnedCategory(pinnedByCategory):!!existing?.pinned,pinned_order:state.isOwner?lowestPinnedOrder(pinnedByCategory):Number(existing?.pinned_order??DEFAULT_PIN_ORDER),visibility,updated_at:new Date().toISOString()};let res;if(id){res=await client.from('articles').update(payload).eq('id',id);}else{Object.assign(payload,{created_by:state.session.user.id,created_by_role:state.isOwner?'owner':(state.editorRole||'publisher'),author:currentAuthorName()});res=await client.from('articles').insert(payload);}if(res.error)throw res.error;showStatus('저장되었습니다.','ok');resetForm();await loadArticles();}catch(e){const msg=String(e.message||e);if(/visibility|avatar|user_preferences|visible_categories|pinned_by_category|column|schema/i.test(msg))showStatus('저장 실패: 함께 제공한 Supabase SQL 마이그레이션을 먼저 적용하세요. '+msg,'err');else showStatus('저장 실패: '+msg,'err');}finally{$('saveArticleBtn').disabled=false;}
+    }
+    function editArticle(id){const a=state.articles.find(x=>String(x.id)===String(id));if(!a)return;if(!canEditArticle(a)){showStatus('본인이 게시한 기사만 수정할 수 있습니다.','err');return;}$('articleId').value=a.id;$('currentImagePath').value=a.image_path||'';$('currentImageUrl').value=a.image_url||'';$('title').value=a.title||'';$('category').value=a.category||'종합';$('summary').value=a.summary||'';setEditorHtml(a.body||'');$('caption').value=a.caption||'';setCurrentGalleryImages(parseArticleGallery(a));if($('galleryFiles'))$('galleryFiles').value='';renderArticleCategoryControls(a);$('imageFile').value='';$('imagePreview').innerHTML=hasArticleImage(a)?`<img src="${escapeHtml(a.image_url)}" alt="">`:'대표 사진 없음';if($('articleVisibility')){$('articleVisibility').value=a.visibility||'members';$('articleVisibility').disabled=!state.isOwner;}updateArticleAuthorPreview(a);}
+    function resetForm(){['articleId','currentImagePath','currentImageUrl','currentGalleryImages','title','summary','body','caption'].forEach(id=>$(id).value='');setEditorHtml('');$('category').value='공지';renderArticleCategoryControls({category:'공지',visible_categories:['종합','공지'],pinned_by_category:{}});$('imageFile').value='';if($('galleryFiles'))$('galleryFiles').value='';$('imagePreview').textContent='대표 사진 없음';setCurrentGalleryImages([]);if($('articleVisibility')){$('articleVisibility').value='members';$('articleVisibility').disabled=!state.isOwner;}updateArticleAuthorPreview();}
+
+    function updateAuthUI(){
+      const loggedIn=!!state.session,approvedMember=canUseMemberFeatures();
+      $('manageBtn').classList.toggle('hidden',!(loggedIn&&state.isEditor));$('policyAdminBtn').classList.toggle('hidden',!(loggedIn&&state.isOwner));$('adAdminBtn').classList.toggle('hidden',!(loggedIn&&state.isOwner));$('accountAdminBtn').classList.toggle('hidden',!(loggedIn&&state.isOwner));if($('accountHelpAdminBtn'))$('accountHelpAdminBtn').classList.toggle('hidden',!(loggedIn&&state.isOwner));if($('inboxAdminBtn'))$('inboxAdminBtn').classList.toggle('hidden',!(loggedIn&&state.isOwner));if($('suggestionBtn')){$('suggestionBtn').classList.toggle('hidden',!(loggedIn&&approvedMember));if(!(loggedIn&&approvedMember))$('suggestionBtn').classList.remove('suggestion-answer-active');}if($('personalMessageBtn')){$('personalMessageBtn').classList.toggle('hidden',!loggedIn);if(!loggedIn)$('personalMessageBtn').classList.remove('personal-message-active');}if($('adminCenterBtn'))$('adminCenterBtn').classList.toggle('hidden',!(loggedIn&&(state.isOwner||state.isEditor)));forceHideLegacyAdminButtons();$('publisherRequestTopBtn').classList.toggle('hidden',!(loggedIn&&approvedMember&&!state.isEditor));$('profileTopBtn').classList.toggle('hidden',!loggedIn);$('logoutTopBtn').classList.toggle('hidden',!loggedIn);$('loginTopBtn').classList.toggle('hidden',loggedIn);$('memberStatusTop').classList.toggle('hidden',!loggedIn);if($('settingsTopBtn'))$('settingsTopBtn').classList.remove('hidden');if(loggedIn){$('nicknameInput').value=state.profile?.nickname||state.memberRequest?.nickname||'';$('memberStatusTop').textContent=state.isOwner?'관리자':memberStatusLabel(state.memberRequest?.status);}syncAppUI();
+    }
+    async function loadSession(){
+      const authUrlText=String(location.hash||'')+String(location.search||'');const isRecoveryRedirect=/type=(recovery|password_recovery)/i.test(authUrlText);const {data}=await client.auth.getSession();state.session=data.session;await checkEditor();await loadProfile();await loadMemberStatus();await refreshTitleState();await loadPreferences();updateAuthUI();await checkSuggestionAnswerNotifications({popup:true});await checkPersonalMessageNotifications({popup:true});if(isRecoveryRedirect&&state.session)openPasswordUpdateDialog();cleanAuthHash();
+      client.auth.onAuthStateChange(async(event,session)=>{state.session=session;await checkEditor();await loadProfile();await loadMemberStatus();await refreshTitleState();await loadPreferences();updateAuthUI();await loadArticles();await checkSuggestionAnswerNotifications({popup:event==='SIGNED_IN'});await checkPersonalMessageNotifications({popup:event==='SIGNED_IN'});await refreshAdminAlertIndicator();if(event==='PASSWORD_RECOVERY'){openPasswordUpdateDialog();cleanAuthHash();}else if(event==='SIGNED_IN')cleanAuthHash();if(state.appMode&&!session)setTimeout(()=>{if(!$('loginDialog').open)openDialog('loginDialog');},150);});
+    }
+
+    function fillAppCategories(){if(!$('appCategoryList'))return;$('appCategoryList').innerHTML=CATEGORIES.map(c=>`<button type="button" data-app-category="${c}" class="${c===state.category?'active':''}">${c}</button>`).join('');$('appCategoryList').querySelectorAll('[data-app-category]').forEach(b=>b.onclick=()=>navigateCategory(b.dataset.appCategory));}
+    function syncAppUI(){
+      document.body.classList.toggle('app-mode',!!state.appMode);if(!state.appMode)return;
+      if($('appHeaderTitle'))$('appHeaderTitle').textContent=state.activeArticleId?(state.articles.find(a=>String(a.id)===String(state.activeArticleId))?.title||'기사'):(state.category==='종합'?'행신뉴스':state.category);
+      $('appBackBtn')?.classList.toggle('hidden',!state.activeArticleId);
+      document.querySelectorAll('[data-app-tab]').forEach(b=>{const tab=b.dataset.appTab;const active=(tab==='home'&&!state.activeArticleId&&state.category==='종합')||(tab==='tips'&&state.category==='뉴스제보')||(tab==='notifications'&&$('personalMessageDialog')?.open)||(tab==='profile'&&$('profileDialog')?.open);b.classList.toggle('active',active);});
+    }
+    function bindEnhancements(){
+      document.body.classList.toggle('app-mode',state.appMode);if($('searchInput')){$('searchInput').value=state.query;let timer=null;$('searchInput').oninput=e=>{clearTimeout(timer);state.query=e.target.value;state.page=1;timer=setTimeout(()=>{updateRoute({category:state.category,page:1,q:state.query},{replace:true});render();},180);};}$('searchClear').onclick=()=>{state.query='';state.page=1;$('searchInput').value='';navigateCategory('종합',{replace:true});};
+      const brandTitle=document.querySelector('.brand h1');if(brandTitle)brandTitle.onclick=()=>{state.query='';if($('searchInput'))$('searchInput').value='';navigateCategory('종합');};
+      if($('profileTopBtn'))$('profileTopBtn').onclick=prepareProfileDialog;if($('settingsTopBtn'))$('settingsTopBtn').onclick=openSettings;if($('appSettingsBtn'))$('appSettingsBtn').onclick=openSettings;if($('appHomeBrand'))$('appHomeBrand').onclick=()=>navigateCategory('종합');if($('appBackBtn'))$('appBackBtn').onclick=()=>{if(history.state?.fromList)history.back();else navigateList({replace:true});};
+      document.querySelectorAll('[data-app-tab]').forEach(b=>b.onclick=async()=>{const tab=b.dataset.appTab;if(tab==='home')navigateCategory('종합');else if(tab==='categories'){fillAppCategories();openDialog('appCategoryDialog');}else if(tab==='tips')navigateCategory('뉴스제보');else if(tab==='notifications')await openPersonalMessageDialog();else if(tab==='profile'){if(state.session)prepareProfileDialog();else openDialog('loginDialog');}});
+      if($('saveSettingsBtn'))$('saveSettingsBtn').onclick=saveSettings;if($('pushEnabled'))$('pushEnabled').onchange=syncPushControls;document.querySelectorAll('input[name="themeChoice"]').forEach(r=>r.onchange=()=>applyThemeChoice(r.value));
+      if($('profileAvatarFile'))$('profileAvatarFile').onchange=e=>{const f=e.target.files?.[0];state.removeAvatarRequested=false;if(f){const url=URL.createObjectURL(f);$('profileAvatarPreview').dataset.tempUrl=url;}renderProfilePreview();};if($('nicknameInput'))$('nicknameInput').oninput=renderProfilePreview;if($('removeAvatarBtn'))$('removeAvatarBtn').onclick=()=>{state.removeAvatarRequested=true;if($('profileAvatarFile'))$('profileAvatarFile').value='';if($('profileAvatarPreview'))$('profileAvatarPreview').dataset.tempUrl='';if($('profileAvatarUrl'))$('profileAvatarUrl').value='';renderProfilePreview();};
+      window.addEventListener('popstate',handlePopState);fillAppCategories();populateSettingsForm();syncAppUI();
+    }
+
+    (async function init(){
+      applyInitialRoute();
+      bind();
+      bindEnhancements();
+      buildNav();
+      await loadSession();
+      await loadPolicyNotice();
+      await loadMaintenanceSettings();
+      await loadAds();
+      await refreshTitleState();
+      await loadNewsTips();
+      if(state.isOwner) await loadSuggestions();
+      await loadArticles();
+      maybeShowPolicy();
+      if(state.appMode && !state.session) setTimeout(()=>{ if(!$('loginDialog').open && !document.querySelector('dialog[open]')) openDialog('loginDialog'); }, 350);
+    })();
   </script>
 </body>
 </html>
