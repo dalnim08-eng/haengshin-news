@@ -708,6 +708,65 @@
     }
   </style>
 
+
+  <style id="article-attachments-v9">
+    .attachment-editor-list,
+    .article-attachments{
+      border:1px solid var(--theme-line);
+      border-radius:16px;
+      background:var(--surface-2);
+      padding:12px;
+    }
+    .attachment-editor-list{min-height:64px;color:var(--theme-muted)}
+    .attachment-editor-grid,.attachment-list{display:grid;gap:10px}
+    .attachment-editor-item,.attachment-card{
+      min-width:0;
+      display:grid;
+      grid-template-columns:48px minmax(0,1fr) auto;
+      gap:12px;
+      align-items:center;
+      border:1px solid var(--theme-line);
+      border-radius:14px;
+      background:var(--surface);
+      padding:11px 12px;
+    }
+    .attachment-file-icon{
+      width:48px;height:48px;border-radius:13px;
+      display:grid;place-items:center;
+      background:var(--brand-gradient);
+      color:#fff;font-size:11px;font-weight:950;
+      letter-spacing:-.03em;text-transform:uppercase;
+      box-shadow:0 8px 20px rgba(36,170,196,.18);
+    }
+    .attachment-file-main{min-width:0}
+    .attachment-file-name{
+      display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+      color:var(--theme-text);font-weight:850;line-height:1.35;
+    }
+    .attachment-file-meta{display:block;margin-top:3px;color:var(--theme-muted);font-size:12px}
+    .attachment-remove{
+      border:1px solid #fecaca;border-radius:999px;background:var(--surface);
+      color:#b91c1c;padding:7px 10px;font-size:12px;font-weight:800;
+    }
+    .article-attachments{margin:24px 0;background:var(--surface)!important}
+    .article-attachments h3{margin:0 0 12px;font-size:19px}
+    .attachment-download{
+      display:inline-flex;align-items:center;justify-content:center;
+      min-height:40px;border:0;border-radius:999px;padding:8px 14px;
+      background:var(--brand-gradient);color:#fff!important;text-decoration:none!important;
+      font-size:13px;font-weight:900;white-space:nowrap;
+      box-shadow:0 8px 22px rgba(36,170,196,.18);
+    }
+    html[data-theme="aurora-black"] .attachment-download{color:#03151c!important}
+    .attachment-apk-note{margin:10px 2px 0;color:var(--theme-muted);font-size:12px;line-height:1.55}
+    @media(max-width:560px){
+      .attachment-editor-item,.attachment-card{grid-template-columns:44px minmax(0,1fr);gap:10px}
+      .attachment-file-icon{width:44px;height:44px;border-radius:12px}
+      .attachment-editor-item .attachment-remove,.attachment-card .attachment-download{grid-column:1/-1;width:100%}
+      .attachment-file-name{white-space:normal;overflow-wrap:anywhere}
+    }
+  </style>
+
 </head>
 <body>
   <script>
@@ -796,7 +855,7 @@
 
   <dialog id="accountAdminDialog"><div class="modal-head"><h2>계정 관리</h2><button class="close" data-close="accountAdminDialog">×</button></div><div class="modal-body"><p class="login-note">관리자만 회원가입 승인과 게시 권한 승인, 점검 모드를 관리할 수 있습니다.</p><div class="admin-list"><h3>점검 모드</h3><div class="maintenance-settings"><label class="policy-check"><input type="checkbox" id="maintenanceEnabled"> 점검 모드 사용</label><p class="login-note">점검 중에는 관리자는 항상 접속 가능하며, 아래에서 선택한 등급만 추가로 접속할 수 있습니다.</p><div class="check-grid"><label><input type="checkbox" class="maintenance-role" value="publisher"> 게시자</label><label><input type="checkbox" class="maintenance-role" value="editor"> 편집자</label><label><input type="checkbox" class="maintenance-role" value="member"> 승인 회원</label></div><div class="field" style="margin-top:12px"><label>점검 안내 문구</label><textarea id="maintenanceMessage" placeholder="현재 사이트 기능 점검 중입니다. 잠시 후 다시 접속해 주세요."></textarea></div><div class="editor-actions"><button class="btn blue" id="saveMaintenanceBtn">점검 설정 저장</button></div></div></div><div class="admin-list"><h3>회원가입 승인 대기</h3><div id="memberRequestList"></div></div><div class="admin-list"><h3>회원 목록</h3><div id="memberAccountList"></div></div><div class="admin-list"><h3>게시 권한 승인 대기</h3><div id="editorRequestList"></div></div><div class="admin-list"><h3>승인된 게시 계정</h3><div id="editorAccountList"></div></div></div></dialog>
 
-  <dialog id="editorDialog"><div class="modal-head"><h2>기사 관리</h2><button class="close" data-close="editorDialog">×</button></div><div class="modal-body"><input type="hidden" id="articleId"><input type="hidden" id="currentImagePath"><input type="hidden" id="currentImageUrl"><input type="hidden" id="currentGalleryImages"><div class="form-grid"><div class="field full"><label>제목</label><input id="title" placeholder="기사 제목"></div><div class="field"><label>분야</label><select id="category"><option>공지</option><option>인사이트</option><option>활동</option><option>칼럼</option><option>종합</option></select></div><div class="field"><label>작성자</label><div id="articleAuthorPreview" class="locked-author">로그인한 계정의 프로필로 자동 지정됩니다.</div><input id="author" type="hidden"></div><div class="field"><label>공개 범위</label><select id="articleVisibility"><option value="members">로그인 회원 전용</option><option value="public">비로그인 공개</option></select><small style="color:#64748b">비로그인 공개는 대표 관리자만 설정할 수 있습니다.</small></div><div class="field full"><label>요약</label><textarea id="summary" placeholder="목록에 표시될 짧은 요약"></textarea></div><div class="field full"><label>본문</label><div class="rich-toolbar" id="bodyToolbar" aria-label="본문 편집 도구"><button type="button" data-cmd="bold"><b>B</b></button><button type="button" data-cmd="italic"><i>I</i></button><button type="button" data-cmd="underline"><u>U</u></button><select id="formatBlockSelect" title="문단 형식"><option value="P">본문</option><option value="H2">큰 제목</option><option value="H3">작은 제목</option><option value="BLOCKQUOTE">인용문</option></select><select id="fontSizeSelect" title="글씨 크기"><option value="">크기</option><option value="14px">14</option><option value="16px">16</option><option value="18px">18</option><option value="22px">22</option><option value="28px">28</option></select><input id="fontColorInput" type="color" title="글자색" value="#111827"><button type="button" data-cmd="justifyLeft">왼쪽</button><button type="button" data-cmd="justifyCenter">가운데</button><button type="button" data-cmd="insertUnorderedList">목록</button><button type="button" data-cmd="insertOrderedList">번호</button><button type="button" id="insertLinkBtn">링크</button><button type="button" data-cmd="removeFormat">서식 제거</button></div><div id="bodyEditor" class="rich-editor" contenteditable="true" data-placeholder="기사 본문을 입력하세요."></div><textarea id="body" class="hidden"></textarea></div><div class="field"><label>대표 사진</label><input id="imageFile" type="file" accept="image/*"><small style="color:#64748b">선택하지 않으면 기존 사진이 유지됩니다.</small></div><div class="field"><label>사진 미리보기</label><div class="preview" id="imagePreview">대표 사진 없음</div></div><div class="field full"><label>추가 사진</label><input id="galleryFiles" type="file" accept="image/*" multiple><small style="color:#64748b">여러 장을 한 번에 선택할 수 있습니다. 기존 추가 사진은 유지되고, 새로 선택한 사진은 뒤에 추가됩니다.</small></div><div class="field full"><label>추가 사진 미리보기</label><div class="gallery-preview" id="galleryPreview">추가 사진 없음</div><div class="editor-actions" style="justify-content:flex-start;margin-top:8px"><button type="button" class="btn red" id="clearGalleryBtn">추가 사진 전체 삭제</button></div></div><div class="field full"><label>대표 사진 설명</label><input id="caption" placeholder="대표 사진 설명 또는 출처"></div><div class="field full"><label>표시할 카테고리</label><div class="check-grid" id="visibleCategoryChecks"></div><small style="color:#64748b">체크한 카테고리 화면에만 게시물이 표시됩니다. 예: 공지와 인사이트만 체크하고 종합을 해제하면 종합에는 뜨지 않습니다.</small></div><div class="field full"><label>카테고리별 상단 고정</label><div class="category-pin-grid" id="pinnedCategorySettings"></div><small style="color:#64748b">체크한 카테고리 안에서만 상단 고정이 적용됩니다. 순서 숫자가 낮을수록 위에 표시됩니다.</small></div></div><div class="editor-actions"><button class="btn" id="newArticleBtn">새 글</button><button class="btn blue" id="saveArticleBtn">저장</button></div><div class="admin-list"><h3>등록된 기사</h3><div id="adminList"></div></div></div></dialog>
+  <dialog id="editorDialog"><div class="modal-head"><h2>기사 관리</h2><button class="close" data-close="editorDialog">×</button></div><div class="modal-body"><input type="hidden" id="articleId"><input type="hidden" id="currentImagePath"><input type="hidden" id="currentImageUrl"><input type="hidden" id="currentGalleryImages"><input type="hidden" id="currentAttachments" value="[]"><div class="form-grid"><div class="field full"><label>제목</label><input id="title" placeholder="기사 제목"></div><div class="field"><label>분야</label><select id="category"><option>공지</option><option>인사이트</option><option>활동</option><option>칼럼</option><option>종합</option></select></div><div class="field"><label>작성자</label><div id="articleAuthorPreview" class="locked-author">로그인한 계정의 프로필로 자동 지정됩니다.</div><input id="author" type="hidden"></div><div class="field"><label>공개 범위</label><select id="articleVisibility"><option value="members">로그인 회원 전용</option><option value="public">비로그인 공개</option></select><small style="color:#64748b">비로그인 공개는 대표 관리자만 설정할 수 있습니다.</small></div><div class="field full"><label>요약</label><textarea id="summary" placeholder="목록에 표시될 짧은 요약"></textarea></div><div class="field full"><label>본문</label><div class="rich-toolbar" id="bodyToolbar" aria-label="본문 편집 도구"><button type="button" data-cmd="bold"><b>B</b></button><button type="button" data-cmd="italic"><i>I</i></button><button type="button" data-cmd="underline"><u>U</u></button><select id="formatBlockSelect" title="문단 형식"><option value="P">본문</option><option value="H2">큰 제목</option><option value="H3">작은 제목</option><option value="BLOCKQUOTE">인용문</option></select><select id="fontSizeSelect" title="글씨 크기"><option value="">크기</option><option value="14px">14</option><option value="16px">16</option><option value="18px">18</option><option value="22px">22</option><option value="28px">28</option></select><input id="fontColorInput" type="color" title="글자색" value="#111827"><button type="button" data-cmd="justifyLeft">왼쪽</button><button type="button" data-cmd="justifyCenter">가운데</button><button type="button" data-cmd="insertUnorderedList">목록</button><button type="button" data-cmd="insertOrderedList">번호</button><button type="button" id="insertLinkBtn">링크</button><button type="button" data-cmd="removeFormat">서식 제거</button></div><div id="bodyEditor" class="rich-editor" contenteditable="true" data-placeholder="기사 본문을 입력하세요."></div><textarea id="body" class="hidden"></textarea></div><div class="field"><label>대표 사진</label><input id="imageFile" type="file" accept="image/*"><small style="color:#64748b">선택하지 않으면 기존 사진이 유지됩니다.</small></div><div class="field"><label>사진 미리보기</label><div class="preview" id="imagePreview">대표 사진 없음</div></div><div class="field full"><label>추가 사진</label><input id="galleryFiles" type="file" accept="image/*" multiple><small style="color:#64748b">여러 장을 한 번에 선택할 수 있습니다. 기존 추가 사진은 유지되고, 새로 선택한 사진은 뒤에 추가됩니다.</small></div><div class="field full"><label>추가 사진 미리보기</label><div class="gallery-preview" id="galleryPreview">추가 사진 없음</div><div class="editor-actions" style="justify-content:flex-start;margin-top:8px"><button type="button" class="btn red" id="clearGalleryBtn">추가 사진 전체 삭제</button></div></div><div class="field full"><label>첨부 파일</label><input id="attachmentFiles" type="file" multiple><small style="color:#64748b">APK, ZIP, PDF, 문서, 음원, 영상 등 일반 파일을 첨부할 수 있습니다. 파일 1개당 최대 100MB, 기사당 최대 10개입니다.</small></div><div class="field full"><label>첨부 파일 목록</label><div class="attachment-editor-list" id="attachmentPreview">첨부 파일 없음</div><div class="editor-actions" style="justify-content:flex-start;margin-top:8px"><button type="button" class="btn red" id="clearAttachmentsBtn">첨부 파일 전체 삭제</button></div></div><div class="field full"><label>대표 사진 설명</label><input id="caption" placeholder="대표 사진 설명 또는 출처"></div><div class="field full"><label>표시할 카테고리</label><div class="check-grid" id="visibleCategoryChecks"></div><small style="color:#64748b">체크한 카테고리 화면에만 게시물이 표시됩니다. 예: 공지와 인사이트만 체크하고 종합을 해제하면 종합에는 뜨지 않습니다.</small></div><div class="field full"><label>카테고리별 상단 고정</label><div class="category-pin-grid" id="pinnedCategorySettings"></div><small style="color:#64748b">체크한 카테고리 안에서만 상단 고정이 적용됩니다. 순서 숫자가 낮을수록 위에 표시됩니다.</small></div></div><div class="editor-actions"><button class="btn" id="newArticleBtn">새 글</button><button class="btn blue" id="saveArticleBtn">저장</button></div><div class="admin-list"><h3>등록된 기사</h3><div id="adminList"></div></div></div></dialog>
 
   <dialog id="adAdminDialog"><div class="modal-head"><h2>광고 관리</h2><button class="close" data-close="adAdminDialog">×</button></div><div class="modal-body"><input type="hidden" id="adId"><input type="hidden" id="currentAdImagePath"><input type="hidden" id="currentAdImageUrl"><p class="login-note">관리자만 가상 광고를 등록·수정·삭제할 수 있습니다. 등록한 광고 이미지는 사이드바, 좌우 고정 여백, 기사 하단 중 선택한 위치에 표시되며, 링크를 넣으면 이미지 클릭 시 해당 주소로 이동합니다.</p><div class="form-grid"><div class="field"><label>광고 제목</label><input id="adTitle" placeholder="예: 행신 스터디 카페"></div><div class="field"><label>클릭 링크</label><input id="adLinkUrl" placeholder="https://example.com 또는 빈칸"></div><div class="field"><label>표시 위치</label><select id="adPlacement"><option value="sidebar">오른쪽 사이드바</option><option value="left_rail">왼쪽 여백</option><option value="right_rail">오른쪽 여백</option><option value="article_bottom">기사 하단 - 작게 제한</option></select></div><div class="field"><label>표시 순서</label><input id="adSortOrder" type="number" value="0" step="1"></div><div class="field"><label>활성 상태</label><select id="adActive"><option value="true">표시</option><option value="false">숨김</option></select></div><div class="field"><label>광고 이미지</label><input id="adImageFile" type="file" accept="image/*"><small style="color:#64748b">새 이미지를 선택하지 않으면 기존 이미지가 유지됩니다.</small></div><div class="field full"><label>광고 설명</label><input id="adAltText" placeholder="이미지 대체 텍스트 또는 설명"></div><div class="field full"><label>미리보기</label><div class="ad-admin-preview" id="adImagePreview">광고 이미지 없음</div></div></div><div class="editor-actions"><button class="btn" id="newAdBtn">새 광고</button><button class="btn blue" id="saveAdBtn">광고 저장</button></div><div class="admin-list"><h3>등록된 광고</h3><div id="adAdminList"></div></div></div></dialog>
 
@@ -832,7 +891,8 @@
     const CONFIG = {
       supabaseUrl: 'https://vcveyhhbnoikziicpljk.supabase.co',
       supabaseAnonKey: 'sb_publishable_fgqKwRloiNvNb83PhCNZow_PM59mBYA',
-      bucket: 'article-images'
+      bucket: 'article-images',
+      fileBucket: 'article-files'
     };
     const CATEGORIES = ['종합','공지','인사이트','뉴스제보','활동','칼럼'];
     const ARTICLE_DISPLAY_CATEGORIES = CATEGORIES.filter(c => c !== '뉴스제보');
@@ -4301,6 +4361,150 @@ async function deleteTitle(id){
       }
     }
 
+
+    /* ===== 기사 일반 파일 첨부 v9 ===== */
+    const ARTICLE_ATTACHMENT_MAX_COUNT = 10;
+    const ARTICLE_ATTACHMENT_MAX_SIZE = 100 * 1024 * 1024;
+
+    function attachmentMimeType(fileOrRow={}){
+      const name=String(fileOrRow.name||'').toLowerCase();
+      const supplied=String(fileOrRow.type||fileOrRow.mime_type||'').trim();
+      if(supplied) return supplied;
+      if(name.endsWith('.apk')) return 'application/vnd.android.package-archive';
+      if(name.endsWith('.pdf')) return 'application/pdf';
+      if(name.endsWith('.zip')) return 'application/zip';
+      if(name.endsWith('.json')) return 'application/json';
+      if(name.endsWith('.txt')) return 'text/plain';
+      return 'application/octet-stream';
+    }
+    function normalizeArticleAttachment(item){
+      if(typeof item==='string') return {name:item.split('/').pop()||'첨부 파일',url:item,path:'',size:0,type:attachmentMimeType({name:item})};
+      if(!item||typeof item!=='object') return null;
+      const url=String(item.url||'').trim(); if(!url) return null;
+      const name=String(item.name||item.file_name||url.split('/').pop()||'첨부 파일').trim();
+      return {name,url,path:String(item.path||'').trim(),size:Math.max(0,Number(item.size||0)),type:attachmentMimeType({name,type:item.type||item.mime_type})};
+    }
+    function parseArticleAttachments(article={}){
+      let raw=article?.attachments; let arr=[];
+      if(Array.isArray(raw)) arr=raw;
+      else if(typeof raw==='string'&&raw.trim()){try{arr=JSON.parse(raw);}catch(_){arr=[];}}
+      return (Array.isArray(arr)?arr:[]).map(normalizeArticleAttachment).filter(Boolean);
+    }
+    function getCurrentAttachments(){
+      try{return (JSON.parse($('currentAttachments')?.value||'[]')||[]).map(normalizeArticleAttachment).filter(Boolean);}catch(_){return [];}
+    }
+    function setCurrentAttachments(items=[]){
+      if($('currentAttachments')) $('currentAttachments').value=JSON.stringify((items||[]).map(normalizeArticleAttachment).filter(Boolean));
+      renderAttachmentPreview();
+    }
+    function formatAttachmentSize(bytes){
+      const n=Number(bytes||0); if(!n) return '크기 정보 없음';
+      if(n<1024) return `${n} B`; if(n<1024**2) return `${(n/1024).toFixed(1)} KB`; if(n<1024**3) return `${(n/1024**2).toFixed(1)} MB`; return `${(n/1024**3).toFixed(1)} GB`;
+    }
+    function attachmentExtension(name=''){
+      const ext=String(name).split('.').pop();
+      return ext&&ext!==name?ext.slice(0,5).toUpperCase():'FILE';
+    }
+    function selectedAttachmentFiles(){return Array.from($('attachmentFiles')?.files||[]);}
+    function removeSelectedAttachment(index){
+      const input=$('attachmentFiles'); if(!input) return;
+      const files=selectedAttachmentFiles().filter((_,i)=>i!==Number(index));
+      try{const transfer=new DataTransfer();files.forEach(file=>transfer.items.add(file));input.files=transfer.files;}catch(e){input.value='';showStatus('선택 예정 파일을 다시 골라 주세요.','');}
+      renderAttachmentPreview();
+    }
+    function renderAttachmentPreview(){
+      const box=$('attachmentPreview'); if(!box) return;
+      const current=getCurrentAttachments(); const selected=selectedAttachmentFiles();
+      if(!current.length&&!selected.length){box.textContent='첨부 파일 없음';return;}
+      const currentHtml=current.map((f,i)=>`<div class="attachment-editor-item"><span class="attachment-file-icon">${escapeHtml(attachmentExtension(f.name))}</span><span class="attachment-file-main"><b class="attachment-file-name">${escapeHtml(f.name)}</b><small class="attachment-file-meta">기존 파일 · ${escapeHtml(formatAttachmentSize(f.size))}</small></span><button type="button" class="attachment-remove" data-remove-current-attachment="${i}">제거</button></div>`).join('');
+      const selectedHtml=selected.map((f,i)=>`<div class="attachment-editor-item"><span class="attachment-file-icon">${escapeHtml(attachmentExtension(f.name))}</span><span class="attachment-file-main"><b class="attachment-file-name">${escapeHtml(f.name)}</b><small class="attachment-file-meta">업로드 예정 · ${escapeHtml(formatAttachmentSize(f.size))}</small></span><button type="button" class="attachment-remove" data-remove-new-attachment="${i}">제거</button></div>`).join('');
+      box.innerHTML=`<div class="attachment-editor-grid">${currentHtml}${selectedHtml}</div>`;
+      box.querySelectorAll('[data-remove-current-attachment]').forEach(button=>button.onclick=()=>{const rows=getCurrentAttachments();rows.splice(Number(button.dataset.removeCurrentAttachment),1);setCurrentAttachments(rows);});
+      box.querySelectorAll('[data-remove-new-attachment]').forEach(button=>button.onclick=()=>removeSelectedAttachment(button.dataset.removeNewAttachment));
+    }
+    function validateAttachmentSelection(files,currentCount=0){
+      const rows=Array.from(files||[]);
+      if(currentCount+rows.length>ARTICLE_ATTACHMENT_MAX_COUNT) throw new Error(`첨부 파일은 기사당 최대 ${ARTICLE_ATTACHMENT_MAX_COUNT}개까지 등록할 수 있습니다.`);
+      rows.forEach(file=>{if(file.size>ARTICLE_ATTACHMENT_MAX_SIZE) throw new Error(`${file.name}: 파일 1개는 100MB 이하여야 합니다.`);});
+      return rows;
+    }
+    async function uploadArticleAttachment(file){
+      const type=attachmentMimeType(file);
+      const ext=(String(file.name||'').split('.').pop()||'bin').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,10)||'bin';
+      const path=`attachments/${state.session.user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const {error}=await client.storage.from(CONFIG.fileBucket).upload(path,file,{cacheControl:'3600',upsert:false,contentType:type});
+      if(error) throw error;
+      const {data}=client.storage.from(CONFIG.fileBucket).getPublicUrl(path);
+      return {name:file.name,url:data.publicUrl,path,size:file.size,type};
+    }
+    async function uploadArticleAttachments(files,currentCount=0){
+      const rows=validateAttachmentSelection(files,currentCount); const uploaded=[];
+      for(const file of rows) uploaded.push(await uploadArticleAttachment(file));
+      return uploaded;
+    }
+    async function removeAttachmentStorage(path){
+      if(!path) return;
+      try{await client.storage.from(CONFIG.fileBucket).remove([path]);}catch(e){console.warn('attachment cleanup skipped',e);}
+    }
+    function renderArticleAttachments(article){
+      const files=parseArticleAttachments(article); if(!files.length) return '';
+      const hasApk=files.some(file=>String(file.name).toLowerCase().endsWith('.apk'));
+      return `<section class="article-attachments"><h3>첨부 파일</h3><div class="attachment-list">${files.map(file=>`<div class="attachment-card"><span class="attachment-file-icon">${escapeHtml(attachmentExtension(file.name))}</span><span class="attachment-file-main"><b class="attachment-file-name">${escapeHtml(file.name)}</b><small class="attachment-file-meta">${escapeHtml(formatAttachmentSize(file.size))}${String(file.name).toLowerCase().endsWith('.apk')?' · Android 설치 파일':''}</small></span><a class="attachment-download" href="${escapeHtml(file.url)}" download="${escapeHtml(file.name)}" target="_blank" rel="noopener noreferrer" data-attachment-url="${escapeHtml(file.url)}" data-attachment-name="${escapeHtml(file.name)}" data-attachment-type="${escapeHtml(file.type)}">다운로드</a></div>`).join('')}</div>${hasApk?'<p class="attachment-apk-note">APK는 다운로드가 끝난 뒤 기기의 다운로드 알림 또는 파일 앱에서 열어 설치할 수 있습니다. 처음 설치할 때는 브라우저나 행신뉴스 앱의 ‘알 수 없는 앱 설치’ 허용이 필요할 수 있습니다.</p>':''}</section>`;
+    }
+    function bindAttachmentDownloads(root=document){
+      root.querySelectorAll('[data-attachment-url]').forEach(link=>{
+        link.onclick=(event)=>{
+          const url=link.dataset.attachmentUrl||link.href; const name=link.dataset.attachmentName||'첨부파일'; const type=link.dataset.attachmentType||attachmentMimeType({name});
+          const bridge=window.HaengshinApp||window.HaengshinAndroid;
+          if(state.appMode&&bridge?.downloadFile){event.preventDefault();try{bridge.downloadFile(url,name,type);}catch(e){console.warn(e);location.href=url;}}
+        };
+      });
+    }
+
+    async function openArticle(id,options={}){
+      if(state.articleReadSession?.article_id&&String(state.articleReadSession.article_id)!==String(id))await finishArticleReadSession();
+      const a=state.articles.find(x=>String(x.id)===String(id));
+      if(!a){$('content').innerHTML=`<div class="empty"><strong>${state.session?'기사를 찾을 수 없습니다':'로그인이 필요하거나 공개되지 않은 기사입니다'}</strong><span>${state.session?'삭제되었거나 접근 권한이 없는 기사입니다.':'로그인 후 다시 시도해 주세요.'}</span>${!state.session?'<div style="margin-top:14px"><button class="btn blue" id="missingArticleLogin">로그인</button></div>':''}</div>`;if($('missingArticleLogin'))$('missingArticleLogin').onclick=()=>openDialog('loginDialog');syncAppUI();return;}
+      if(!canViewArticle(a)){showStatus('로그인 후 볼 수 있는 게시물입니다.','err');openDialog('loginDialog');return;}
+      if(!options.fromRoute)updateRoute({article:a.id,category:state.category,page:state.page,q:state.query},{stateData:{fromList:true}});
+      state.activeArticleId=a.id;if(!options.skipViewIncrement){await incrementViews(a);await recordActivityEvent('article_view',{article_id:a.id,category:a.category||null});}
+      $('content').innerHTML=`<div class="article-view"><div class="backline"><button class="btn" id="backBtn">← 목록으로</button></div><span class="kicker">${escapeHtml(a.category)}</span><h2>${escapeHtml(a.title)}</h2><div class="meta">${renderArticleAuthor(a)}<span>${fmtDate(a.created_at)}</span><span>조회 ${a.views||0}</span></div>${hasArticleImage(a)?`<div class="main-image"><img class="article-image-zoom" src="${escapeHtml(a.image_url)}" alt="${escapeHtml(a.caption||a.title||'대표 사진')}" data-image-view="${escapeHtml(a.image_url)}" data-image-caption="${escapeHtml(a.caption||a.title||'대표 사진')}"><div class="caption">${escapeHtml(a.caption||'')}</div></div>`:''}${renderArticleGallery(a)}<p class="summary">${escapeHtml(a.summary||'')}</p><hr style="border:0;border-top:1px solid var(--theme-line);margin:22px 0"><div class="article-body rich-content">${renderArticleBody(a.body||'')}</div>${renderArticleAttachments(a)}${renderArticleBottomAds()}<section class="comments" id="commentsBox"><h3>댓글</h3><div id="commentFormBox"></div><div class="comment-list" id="commentList"><div class="comment-note">댓글을 불러오는 중입니다.</div></div></section></div>`;
+      $('backBtn').onclick=()=>{if(history.state?.fromList)history.back();else navigateList({replace:true});};
+      bindAdCloseButtons();bindImageViewers();bindAttachmentDownloads($('content'));startArticleReadSession(a);syncAppUI();await loadComments(a.id);
+    }
+
+    async function saveArticle(){
+      if(!state.session){openDialog('loginDialog');return;}if(!state.isEditor){showStatus('승인된 기사 게시 계정만 저장할 수 있습니다.','err');return;}if(!currentAuthorName()){showStatus('기사를 작성하기 전에 프로필 닉네임을 설정하세요.','err');prepareProfileDialog();return;}
+      syncBodyFromEditor();const title=$('title').value.trim(),body=$('body').value.trim();if(!title||!body){showStatus('제목과 본문은 필수입니다.','err');return;}
+      const id=$('articleId').value;const existing=id?state.articles.find(x=>String(x.id)===String(id)):null;if(id&&(!existing||!canEditArticle(existing))){showStatus('본인이 게시한 기사만 수정할 수 있습니다.','err');return;}
+      const newlyUploaded=[];
+      try{
+        $('saveArticleBtn').disabled=true;$('saveArticleBtn').textContent='업로드 중…';
+        let imageUrl=$('currentImageUrl').value||null,imagePath=$('currentImagePath').value||null;const file=$('imageFile').files[0];if(file){const uploaded=await uploadImage(file);imageUrl=uploaded.url;imagePath=uploaded.path;}
+        const {currentCaptions,newCaptions}=collectGalleryCaptionInputs();const currentGallery=getCurrentGalleryImages().map((img,idx)=>({...img,caption:currentCaptions[idx]??img.caption??''}));const galleryUploads=await uploadGalleryImages($('galleryFiles')?.files||[]);const galleryImages=[...currentGallery,...galleryUploads.map((img,idx)=>({...img,caption:newCaptions[idx]||''}))];
+        const currentAttachments=getCurrentAttachments();const attachmentUploads=await uploadArticleAttachments($('attachmentFiles')?.files||[],currentAttachments.length);newlyUploaded.push(...attachmentUploads);const attachments=[...currentAttachments,...attachmentUploads];
+        const articleForDefaults={...existing,category:$('category').value};const visibleCategories=selectedVisibleCategoriesFromForm(articleForDefaults);const pinnedByCategory=state.isOwner?selectedPinnedConfigFromForm():pinnedConfigForArticle(existing||{});const visibility=state.isOwner?($('articleVisibility')?.value||'members'):(existing?.visibility||'members');
+        const payload={title,category:$('category').value,summary:$('summary').value.trim(),body,image_url:imageUrl,image_path:imagePath,gallery_images:galleryImages,attachments,caption:$('caption').value.trim(),visible_categories:visibleCategories,pinned_by_category:pinnedByCategory,pinned:state.isOwner?hasPinnedCategory(pinnedByCategory):!!existing?.pinned,pinned_order:state.isOwner?lowestPinnedOrder(pinnedByCategory):Number(existing?.pinned_order??DEFAULT_PIN_ORDER),visibility,updated_at:new Date().toISOString()};
+        let res;if(id)res=await client.from('articles').update(payload).eq('id',id);else{Object.assign(payload,{created_by:state.session.user.id,created_by_role:state.isOwner?'owner':(state.editorRole||'publisher'),author:currentAuthorName()});res=await client.from('articles').insert(payload);}if(res.error)throw res.error;
+        const retainedPaths=new Set(attachments.map(item=>item.path).filter(Boolean));for(const old of parseArticleAttachments(existing||{})){if(old.path&&!retainedPaths.has(old.path))await removeAttachmentStorage(old.path);}
+        showStatus('기사와 첨부 파일이 저장되었습니다.','ok');resetForm();await loadArticles();
+      }catch(e){for(const item of newlyUploaded)await removeAttachmentStorage(item.path);const msg=String(e.message||e);if(/attachments|fileBucket|article-files|visibility|avatar|user_preferences|visible_categories|pinned_by_category|column|schema|bucket|row-level security/i.test(msg))showStatus('저장 실패: 첨부 파일용 Supabase SQL을 먼저 적용했는지 확인하세요. '+msg,'err');else showStatus('저장 실패: '+msg,'err');}
+      finally{$('saveArticleBtn').disabled=false;$('saveArticleBtn').textContent='저장';}
+    }
+    function editArticle(id){
+      const a=state.articles.find(x=>String(x.id)===String(id));if(!a)return;if(!canEditArticle(a)){showStatus('본인이 게시한 기사만 수정할 수 있습니다.','err');return;}
+      $('articleId').value=a.id;$('currentImagePath').value=a.image_path||'';$('currentImageUrl').value=a.image_url||'';$('title').value=a.title||'';$('category').value=a.category||'종합';$('summary').value=a.summary||'';setEditorHtml(a.body||'');$('caption').value=a.caption||'';setCurrentGalleryImages(parseArticleGallery(a));if($('galleryFiles'))$('galleryFiles').value='';setCurrentAttachments(parseArticleAttachments(a));if($('attachmentFiles'))$('attachmentFiles').value='';renderArticleCategoryControls(a);$('imageFile').value='';$('imagePreview').innerHTML=hasArticleImage(a)?`<img src="${escapeHtml(a.image_url)}" alt="">`:'대표 사진 없음';if($('articleVisibility')){$('articleVisibility').value=a.visibility||'members';$('articleVisibility').disabled=!state.isOwner;}updateArticleAuthorPreview(a);
+    }
+    function resetForm(){
+      ['articleId','currentImagePath','currentImageUrl','currentGalleryImages','currentAttachments','title','summary','body','caption'].forEach(id=>{if($(id))$(id).value=id==='currentAttachments'?'[]':'';});setEditorHtml('');$('category').value='공지';renderArticleCategoryControls({category:'공지',visible_categories:['종합','공지'],pinned_by_category:{}});$('imageFile').value='';if($('galleryFiles'))$('galleryFiles').value='';if($('attachmentFiles'))$('attachmentFiles').value='';$('imagePreview').textContent='대표 사진 없음';setCurrentGalleryImages([]);setCurrentAttachments([]);if($('articleVisibility')){$('articleVisibility').value='members';$('articleVisibility').disabled=!state.isOwner;}updateArticleAuthorPreview();
+    }
+    async function deleteArticle(id){
+      if(!state.isOwner){showStatus('관리자만 기사를 삭제할 수 있습니다.','err');return;}if(!confirm('이 기사와 첨부 파일을 삭제하시겠습니까?'))return;
+      const article=state.articles.find(row=>String(row.id)===String(id));const {error}=await client.from('articles').delete().eq('id',id);if(error){showStatus('삭제 실패: '+error.message,'err');return;}
+      for(const file of parseArticleAttachments(article||{}))if(file.path)await removeAttachmentStorage(file.path);
+      showStatus('기사와 첨부 파일이 삭제되었습니다.','ok');await loadArticles();
+    }
+
     function bindEnhancements(){
       if($('appLogoutBtn')) $('appLogoutBtn').onclick=logoutCurrentUser;
       if($('logoutTopBtn')) $('logoutTopBtn').onclick=logoutCurrentUser;
@@ -4315,6 +4519,7 @@ async function deleteTitle(id){
       document.querySelectorAll('[data-app-tab]').forEach(b=>b.onclick=async()=>{const tab=b.dataset.appTab;if(tab==='home')navigateCategory('종합');else if(tab==='categories'){fillAppCategories();openDialog('appCategoryDialog');}else if(tab==='tips')navigateCategory('뉴스제보');else if(tab==='notifications')await openPersonalMessageDialog();else if(tab==='profile'){if(state.session)prepareProfileDialog();else openDialog('loginDialog');}});
       if($('saveSettingsBtn'))$('saveSettingsBtn').onclick=saveSettings;if($('pushEnabled'))$('pushEnabled').onchange=syncPushControls;document.querySelectorAll('input[name="themeChoice"]').forEach(r=>r.onchange=()=>applyThemeChoice(r.value));
       if($('profileAvatarFile'))$('profileAvatarFile').onchange=e=>{const f=e.target.files?.[0];state.removeAvatarRequested=false;if(f){const url=URL.createObjectURL(f);$('profileAvatarPreview').dataset.tempUrl=url;}renderProfilePreview();};if($('nicknameInput'))$('nicknameInput').oninput=renderProfilePreview;if($('removeAvatarBtn'))$('removeAvatarBtn').onclick=()=>{state.removeAvatarRequested=true;if($('profileAvatarFile'))$('profileAvatarFile').value='';if($('profileAvatarPreview'))$('profileAvatarPreview').dataset.tempUrl='';if($('profileAvatarUrl'))$('profileAvatarUrl').value='';renderProfilePreview();};
+      if($('attachmentFiles'))$('attachmentFiles').onchange=()=>{try{validateAttachmentSelection($('attachmentFiles').files,getCurrentAttachments().length);renderAttachmentPreview();}catch(e){$('attachmentFiles').value='';renderAttachmentPreview();showStatus(e.message||e,'err');}};if($('clearAttachmentsBtn'))$('clearAttachmentsBtn').onclick=()=>{if(confirm('현재 기사에서 첨부 파일을 모두 제거하시겠습니까? 저장해야 실제 글에 반영됩니다.')){setCurrentAttachments([]);if($('attachmentFiles'))$('attachmentFiles').value='';renderAttachmentPreview();}};renderAttachmentPreview();
       window.addEventListener('popstate',handlePopState);fillAppCategories();populateSettingsForm();syncAppUI();
     }
 
