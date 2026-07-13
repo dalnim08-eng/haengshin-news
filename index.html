@@ -1499,6 +1499,51 @@
     @media(max-width:760px){.admin-center-title-wrap p{display:none}.admin-center-dialog .admin-center-main{padding:18px!important}.admin-dashboard-head{align-items:center}.admin-center-dialog .admin-alert-grid{grid-template-columns:1fr}}
   </style>
 
+  <style id="pure-black-button-contrast-v15">
+    html[data-theme="pure-black"] button,
+    html[data-theme="pure-black"] .btn,
+    html[data-theme="pure-black"] .tag,
+    html[data-theme="pure-black"] .page-btn,
+    html[data-theme="pure-black"] .admin-return-btn{
+      background:#0b0b0b!important;
+      color:#f5f5f5!important;
+      border-color:#3a3a3a!important;
+    }
+    html[data-theme="pure-black"] button *,
+    html[data-theme="pure-black"] .btn *{
+      color:inherit!important;
+    }
+    html[data-theme="pure-black"] .btn.blue,
+    html[data-theme="pure-black"] .btn.dark,
+    html[data-theme="pure-black"] .page-btn.active,
+    html[data-theme="pure-black"] .nav-btn.active,
+    html[data-theme="pure-black"] .ui-mode-actions .btn.active{
+      background:#fff!important;
+      color:#000!important;
+      border-color:#fff!important;
+    }
+    html[data-theme="pure-black"] .btn.green{
+      background:#15803d!important;
+      color:#fff!important;
+      border-color:#22c55e!important;
+    }
+    html[data-theme="pure-black"] .btn.red{
+      background:#21090d!important;
+      color:#fda4af!important;
+      border-color:#7f1d1d!important;
+    }
+    html[data-theme="pure-black"] button:disabled,
+    html[data-theme="pure-black"] .btn:disabled{
+      background:#151515!important;
+      color:#777!important;
+      border-color:#2b2b2b!important;
+    }
+    html[data-theme="pure-black"] .app-bottom-nav button,
+    html[data-theme="pure-black"] .app-brand-button{
+      background:transparent!important;
+      border-color:transparent!important;
+    }
+  </style>
 </head>
 <body>
   <script>
@@ -4166,6 +4211,35 @@ async function deleteTitle(id){
       return uploaded;
     }
     function canEditArticle(a){ return !!(state.isOwner || (state.session?.user?.id && a?.created_by === state.session.user.id)); }
+    function missingArticleColumn(error){
+      const message=String(error?.message||error||'');
+      const quoted=message.match(/(?:column|field)\s+["']?(?:articles\.)?([a-z_][a-z0-9_]*)["']?/i);
+      if(quoted)return quoted[1];
+      const cache=message.match(/["']([a-z_][a-z0-9_]*)["']\s+(?:column|field)/i);
+      return cache?cache[1]:'';
+    }
+    async function writeArticleWithVerification(id,payload){
+      const working={...payload};
+      const optionalColumns=new Set(['attachments','gallery_images','visible_categories','pinned_by_category','visibility','created_by_role']);
+      const skipped=[];
+      for(let attempt=0;attempt<=optionalColumns.size;attempt++){
+        let query;
+        if(id)query=client.from('articles').update(working).eq('id',id).select('*');
+        else query=client.from('articles').insert(working).select('*');
+        const {data,error}=await query;
+        if(!error){
+          const saved=Array.isArray(data)?data[0]:data;
+          if(!saved)throw new Error('저장 요청은 처리되었지만 저장된 기사를 확인하지 못했습니다. articles INSERT/UPDATE 및 SELECT RLS 정책을 확인하세요.');
+          return {saved,skipped};
+        }
+        const column=missingArticleColumn(error);
+        if(column&&optionalColumns.has(column)&&Object.prototype.hasOwnProperty.call(working,column)){
+          delete working[column];skipped.push(column);continue;
+        }
+        throw error;
+      }
+      throw new Error('기사 저장 호환 처리를 완료하지 못했습니다.');
+    }
     async function saveArticle(){
       if(!state.session){ openDialog('loginDialog'); return; }
       if(!state.isEditor){ showStatus('승인된 기사 게시 계정만 저장할 수 있습니다.','err'); return; }
@@ -4366,7 +4440,7 @@ async function deleteTitle(id){
       memAccBox.innerHTML = state.memberRequests.length ? state.memberRequests.map(m=>{
         const badges = normalizeBadges(state.memberProfileBadges[m.user_id]);
         const isProtectedOwner = badges.includes('owner');
-        return `<div class="request-row"><div><strong>${escapeHtml(m.nickname || m.email)} ${renderNameBadges(badges)}</strong><span>${escapeHtml(m.email)} · <span class="role-badge">${memberStatusLabel(m.status)}</span></span><div class="badge-editor" data-badge-user="${escapeHtml(m.user_id || '')}"><label><input type="checkbox" data-badge-check="owner" ${badges.includes('owner')?'checked':''}> 대표관리자(금빛)</label><label><input type="checkbox" data-badge-check="admin" ${badges.includes('admin')?'checked':''}> 관리자</label><label><input type="checkbox" data-badge-check="reporter" ${badges.includes('reporter')?'checked':''}> 기자</label><button class="btn" data-badge-save="${escapeHtml(m.user_id || '')}">배지 저장</button></div></div><div class="ops">${m.status === 'approved' ? `<button class="btn red" data-member-block="${m.id}">차단</button>` : m.status === 'blocked' ? `<button class="btn" data-member-approve="${m.id}">차단 해제</button>` : m.status === 'rejected' ? `<button class="btn" data-member-approve="${m.id}">승인</button>` : ''}</div></div>`;
+        return `<div class="request-row"><div><strong>${escapeHtml(m.nickname || m.email)} ${renderNameBadges(badges)}</strong><span>${escapeHtml(m.email)} · <span class="role-badge">${memberStatusLabel(m.status)}</span></span><div class="badge-editor" data-badge-user="${escapeHtml(m.user_id || '')}"><label><input type="checkbox" data-badge-check="owner" ${badges.includes('owner')?'checked':''}> 대표관리자(금빛)</label><label><input type="checkbox" data-badge-check="admin" ${badges.includes('admin')?'checked':''}> 관리자</label><label><input type="checkbox" data-badge-check="reporter" ${badges.includes('reporter')?'checked':''}> 기자·기사 작성 권한</label><button class="btn" data-badge-save="${escapeHtml(m.user_id || '')}">권한·배지 저장</button></div></div><div class="ops">${m.status === 'approved' ? `<button class="btn red" data-member-block="${m.id}">차단</button>` : m.status === 'blocked' ? `<button class="btn" data-member-approve="${m.id}">차단 해제</button>` : m.status === 'rejected' ? `<button class="btn" data-member-approve="${m.id}">승인</button>` : ''}</div></div>`;
       }).join('') : '<p style="color:#64748b">회원 목록이 없습니다.</p>';
       const pending = state.editorRequests.filter(r => r.status === 'pending');
       reqBox.innerHTML = pending.length ? pending.map(r=>`<div class="request-row"><div><strong>${escapeHtml(r.nickname || r.email)}</strong><span>${escapeHtml(r.email)} · 신청 등급 ${roleLabel(r.requested_role || 'publisher')} · ${fmtDate(r.requested_at)}${r.reason ? '<br>사유: '+escapeHtml(r.reason) : ''}</span></div><div class="ops"><button class="btn blue" data-approve="${r.id}">승인</button><button class="btn red" data-reject="${r.id}">거절</button></div></div>`).join('') : '<p style="color:#64748b">게시 권한 승인 대기가 없습니다.</p>';
@@ -4380,6 +4454,17 @@ async function deleteTitle(id){
       accBox.querySelectorAll('[data-toggle-editor]').forEach(b=>b.onclick=()=>toggleEditorAccount(b.dataset.toggleEditor));
       accBox.querySelectorAll('[data-remove-editor]').forEach(b=>b.onclick=()=>removeEditorAccount(b.dataset.removeEditor));
     }
+    async function upsertPublisherPermission(member, approvedAt=new Date().toISOString()){
+      const full={user_id:member.user_id,email:member.email||null,nickname:member.nickname||member.email||'사용자',role:'publisher',active:true,approved_by:state.session.user.id,approved_at:approvedAt};
+      let res=await client.from('editors').upsert(full,{onConflict:'user_id'}).select('id,user_id,role,active').maybeSingle();
+      if(res.error&&/approved_by|approved_at|column|schema|cache/i.test(res.error.message||'')){
+        const compatible={user_id:full.user_id,email:full.email,nickname:full.nickname,role:'publisher',active:true};
+        res=await client.from('editors').upsert(compatible,{onConflict:'user_id'}).select('id,user_id,role,active').maybeSingle();
+      }
+      if(res.error)throw res.error;
+      if(!res.data||res.data.role!=='publisher'||res.data.active!==true)throw new Error('기자 권한 등록 결과를 확인하지 못했습니다. editors SELECT/INSERT/UPDATE RLS 정책을 확인하세요.');
+      return res.data;
+    }
     async function saveMemberBadges(userId){
       if(!state.isOwner){ showStatus('관리자만 배지를 부여할 수 있습니다.','err'); return; }
       if(!userId){ showStatus('사용자 정보를 찾을 수 없습니다.','err'); return; }
@@ -4389,6 +4474,18 @@ async function deleteTitle(id){
       const cleanBadges = normalizeBadges(badges);
       const member = state.memberRequests.find(m=>m.user_id === userId);
       const nickname = member?.nickname || state.profile?.nickname || member?.email || '사용자';
+      const wantsReporter=cleanBadges.includes('reporter');
+      try{
+        if(wantsReporter)await upsertPublisherPermission({user_id:userId,email:member?.email,nickname});
+        else{
+          const existingEditor=state.editorAccounts.find(row=>String(row.user_id)===String(userId));
+          if(existingEditor&&existingEditor.role!=='owner'){
+            const {data:disabled,error:disableError}=await client.from('editors').update({active:false}).eq('user_id',userId).neq('role','owner').select('id,active');
+            if(disableError)throw disableError;
+            if(!disabled?.length)throw new Error('기자 권한 해제 결과를 확인하지 못했습니다.');
+          }
+        }
+      }catch(e){showStatus('기사 권한 저장 실패: '+(e.message||e),'err');return;}
       const { data, error } = await client.from('profiles').upsert({
         user_id: userId,
         nickname,
@@ -4402,7 +4499,7 @@ async function deleteTitle(id){
       const savedBadges = normalizeBadges(data?.badges ?? cleanBadges);
       state.memberProfileBadges[userId] = savedBadges;
       if(state.session?.user?.id === userId && state.profile) state.profile.badges = savedBadges;
-      showStatus(savedBadges.length ? '댓글 배지가 저장되었습니다.' : '댓글 배지가 해제되었습니다.','ok');
+      showStatus(wantsReporter?'기자 배지와 기사 작성 권한이 함께 등록되었습니다.':'배지가 저장되었고 기자 권한 설정도 반영되었습니다.','ok');
       await loadAccountAdminData();
       await refreshAdminAlertIndicator();
       if(state.activeArticleId) await loadComments(state.activeArticleId);
@@ -4420,18 +4517,10 @@ async function deleteTitle(id){
       if(!state.isOwner) return;
       const r = state.editorRequests.find(x=>String(x.id)===String(requestId));
       if(!r) return;
-      const { error: upsertError } = await client.from('editors').upsert({
-        user_id: r.user_id,
-        email: r.email,
-        nickname: r.nickname,
-        role: 'publisher',
-        active: true,
-        approved_by: state.session.user.id,
-        approved_at: new Date().toISOString()
-      }, { onConflict: 'user_id' });
-      if(upsertError){ showStatus('승인 실패: '+upsertError.message,'err'); return; }
-      const { error: reqError } = await client.from('editor_requests').update({ status:'approved', reviewed_by: state.session.user.id, reviewed_at: new Date().toISOString() }).eq('id', requestId);
-      if(reqError){ showStatus('신청 상태 변경 실패: '+reqError.message,'err'); return; }
+      try{await upsertPublisherPermission(r);}catch(e){showStatus('승인 실패: '+(e.message||e),'err');return;}
+      const { data:reqRows, error: reqError } = await client.from('editor_requests').update({ status:'approved', reviewed_by: state.session.user.id, reviewed_at: new Date().toISOString() }).eq('id', requestId).select('id,status');
+      if(reqError){ showStatus('권한은 등록됐지만 신청 상태 변경 실패: '+reqError.message,'err'); return; }
+      if(!reqRows?.length||reqRows[0].status!=='approved'){showStatus('권한은 등록됐지만 신청 승인 상태를 확인하지 못했습니다. editor_requests UPDATE/SELECT RLS 정책을 확인하세요.','err');return;}
       try{
         const currentBadges = normalizeBadges(state.memberProfileBadges?.[r.user_id]);
         await client.from('profiles').upsert({
@@ -5653,7 +5742,7 @@ async function deleteTitle(id){
       if(!state.session){openDialog('loginDialog');return;}if(!state.isEditor){showStatus('승인된 기사 게시 계정만 저장할 수 있습니다.','err');return;}if(!currentAuthorName()){showStatus('기사를 작성하기 전에 프로필 닉네임을 설정하세요.','err');prepareProfileDialog();return;}
       syncBodyFromEditor();const title=$('title').value.trim(),body=$('body').value.trim();if(!title||!body){showStatus('제목과 본문은 필수입니다.','err');return;}
       const id=$('articleId').value;const existing=id?state.articles.find(x=>String(x.id)===String(id)):null;if(id&&(!existing||!canEditArticle(existing))){showStatus('본인이 게시한 기사만 수정할 수 있습니다.','err');return;}
-      const newlyUploaded=[];
+      const newlyUploaded=[];let articleCommitted=false;
       try{
         $('saveArticleBtn').disabled=true;$('saveArticleBtn').textContent='업로드 중…';
         let imageUrl=$('currentImageUrl').value||null,imagePath=$('currentImagePath').value||null;const file=$('imageFile').files[0];if(file){const uploaded=await uploadImage(file);imageUrl=uploaded.url;imagePath=uploaded.path;}
@@ -5661,10 +5750,18 @@ async function deleteTitle(id){
         const currentAttachments=getCurrentAttachments();const attachmentUploads=await uploadArticleAttachments($('attachmentFiles')?.files||[],currentAttachments.length);newlyUploaded.push(...attachmentUploads);const attachments=[...currentAttachments,...attachmentUploads];
         const articleForDefaults={...existing,category:$('category').value};const visibleCategories=selectedVisibleCategoriesFromForm(articleForDefaults);const pinnedByCategory=state.isOwner?selectedPinnedConfigFromForm():pinnedConfigForArticle(existing||{});const visibility=state.isOwner?($('articleVisibility')?.value||'members'):(existing?.visibility||'members');
         const payload={title,category:$('category').value,summary:$('summary').value.trim(),body,image_url:imageUrl,image_path:imagePath,gallery_images:galleryImages,attachments,caption:$('caption').value.trim(),visible_categories:visibleCategories,pinned_by_category:pinnedByCategory,pinned:state.isOwner?hasPinnedCategory(pinnedByCategory):!!existing?.pinned,pinned_order:state.isOwner?lowestPinnedOrder(pinnedByCategory):Number(existing?.pinned_order??DEFAULT_PIN_ORDER),visibility,updated_at:new Date().toISOString()};
-        let res;if(id)res=await client.from('articles').update(payload).eq('id',id);else{Object.assign(payload,{created_by:state.session.user.id,created_by_role:state.isOwner?'owner':(state.editorRole||'publisher'),author:currentAuthorName()});res=await client.from('articles').insert(payload);}if(res.error)throw res.error;
+        if(!id)Object.assign(payload,{created_by:state.session.user.id,created_by_role:state.isOwner?'owner':(state.editorRole||'publisher'),author:currentAuthorName()});
+        const {saved,skipped}=await writeArticleWithVerification(id,payload);articleCommitted=true;
+        if(skipped.includes('attachments'))for(const item of newlyUploaded)await removeAttachmentStorage(item.path);
         const retainedPaths=new Set(attachments.map(item=>item.path).filter(Boolean));for(const old of parseArticleAttachments(existing||{})){if(old.path&&!retainedPaths.has(old.path))await removeAttachmentStorage(old.path);}
-        showStatus('기사와 첨부 파일이 저장되었습니다.','ok');resetForm();await loadArticles();
-      }catch(e){for(const item of newlyUploaded)await removeAttachmentStorage(item.path);const msg=String(e.message||e);if(/attachments|fileBucket|article-files|visibility|avatar|user_preferences|visible_categories|pinned_by_category|column|schema|bucket|row-level security/i.test(msg))showStatus('저장 실패: 첨부 파일용 Supabase SQL을 먼저 적용했는지 확인하세요. '+msg,'err');else showStatus('저장 실패: '+msg,'err');}
+        resetForm();await loadArticles();
+        const confirmed=state.articles.some(row=>String(row.id)===String(saved.id));
+        if(!confirmed)throw new Error('기사는 저장되었지만 목록에서 다시 확인되지 않았습니다. articles SELECT RLS 정책을 확인하세요.');
+        state.query='';state.page=1;state.category=ARTICLE_DISPLAY_CATEGORIES.includes(saved.category)?saved.category:'종합';
+        updateRoute({category:state.category,page:1,q:''},{replace:true});render();
+        if(skipped.length)showStatus('기사는 저장되었습니다. 다만 DB에 없는 선택 기능('+skipped.join(', ')+')은 제외되었습니다.','ok');
+        else showStatus('기사가 저장되었고 목록 반영까지 확인했습니다.','ok');
+      }catch(e){if(!articleCommitted)for(const item of newlyUploaded)await removeAttachmentStorage(item.path);const msg=String(e.message||e);if(/attachments|fileBucket|article-files|visibility|avatar|user_preferences|visible_categories|pinned_by_category|column|schema|bucket|row-level security/i.test(msg))showStatus('저장 실패: Supabase 기사 테이블과 RLS 정책을 확인하세요. '+msg,'err');else showStatus('저장 실패: '+msg,'err');}
       finally{$('saveArticleBtn').disabled=false;$('saveArticleBtn').textContent='저장';}
     }
     function editArticle(id){
